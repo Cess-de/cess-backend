@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CESS UofT — Civil Engineering Student Society</title>
+<title>CESS-UofT — جمعية طلاب الهندسة المدنية</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -29,7 +29,7 @@
     --card-bg: rgba(255,255,255,0.04);
     --card-border: rgba(255,255,255,0.08);
 
-    --transition: 0.3s ease;
+    --transition: 0.25s ease;
   }
 
   [data-theme="light"] {
@@ -44,12 +44,22 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  html { scroll-behavior: smooth; }
+
   body {
     font-family: 'Inter', sans-serif;
     background: var(--bg);
     color: var(--text-primary);
     transition: background var(--transition), color var(--transition);
     overflow-x: hidden;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 20px;
   }
 
   /* ============ NAVBAR ============ */
@@ -62,36 +72,38 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 18px 6%;
-    background: color-mix(in srgb, var(--bg) 80%, transparent);
+    padding: 14px 20px;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--card-border);
-    transition: background var(--transition);
   }
 
   .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-weight: 800;
-    font-size: 20px;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 16px;
   }
 
   .logo-icon {
-    width: 34px;
-    height: 34px;
+    width: 28px;
+    height: 28px;
     background: var(--accent);
-    border-radius: 8px;
+    border-radius: 7px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--navy);
-    font-size: 18px;
+    font-size: 14px;
+    flex-shrink: 0;
   }
+
+  [data-theme="light"] .logo-icon { color: var(--white); }
 
   .nav-links {
     display: flex;
-    gap: 32px;
+    gap: 24px;
     list-style: none;
   }
 
@@ -99,7 +111,7 @@
     color: var(--text-secondary);
     text-decoration: none;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 13.5px;
     transition: color var(--transition);
   }
 
@@ -110,12 +122,12 @@
   .nav-actions {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 10px;
   }
 
   .theme-toggle {
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     background: var(--card-bg);
     border: 1px solid var(--card-border);
@@ -123,24 +135,26 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 14px;
     transition: transform 0.2s;
+    flex-shrink: 0;
   }
 
   .theme-toggle:active { transform: scale(0.9); }
 
   .btn {
-    padding: 11px 24px;
-    border-radius: 10px;
+    padding: 8px 16px;
+    border-radius: 8px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 13px;
     border: none;
     cursor: pointer;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     transition: all var(--transition);
+    white-space: nowrap;
   }
 
   .btn-primary {
@@ -151,8 +165,8 @@
   [data-theme="light"] .btn-primary { color: var(--white); }
 
   .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px color-mix(in srgb, var(--accent) 40%, transparent);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 35%, transparent);
   }
 
   .btn-secondary {
@@ -170,17 +184,17 @@
     background: none;
     border: none;
     color: var(--text-primary);
-    font-size: 24px;
+    font-size: 20px;
     cursor: pointer;
   }
 
   /* ============ HERO ============ */
   .hero {
     position: relative;
-    min-height: 100vh;
+    min-height: 92vh;
     display: flex;
     align-items: center;
-    padding: 100px 6% 60px;
+    padding: 90px 0 50px;
     overflow: hidden;
   }
 
@@ -196,12 +210,10 @@
     background-size: cover;
     background-position: center;
     opacity: 0;
-    transition: opacity 2s ease-in-out;
+    transition: opacity 2.2s ease-in-out;
   }
 
-  .hero-bg-slide.active {
-    opacity: 1;
-  }
+  .hero-bg-slide.active { opacity: 1; }
 
   .hero-overlay {
     position: absolute;
@@ -209,53 +221,57 @@
     background: linear-gradient(
       100deg,
       var(--bg) 0%,
-      color-mix(in srgb, var(--bg) 75%, transparent) 45%,
-      color-mix(in srgb, var(--bg) 20%, transparent) 100%
+      color-mix(in srgb, var(--bg) 78%, transparent) 50%,
+      color-mix(in srgb, var(--bg) 25%, transparent) 100%
     );
     z-index: 1;
   }
 
-  .hero-content {
+  .hero-inner {
     position: relative;
     z-index: 2;
-    max-width: 620px;
+    width: 100%;
   }
+
+  .hero-content { max-width: 540px; }
 
   .hero-eyebrow {
     color: var(--accent);
     font-weight: 600;
-    font-size: 14px;
-    margin-bottom: 16px;
-    letter-spacing: 0.5px;
+    font-size: 12.5px;
+    margin-bottom: 14px;
   }
 
   .hero h1 {
-    font-size: clamp(36px, 6vw, 56px);
+    font-size: clamp(28px, 5.5vw, 42px);
     font-weight: 800;
-    line-height: 1.1;
-    margin-bottom: 20px;
+    line-height: 1.18;
+    margin-bottom: 4px;
   }
 
   .hero h1 .accent { color: var(--accent); }
 
+  .hero-tagline {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--accent);
+    margin: 14px 0;
+    letter-spacing: 0.3px;
+  }
+
   .hero p {
-    font-size: 17px;
+    font-size: 14.5px;
     color: var(--text-secondary);
-    margin-bottom: 32px;
-    line-height: 1.6;
+    margin-bottom: 24px;
+    line-height: 1.65;
+    max-width: 460px;
   }
 
   .hero-actions {
     display: flex;
-    gap: 14px;
-    margin-bottom: 56px;
+    gap: 10px;
+    margin-bottom: 40px;
     flex-wrap: wrap;
-  }
-
-  .btn-lg {
-    padding: 15px 30px;
-    font-size: 15px;
-    border-radius: 12px;
   }
 
   /* ============ FEATURE CARDS ============ */
@@ -264,44 +280,44 @@
     z-index: 2;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    max-width: 900px;
+    gap: 12px;
+    max-width: 760px;
   }
 
   .feature-card {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
-    border-radius: 16px;
-    padding: 20px;
+    border-radius: 12px;
+    padding: 14px;
     backdrop-filter: blur(10px);
     transition: transform var(--transition), border-color var(--transition);
   }
 
   .feature-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-2px);
     border-color: var(--accent);
   }
 
   .feature-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
     background: color-mix(in srgb, var(--accent) 18%, transparent);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
-    margin-bottom: 12px;
+    font-size: 14px;
+    margin-bottom: 8px;
   }
 
   .feature-card h3 {
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 700;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
 
   .feature-card p {
-    font-size: 13px;
+    font-size: 11.5px;
     color: var(--text-secondary);
     margin: 0;
     line-height: 1.4;
@@ -310,16 +326,16 @@
   /* ============ SLIDE INDICATORS ============ */
   .slide-indicators {
     position: absolute;
-    bottom: 30px;
-    left: 6%;
+    bottom: 20px;
+    right: 20px;
     z-index: 2;
     display: flex;
-    gap: 8px;
+    gap: 6px;
   }
 
   .slide-dot {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background: rgba(255,255,255,0.3);
     transition: all 0.3s;
@@ -327,8 +343,65 @@
 
   .slide-dot.active {
     background: var(--accent);
-    width: 24px;
-    border-radius: 4px;
+    width: 18px;
+    border-radius: 3px;
+  }
+
+  /* ============ MISSION / VISION SECTION ============ */
+  .mission-section {
+    padding: 64px 0;
+    border-top: 1px solid var(--card-border);
+  }
+
+  .mission-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .mission-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 26px;
+  }
+
+  .mission-card .label {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+
+  .mission-card p {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text-secondary);
+  }
+
+  .mission-note {
+    margin-top: 20px;
+    padding: 16px 18px;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+
+  .mission-note strong { color: var(--accent); }
+
+  .section-title {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+
+  .section-subtitle {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    max-width: 460px;
   }
 
   /* ============ RESPONSIVE ============ */
@@ -336,14 +409,17 @@
     .nav-links { display: none; }
     .mobile-menu-btn { display: block; }
     .feature-grid { grid-template-columns: repeat(2, 1fr); }
+    .mission-grid { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 600px) {
-    .hero { padding: 90px 5% 40px; min-height: 90vh; }
-    .feature-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .hero { padding: 80px 0 32px; min-height: 88vh; }
+    .container { padding: 0 16px; }
+    .feature-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
     .hero-actions { flex-direction: column; }
-    .btn-lg { width: 100%; justify-content: center; }
+    .hero-actions .btn { width: 100%; justify-content: center; }
     .nav-actions .btn-secondary { display: none; }
+    .mission-card { padding: 20px; }
   }
 </style>
 </head>
@@ -352,12 +428,12 @@
 <nav class="navbar">
   <div class="logo">
     <div class="logo-icon">🎓</div>
-    <span>CESS UofT</span>
+    <span>CESS-UofT</span>
   </div>
 
   <ul class="nav-links">
     <li><a href="#" class="active">الرئيسية</a></li>
-    <li><a href="#about">عن الجمعية</a></li>
+    <li><a href="#mission">رؤيتنا</a></li>
     <li><a href="#activities">الأنشطة</a></li>
     <li><a href="#resources">الموارد</a></li>
     <li><a href="#contact">تواصل</a></li>
@@ -375,35 +451,38 @@
   <div class="hero-bg-slideshow" id="heroSlideshow"></div>
   <div class="hero-overlay"></div>
 
-  <div class="hero-content">
-    <div class="hero-eyebrow">جامعة تورنتو — كلية الهندسة</div>
-    <h1>جمعية طلاب<br><span class="accent">الهندسة المدنية</span></h1>
-    <p>نبني معاً جيلاً من المهندسين القادرين على قيادة المستقبل، من خلال الأنشطة والمبادرات وشبكة تواصل قوية بين الطلاب.</p>
-    <div class="hero-actions">
-      <a href="#about" class="btn btn-primary btn-lg">اكتشف CESS →</a>
-      <a href="#" class="btn btn-secondary btn-lg">انضم إلينا</a>
-    </div>
+  <div class="container hero-inner">
+    <div class="hero-content">
+      <div class="hero-eyebrow">الجامعة التكنولوجية — كلية الهندسة والعمارة</div>
+      <h1>نبني اليوم<br><span class="accent">ثم المستقبل</span></h1>
+      <div class="hero-tagline">ابنِ. تواصل. قُد.</div>
+      <p>جيل جديد من طلاب الهندسة المدنية، بطموح لا حدود له ورؤية تتجاوز مقاعد الدراسة، نصنع مستقبلنا بأيدينا ونمهد الطريق نحو التميز.</p>
+      <div class="hero-actions">
+        <a href="#mission" class="btn btn-primary">اكتشف CESS-UofT →</a>
+        <a href="#" class="btn btn-secondary">انضم إلينا</a>
+      </div>
 
-    <div class="feature-grid">
-      <div class="feature-card">
-        <div class="feature-icon">👥</div>
-        <h3>مجتمع</h3>
-        <p>تواصل مع زملائك وابنِ شبكة علاقات قوية</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">📈</div>
-        <h3>تطوير</h3>
-        <p>طوّر مهاراتك من خلال ورش وفعاليات عملية</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">📅</div>
-        <h3>فرص</h3>
-        <p>وصول حصري لفعاليات وفرص وظيفية</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🎯</div>
-        <h3>أثر</h3>
-        <p>اصنع فرقاً حقيقياً داخل مجتمعنا الطلابي</p>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">👥</div>
+          <h3>مجتمع</h3>
+          <p>تواصل مع زملائك وابنِ شبكة علاقات قوية</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📈</div>
+          <h3>تطوير</h3>
+          <p>طوّر مهاراتك من خلال ورش وفعاليات عملية</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📅</div>
+          <h3>فرص</h3>
+          <p>وصول حصري لفعاليات وفرص وظيفية</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>أثر</h3>
+          <p>اصنع فرقاً حقيقياً داخل مجتمعنا الطلابي</p>
+        </div>
       </div>
     </div>
   </div>
@@ -411,15 +490,37 @@
   <div class="slide-indicators" id="slideIndicators"></div>
 </section>
 
+<section class="mission-section" id="mission">
+  <div class="container">
+    <div class="section-title">رؤيتنا ورسالتنا</div>
+    <div class="section-subtitle">لسنا مجرد نشاطات ثقافية أو اجتماعات — نحن حلقة الوصل بين الجامعة والتدريب وسوق العمل والمجتمع الهندسي.</div>
+
+    <div class="mission-grid">
+      <div class="mission-card">
+        <div class="label">الرؤية</div>
+        <p>أن تكون جمعية الهندسة المدنية بيئة طلابية رائدة في تطوير الطالب المدني أكاديمياً ومهنياً وشخصياً، وإعداده للانتقال بكفاءة من الحياة الجامعية إلى سوق العمل والمجتمع الهندسي.</p>
+      </div>
+      <div class="mission-card">
+        <div class="label">الرسالة</div>
+        <p>توفير بيئة طلابية تجمع بين المعرفة الأكاديمية والتطبيق العملي والتطوير المهني والشخصي، من خلال البرامج التدريبية والورش والزيارات العلمية والأنشطة البحثية والثقافية والمهنية، وبناء شبكة من العلاقات والفرص التي تساعد طالب الهندسة المدنية على اكتساب المهارات والخبرات اللازمة لمستقبله.</p>
+      </div>
+    </div>
+
+    <div class="mission-note">
+      <strong>معيارنا لكل نشاط:</strong> أي فعالية نقدمها لازم تخدم هدفاً واضحاً من أهداف الجمعية — لا نشاط بلا غاية.
+    </div>
+  </div>
+</section>
+
 <script>
   // ============ CONFIG ============
   const SUPABASE_PROJECT_REF = "bibhljpmmmcxcxhpbuqf";
   const STORAGE_BASE = `https://${SUPABASE_PROJECT_REF}.supabase.co/storage/v1/object/public/hero-images`;
 
-  const NIGHT_IMAGES = [1,2,3,4,5,6].map(n => `${STORAGE_BASE}/night-${n}.jpg`);
-  const DAY_IMAGES = [1,2,3,4,5,6].map(n => `${STORAGE_BASE}/day-${n}.jpg`);
+  const NIGHT_IMAGES = [1,2,3,4,5,6].map(n => `${STORAGE_BASE}/night-${n}.jpg.JPG`);
+  const DAY_IMAGES = [1,2,3,4,5,6].map(n => `${STORAGE_BASE}/day-${n}.jpg.JPG`);
 
-  const SLIDE_DURATION = 6000; // 6 seconds per image
+  const SLIDE_DURATION = 6000;
 
   // ============ THEME ============
   const body = document.body;
