@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عن الجمعية — CESS-UofT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B132B;
+    --navy-light: #1C2641;
+    --yellow: #FFC72C;
+    --text-white: #FFFFFF;
+    --text-gray: #A8B3CC;
+    --white: #FFFFFF;
+    --off-white: #F8F9FA;
+    --dark-navy: #0F172A;
+    --gray: #64748B;
+
+    --bg: var(--navy);
+    --bg-elevated: var(--navy-light);
+    --accent: var(--yellow);
+    --hero-accent: var(--yellow);
+    --text-primary: var(--text-white);
+    --text-secondary: var(--text-gray);
+    --card-bg: rgba(255,255,255,0.04);
+    --card-border: rgba(255,255,255,0.08);
+
+    --transition: 0.25s ease;
+  }
+
+  [data-theme="light"] {
+    --bg: var(--off-white);
+    --bg-elevated: var(--white);
+    --accent: var(--yellow);
+    --hero-accent: var(--navy);
+    --text-primary: var(--dark-navy);
+    --text-secondary: var(--gray);
+    --card-bg: var(--white);
+    --card-border: rgba(15,23,42,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    transition: background var(--transition), color var(--transition);
+    overflow-x: hidden;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  body[dir="ltr"] { direction: ltr; }
+
+  .container { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+  /* ============ NAVBAR ============ */
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    background: color-mix(in srgb, var(--bg) 90%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px; text-decoration: none; color: var(--text-primary); }
+  .logo-icon { width: 28px; height: 28px; background: var(--accent); border-radius: 7px; display: flex; align-items: center; justify-content: center; color: var(--navy); font-size: 14px; flex-shrink: 0; }
+
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; font-size: 13.5px; transition: color var(--transition); }
+  .nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
+
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
+
+  .theme-toggle, .lang-toggle {
+    height: 34px; border-radius: 999px; background: var(--card-bg); border: 1px solid var(--card-border);
+    display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 13px;
+    transition: transform 0.2s, border-color var(--transition); flex-shrink: 0; color: var(--text-primary); font-family: inherit;
+  }
+  .theme-toggle { width: 34px; font-size: 14px; }
+  .lang-toggle { padding: 0 12px; font-weight: 700; font-size: 12px; }
+  .theme-toggle:active, .lang-toggle:active { transform: scale(0.92); }
+  .lang-toggle:hover { border-color: var(--accent); }
+
+  .btn {
+    padding: 8px 16px; border-radius: 999px; font-weight: 600; font-size: 13px; border: none; cursor: pointer;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all var(--transition); white-space: nowrap;
+  }
+  .btn-primary { background: var(--accent); color: var(--navy); border-radius: 10px; }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 35%, transparent); }
+  .btn-secondary { background: rgba(255,255,255,0.1); color: var(--text-primary); border: 1.5px solid rgba(255,255,255,0.15); backdrop-filter: blur(6px); }
+  [data-theme="light"] .btn-secondary { background: rgba(15,23,42,0.05); border: 1.5px solid rgba(15,23,42,0.1); }
+  .btn-secondary:hover { border-color: var(--accent); }
+
+  .mobile-menu-btn { display: none; background: none; border: none; color: var(--text-primary); font-size: 20px; cursor: pointer; }
+
+  /* ============ PAGE HEADER ============ */
+  .page-header { padding: 48px 0 36px; border-bottom: 1px solid var(--card-border); }
+  .page-eyebrow { color: var(--hero-accent); font-weight: 600; font-size: 12.5px; margin-bottom: 10px; }
+  .page-title { font-size: clamp(26px, 5vw, 36px); font-weight: 800; margin-bottom: 10px; }
+  .page-desc { font-size: 14px; color: var(--text-secondary); max-width: 560px; line-height: 1.7; }
+
+  /* ============ SECTIONS ============ */
+  .section { padding: 56px 0; }
+  .section + .section { border-top: 1px solid var(--card-border); }
+
+  .section-title { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+  .section-subtitle { font-size: 13.5px; color: var(--text-secondary); margin-bottom: 32px; max-width: 520px; }
+
+  /* ============ WHO WE ARE ============ */
+  .who-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .who-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 26px; }
+  .who-card .label { color: var(--accent); font-weight: 700; font-size: 13px; margin-bottom: 10px; }
+  .who-card p { font-size: 14px; line-height: 1.75; color: var(--text-secondary); }
+
+  /* ============ GOALS ============ */
+  .goals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  .goal-card {
+    background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 22px;
+    transition: transform var(--transition), border-color var(--transition);
+  }
+  .goal-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+
+  .goal-icon {
+    width: 40px; height: 40px; border-radius: 10px; background: color-mix(in srgb, var(--accent) 18%, transparent);
+    display: flex; align-items: center; justify-content: center; font-size: 19px; margin-bottom: 14px;
+  }
+  .goal-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .goal-card p { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 10px; }
+
+  .goal-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .goal-tag {
+    font-size: 10.5px; padding: 3px 9px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 12%, transparent);
+    color: var(--text-primary); border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+  }
+
+  /* ============ CTA ============ */
+  .cta-box {
+    background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px;
+    padding: 34px 28px; text-align: center; margin-top: 8px;
+  }
+  .cta-box h3 { font-size: 19px; font-weight: 800; margin-bottom: 8px; }
+  .cta-box p { font-size: 13.5px; color: var(--text-secondary); margin-bottom: 20px; max-width: 420px; margin-left: auto; margin-right: auto; }
+
+  /* ============ FOOTER ============ */
+  .footer { border-top: 1px solid var(--card-border); padding: 40px 0 28px; }
+  .footer-name { font-size: 16px; font-weight: 800; margin-bottom: 6px; }
+  .footer-tagline { font-size: 12.5px; color: var(--text-secondary); margin-bottom: 24px; max-width: 420px; line-height: 1.6; }
+  .footer-social { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
+  .social-btn {
+    width: 38px; height: 38px; border-radius: 50%; background: var(--card-bg); border: 1px solid var(--card-border);
+    display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--text-primary); transition: all var(--transition);
+  }
+  .social-btn:hover { border-color: var(--accent); transform: translateY(-2px); color: var(--accent); }
+  .footer-bottom { padding-top: 20px; border-top: 1px solid var(--card-border); font-size: 12px; color: var(--text-secondary); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .mobile-menu-btn { display: block; }
+    .who-grid { grid-template-columns: 1fr; }
+    .goals-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .container { padding: 0 16px; }
+    .goals-grid { grid-template-columns: 1fr; }
+    .who-card, .goal-card { padding: 18px; }
+  }
+</style>
+</head>
+<body data-theme="dark" dir="rtl">
+
+<nav class="navbar">
+  <a href="index.html" class="logo">
+    <div class="logo-icon">🎓</div>
+    <span>CESS-UofT</span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="index.html" data-i18n="nav_home">الرئيسية</a></li>
+    <li><a href="about.html" class="active" data-i18n="nav_about">الجمعية</a></li>
+    <li><a href="offices.html" data-i18n="nav_offices">الأمانات</a></li>
+    <li><a href="#" data-i18n="nav_activities">الفعاليات</a></li>
+    <li><a href="index.html#contact" data-i18n="nav_contact">تواصل</a></li>
+  </ul>
+
+  <div class="nav-actions">
+    <button class="lang-toggle" id="langToggle">EN</button>
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+    <a href="login.html" class="btn btn-secondary" data-i18n="nav_login">دخول</a>
+    <a href="activate.html" class="btn btn-primary" data-i18n="nav_join">انضم إلينا</a>
+    <button class="mobile-menu-btn">☰</button>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="container">
+    <div class="page-eyebrow" data-i18n="about_eyebrow">الجامعة التكنولوجية — كلية الهندسة والعمارة</div>
+    <h1 class="page-title" data-i18n="about_title">من نحن</h1>
+    <p class="page-desc" data-i18n="about_desc">جمعية طلاب الهندسة المدنية هي البيت الرقمي والمجتمعي لكل طالب مدني، تجمع بين الجانب الأكاديمي والمهني والشخصي والمجتمعي في منظومة واحدة.</p>
+  </div>
+</header>
+
+<section class="section" id="who">
+  <div class="container">
+    <div class="section-title" data-i18n="who_title">رؤيتنا ورسالتنا</div>
+    <div class="section-subtitle" data-i18n="who_subtitle">لسنا مجرد نشاطات ثقافية أو اجتماعات — نحن حلقة الوصل بين الجامعة والتدريب وسوق العمل والمجتمع الهندسي.</div>
+
+    <div class="who-grid">
+      <div class="who-card">
+        <div class="label" data-i18n="vision_label">الرؤية</div>
+        <p data-i18n="vision_text">أن تكون جمعية الهندسة المدنية بيئة طلابية رائدة في تطوير الطالب المدني أكاديمياً ومهنياً وشخصياً، وإعداده للانتقال بكفاءة من الحياة الجامعية إلى سوق العمل والمجتمع الهندسي.</p>
+      </div>
+      <div class="who-card">
+        <div class="label" data-i18n="message_label">الرسالة</div>
+        <p data-i18n="message_text">توفير بيئة طلابية تجمع بين المعرفة الأكاديمية والتطبيق العملي والتطوير المهني والشخصي، من خلال البرامج التدريبية والورش والزيارات العلمية والأنشطة البحثية والثقافية والمهنية، وبناء شبكة من العلاقات والفرص التي تساعد طالب الهندسة المدنية على اكتساب المهارات والخبرات اللازمة لمستقبله.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="goals">
+  <div class="container">
+    <div class="section-title" data-i18n="goals_title">أهدافنا الستة</div>
+    <div class="section-subtitle" data-i18n="goals_subtitle">نركز على بناء الطالب في أربعة أبعاد رئيسية: أكاديمياً، مهنياً، شخصياً وقيادياً، واجتماعياً ومجتمعياً — من خلال ستة أهداف محورية.</div>
+
+    <div class="goals-grid">
+      <div class="goal-card">
+        <div class="goal-icon">📚</div>
+        <h3 data-i18n="goal1_title">التطوير الأكاديمي</h3>
+        <p data-i18n="goal1_desc">دعم الطالب في رحلته الدراسية من خلال المحتوى والأنشطة والبرامج الأكاديمية.</p>
+        <div class="goal-tags">
+          <span class="goal-tag" data-i18n="goal1_tag1">محاضرات</span>
+          <span class="goal-tag" data-i18n="goal1_tag2">ملخصات</span>
+          <span class="goal-tag" data-i18n="goal1_tag3">مراجعات</span>
+        </div>
+      </div>
+
+      <div class="goal-card">
+        <div class="goal-icon">⚙️</div>
+        <h3 data-i18n="goal2_title">التطوير العملي والتقني</h3>
+        <p data-i18n="goal2_desc">ربط الدراسة النظرية بالتطبيق الهندسي من خلال المشاريع وورش العمل.</p>
+        <div class="goal-tags">
+          <span class="goal-tag" data-i18n="goal2_tag1">مشاريع</span>
+          <span class="goal-tag" data-i18n="goal2_tag2">ورش عمل</span>
+          <span class="goal-tag" data-i18n="goal2_tag3">مهارات تقنية</span>
+        </div>
+      </div>
+
+      <div class="goal-card">
+        <div class="goal-icon">💼</div>
+        <h3 data-i18n="goal3_title">التطوير المهني</h3>
+        <p data-i18n="goal3_desc">تهيئة الطالب للحياة المهنية والتعريف بمسارات العمل في الهندسة المدنية.</p>
+        <div class="goal-tags">
+          <span class="goal-tag" data-i18n="goal3_tag1">تدريب</span>
+          <span class="goal-tag" data-i18n="goal3_tag2">سيرة ذاتية</span>
+          <span class="goal-tag" data-i18n="goal3_tag3">فرص عمل</span>
+        </div>
+      </div>
+
+      <div class="goal-card">
+        <div class="goal-icon">🎯</div>
+        <h3 data-i18n="goal4_title">التطوير الشخصي والقيادي</h3>
+        <p data-i18n="goal4_desc">بناء شخصية الطالب من خلال القيادة والتواصل والعمل الجماعي وإدارة الوقت.</p>
+        <div class="goal-tags">
+          <span class="goal-tag" data-i18n="goal4_tag1">قيادة</span>
+          <span class="goal-tag" data-i18n="goal4_tag2">تواصل</span>
+          <span class="goal-tag" data-i18n="goal4_tag3">اتخاذ قرار</span>
+        </div>
+      </div>
+
+      <div class="goal-card">
+        <div class="goal-icon">🔬</div>
+        <h3 data-i18n="goal5_title">البحث والابتكار</h3>
+        <p data-i18n="goal5_desc">تشجيع الطالب على التفكير الهندسي والبحث العلمي والمشاريع الطلابية المبتكرة.</p>
+        <div class="goal-tags">
+          <span class="goal-tag" data-i18n="goal5_tag1">بحث علمي</span>
+          <span class="goal-tag" data-i18n="goal5_tag2">ابتكار</span>
+          <span class="goal-tag" data-i18n="goal5_tag3">أفكار هندسية</span>
+        </div>
+      </div>
+
+      <div class="goal-card">
+        <div class="goal-icon">🤝</div>
+        <h3 data-i18n="goal6_title">خدمة المجتمع</h3>
+        <p data-i18n="goal6_desc">توجيه قدرات الطالب لخدمة المجتمع من خلال المبادرات التطوعية والحملات المجتمعية.</p>
+        <div class="goal-tags">
+          <span class="goal-tag" data-i18n="goal6_tag1">تطوع</span>
+          <span class="goal-tag" data-i18n="goal6_tag2">مبادرات</span>
+          <span class="goal-tag" data-i18n="goal6_tag3">أثر مجتمعي</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="cta">
+  <div class="container">
+    <div class="cta-box">
+      <h3 data-i18n="cta_title">جاهز تبدأ رحلتك معنا؟</h3>
+      <p data-i18n="cta_desc">انضم إلى جمعية الهندسة المدنية وابنِ مستقبلك الأكاديمي والمهني منذ اليوم.</p>
+      <a href="activate.html" class="btn btn-primary" data-i18n="cta_btn">انضم إلينا الآن →</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer" id="contact">
+  <div class="container">
+    <div class="footer-name" data-i18n="footer_name">جمعية الهندسة المدنية_الجامعة التكنولوجية — كلية الهندسة والعمارة</div>
+    <p class="footer-tagline" data-i18n="footer_tagline">تواصل معنا عبر منصات التواصل الاجتماعي، ونسعد بانضمامك لمجتمعنا الهندسي.</p>
+
+    <div class="footer-social">
+      <a href="#" class="social-btn" id="linkFacebook" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg></a>
+      <a href="#" class="social-btn" id="linkInstagram" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.256 1.216.6 1.772 1.153a4.908 4.908 0 011.153 1.772c.247.637.415 1.363.465 2.428.047 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 01-1.153 1.772 4.915 4.915 0 01-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.047-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 01-1.772-1.153 4.904 4.904 0 01-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 011.153-1.772A4.897 4.897 0 015.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 1.802c-2.67 0-2.986.01-4.04.059-.976.045-1.505.207-1.858.344-.466.181-.8.398-1.15.748-.35.35-.566.683-.747 1.15-.137.352-.3.881-.344 1.857-.05 1.054-.06 1.37-.06 4.04 0 2.67.01 2.987.06 4.04.045.976.207 1.505.344 1.858.181.466.397.8.747 1.15.35.35.684.566 1.15.747.353.137.882.3 1.857.344 1.055.05 1.37.06 4.041.06 2.67 0 2.987-.01 4.04-.06.976-.045 1.505-.207 1.858-.344a3.09 3.09 0 001.15-.747c.35-.35.566-.684.747-1.15.137-.353.3-.882.344-1.857.05-1.055.06-1.37.06-4.041 0-2.67-.01-2.987-.06-4.04-.045-.976-.207-1.505-.344-1.858a3.09 3.09 0 00-.747-1.15 3.09 3.09 0 00-1.15-.747c-.353-.137-.882-.3-1.857-.344-1.055-.05-1.37-.06-4.041-.06zm0 4.595a5.603 5.603 0 110 11.206 5.603 5.603 0 010-11.206zM12 16a4 4 0 100-8 4 4 0 000 8zm5.838-9.808a1.31 1.31 0 11-2.62 0 1.31 1.31 0 012.62 0z"/></svg></a>
+      <a href="#" class="social-btn" id="linkX" aria-label="X"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a href="#" class="social-btn" id="linkLinkedin" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="#" class="social-btn" id="linkWhatsapp" aria-label="WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.001 2c5.514 0 9.999 4.485 9.999 10 0 5.514-4.485 9.999-9.999 9.999a9.95 9.95 0 01-5.14-1.42l-5.632 1.418 1.44-5.485A9.945 9.945 0 012.002 12c0-5.515 4.485-10 9.999-10zm0 1.802a8.19 8.19 0 00-8.198 8.198c0 1.71.485 3.32 1.402 4.688l-.907 3.457 3.543-.892a8.16 8.16 0 004.16 1.145 8.19 8.19 0 008.199-8.198 8.19 8.19 0 00-8.199-8.198z"/></svg></a>
+      <a href="#" class="social-btn" id="linkTelegram" aria-label="Telegram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024q-.16.038-3.977 2.627-.564.387-1.024.375-.505-.011-1.478-.34-1.193-.398-1.907-.611-.92-.276-.852-.611.036-.204.436-.336l8.108-3.517q.6-.211 1.032-.319z"/></svg></a>
+      <a href="#" class="social-btn" id="linkEmail" aria-label="Email"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-10.5 6.415L1.5 8.67z"/><path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l10.5 6.42 10.5-6.42z"/></svg></a>
+    </div>
+
+    <div class="footer-bottom" data-i18n="footer_copyright">© 2026 CESS-UofT — جميع الحقوق محفوظة</div>
+  </div>
+</footer>
+
+<script>
+  const TRANSLATIONS = {
+    ar: {
+      nav_home: "الرئيسية", nav_about: "الجمعية", nav_offices: "الأمانات", nav_activities: "الفعاليات", nav_contact: "تواصل",
+      nav_login: "دخول", nav_join: "انضم إلينا",
+      about_eyebrow: "الجامعة التكنولوجية — كلية الهندسة والعمارة",
+      about_title: "من نحن",
+      about_desc: "جمعية طلاب الهندسة المدنية هي البيت الرقمي والمجتمعي لكل طالب مدني، تجمع بين الجانب الأكاديمي والمهني والشخصي والمجتمعي في منظومة واحدة.",
+      who_title: "رؤيتنا ورسالتنا",
+      who_subtitle: "لسنا مجرد نشاطات ثقافية أو اجتماعات — نحن حلقة الوصل بين الجامعة والتدريب وسوق العمل والمجتمع الهندسي.",
+      vision_label: "الرؤية",
+      vision_text: "أن تكون جمعية الهندسة المدنية بيئة طلابية رائدة في تطوير الطالب المدني أكاديمياً ومهنياً وشخصياً، وإعداده للانتقال بكفاءة من الحياة الجامعية إلى سوق العمل والمجتمع الهندسي.",
+      message_label: "الرسالة",
+      message_text: "توفير بيئة طلابية تجمع بين المعرفة الأكاديمية والتطبيق العملي والتطوير المهني والشخصي، من خلال البرامج التدريبية والورش والزيارات العلمية والأنشطة البحثية والثقافية والمهنية، وبناء شبكة من العلاقات والفرص التي تساعد طالب الهندسة المدنية على اكتساب المهارات والخبرات اللازمة لمستقبله.",
+      goals_title: "أهدافنا الستة",
+      goals_subtitle: "نركز على بناء الطالب في أربعة أبعاد رئيسية: أكاديمياً، مهنياً، شخصياً وقيادياً، واجتماعياً ومجتمعياً — من خلال ستة أهداف محورية.",
+      goal1_title: "التطوير الأكاديمي", goal1_desc: "دعم الطالب في رحلته الدراسية من خلال المحتوى والأنشطة والبرامج الأكاديمية.",
+      goal1_tag1: "محاضرات", goal1_tag2: "ملخصات", goal1_tag3: "مراجعات",
+      goal2_title: "التطوير العملي والتقني", goal2_desc: "ربط الدراسة النظرية بالتطبيق الهندسي من خلال المشاريع وورش العمل.",
+      goal2_tag1: "مشاريع", goal2_tag2: "ورش عمل", goal2_tag3: "مهارات تقنية",
+      goal3_title: "التطوير المهني", goal3_desc: "تهيئة الطالب للحياة المهنية والتعريف بمسارات العمل في الهندسة المدنية.",
+      goal3_tag1: "تدريب", goal3_tag2: "سيرة ذاتية", goal3_tag3: "فرص عمل",
+      goal4_title: "التطوير الشخصي والقيادي", goal4_desc: "بناء شخصية الطالب من خلال القيادة والتواصل والعمل الجماعي وإدارة الوقت.",
+      goal4_tag1: "قيادة", goal4_tag2: "تواصل", goal4_tag3: "اتخاذ قرار",
+      goal5_title: "البحث والابتكار", goal5_desc: "تشجيع الطالب على التفكير الهندسي والبحث العلمي والمشاريع الطلابية المبتكرة.",
+      goal5_tag1: "بحث علمي", goal5_tag2: "ابتكار", goal5_tag3: "أفكار هندسية",
+      goal6_title: "خدمة المجتمع", goal6_desc: "توجيه قدرات الطالب لخدمة المجتمع من خلال المبادرات التطوعية والحملات المجتمعية.",
+      goal6_tag1: "تطوع", goal6_tag2: "مبادرات", goal6_tag3: "أثر مجتمعي",
+      cta_title: "جاهز تبدأ رحلتك معنا؟",
+      cta_desc: "انضم إلى جمعية الهندسة المدنية وابنِ مستقبلك الأكاديمي والمهني منذ اليوم.",
+      cta_btn: "انضم إلينا الآن →",
+      footer_name: "جمعية الهندسة المدنية_الجامعة التكنولوجية — كلية الهندسة والعمارة",
+      footer_tagline: "تواصل معنا عبر منصات التواصل الاجتماعي، ونسعد بانضمامك لمجتمعنا الهندسي.",
+      footer_copyright: "© 2026 CESS-UofT — جميع الحقوق محفوظة"
+    },
+    en: {
+      nav_home: "Home", nav_about: "About", nav_offices: "Committees", nav_activities: "Activities", nav_contact: "Contact",
+      nav_login: "Log In", nav_join: "Join Us",
+      about_eyebrow: "Technological University — Faculty of Engineering & Architecture",
+      about_title: "Who We Are",
+      about_desc: "The Civil Engineering Student Society is the digital and community home for every civil engineering student, bringing together the academic, professional, personal, and community dimensions into one system.",
+      who_title: "Our Vision & Mission",
+      who_subtitle: "We are not just cultural activities or meetings — we are the bridge between the university, training, the job market, and the engineering community.",
+      vision_label: "Vision",
+      vision_text: "To be a leading student environment in developing civil engineering students academically, professionally, and personally, preparing them to transition efficiently from university life to the job market and the engineering community.",
+      message_label: "Mission",
+      message_text: "Providing a student environment that combines academic knowledge with practical application, professional and personal development, through training programs, workshops, technical visits, and research, cultural, and professional activities, while building a network of relationships and opportunities that help civil engineering students gain the skills and experience needed for their future.",
+      goals_title: "Our Six Goals",
+      goals_subtitle: "We focus on developing the student across four key dimensions: academic, professional, personal & leadership, and social & community — through six core goals.",
+      goal1_title: "Academic Development", goal1_desc: "Supporting students in their academic journey through content, activities, and academic programs.",
+      goal1_tag1: "Lectures", goal1_tag2: "Summaries", goal1_tag3: "Reviews",
+      goal2_title: "Practical & Technical Development", goal2_desc: "Connecting theoretical study with engineering application through projects and workshops.",
+      goal2_tag1: "Projects", goal2_tag2: "Workshops", goal2_tag3: "Technical Skills",
+      goal3_title: "Professional Development", goal3_desc: "Preparing students for professional life and introducing career paths in civil engineering.",
+      goal3_tag1: "Training", goal3_tag2: "Resume", goal3_tag3: "Job Opportunities",
+      goal4_title: "Personal & Leadership Development", goal4_desc: "Building student character through leadership, communication, teamwork, and time management.",
+      goal4_tag1: "Leadership", goal4_tag2: "Communication", goal4_tag3: "Decision Making",
+      goal5_title: "Research & Innovation", goal5_desc: "Encouraging engineering thinking, scientific research, and innovative student projects.",
+      goal5_tag1: "Research", goal5_tag2: "Innovation", goal5_tag3: "Engineering Ideas",
+      goal6_title: "Community Service", goal6_desc: "Directing student capabilities toward community service through volunteer initiatives and campaigns.",
+      goal6_tag1: "Volunteering", goal6_tag2: "Initiatives", goal6_tag3: "Community Impact",
+      cta_title: "Ready to Start Your Journey?",
+      cta_desc: "Join the Civil Engineering Student Society and build your academic and professional future today.",
+      cta_btn: "Join Us Now →",
+      footer_name: "Civil Engineering Student Society — Technological University, Faculty of Engineering & Architecture",
+      footer_tagline: "Connect with us on social media, and we look forward to welcoming you to our engineering community.",
+      footer_copyright: "© 2026 CESS-UofT — All rights reserved"
+    }
+  };
+
+  function getSavedLang() { return localStorage.getItem('cess-lang') || 'ar'; }
+
+  function applyLanguage(lang) {
+    const dict = TRANSLATIONS[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (dict[key]) el.textContent = dict[key];
+    });
+    document.documentElement.lang = lang;
+    document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.getElementById('langToggle').textContent = lang === 'ar' ? 'EN' : 'AR';
+    localStorage.setItem('cess-lang', lang);
+  }
+
+  document.getElementById('langToggle').addEventListener('click', () => {
+    applyLanguage(getSavedLang() === 'ar' ? 'en' : 'ar');
+  });
+
+  const body = document.body;
+  const themeToggle = document.getElementById('themeToggle');
+
+  function setTheme(theme) {
+    body.setAttribute('data-theme', theme);
+    localStorage.setItem('cess-theme', theme);
+    themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+  }
+
+  themeToggle.addEventListener('click', () => {
+    setTheme(body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+
+  const SOCIAL_LINKS = { facebook: '#', instagram: '#', x: '#', linkedin: '#', whatsapp: '#', telegram: '#', email: '#' };
+  document.getElementById('linkFacebook').href = SOCIAL_LINKS.facebook;
+  document.getElementById('linkInstagram').href = SOCIAL_LINKS.instagram;
+  document.getElementById('linkX').href = SOCIAL_LINKS.x;
+  document.getElementById('linkLinkedin').href = SOCIAL_LINKS.linkedin;
+  document.getElementById('linkWhatsapp').href = SOCIAL_LINKS.whatsapp;
+  document.getElementById('linkTelegram').href = SOCIAL_LINKS.telegram;
+  document.getElementById('linkEmail').href = SOCIAL_LINKS.email;
+
+  setTheme(localStorage.getItem('cess-theme') || 'dark');
+  applyLanguage(getSavedLang());
+</script>
+
+</body>
+</html>
