@@ -23,6 +23,7 @@
     --bg: var(--navy);
     --bg-elevated: var(--navy-light);
     --accent: var(--yellow);
+    --hero-accent: var(--yellow);
     --text-primary: var(--text-white);
     --text-secondary: var(--text-gray);
     --card-bg: rgba(255,255,255,0.04);
@@ -35,6 +36,7 @@
     --bg: var(--off-white);
     --bg-elevated: var(--white);
     --accent: var(--yellow);
+    --hero-accent: var(--navy);
     --text-primary: var(--dark-navy);
     --text-secondary: var(--gray);
     --card-bg: var(--white);
@@ -137,7 +139,7 @@
 
   .btn {
     padding: 8px 16px;
-    border-radius: 8px;
+    border-radius: 999px;
     font-weight: 600;
     font-size: 13px;
     border: none;
@@ -153,6 +155,7 @@
   .btn-primary {
     background: var(--accent);
     color: var(--navy);
+    border-radius: 10px;
   }
 
   .btn-primary:hover {
@@ -161,13 +164,19 @@
   }
 
   .btn-secondary {
-    background: transparent;
+    background: rgba(255,255,255,0.1);
     color: var(--text-primary);
-    border: 1.5px solid var(--card-border);
+    border: 1.5px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(6px);
+  }
+
+  [data-theme="light"] .btn-secondary {
+    background: rgba(15,23,42,0.05);
+    border: 1.5px solid rgba(15,23,42,0.1);
   }
 
   .btn-secondary:hover {
-    border-color: var(--text-secondary);
+    border-color: var(--accent);
   }
 
   .mobile-menu-btn {
@@ -179,7 +188,7 @@
     cursor: pointer;
   }
 
-  /* ============ TOP IMAGE BANNER (الطابق الأول) ============ */
+  /* ============ TOP IMAGE BANNER ============ */
   .top-banner {
     width: 100%;
     height: 42vh;
@@ -196,7 +205,7 @@
     display: block;
   }
 
-  /* ============ HERO (الطابق الثاني) ============ */
+  /* ============ HERO ============ */
   .hero {
     position: relative;
     padding: 56px 0 50px;
@@ -241,7 +250,7 @@
   .hero-content { max-width: 540px; }
 
   .hero-eyebrow {
-    color: var(--accent);
+    color: var(--hero-accent);
     font-weight: 600;
     font-size: 12.5px;
     margin-bottom: 14px;
@@ -255,22 +264,26 @@
     color: var(--text-primary);
   }
 
-  .hero h1 .accent { color: var(--accent); }
+  .hero h1 .accent { color: var(--hero-accent); }
 
   .hero-tagline {
     font-size: 15px;
     font-weight: 600;
-    color: var(--accent);
+    color: var(--hero-accent);
     margin: 14px 0;
     letter-spacing: 0.3px;
   }
 
   .hero p {
     font-size: 14.5px;
-    color: var(--text-secondary);
+    color: var(--text-white);
     margin-bottom: 24px;
     line-height: 1.65;
     max-width: 460px;
+  }
+
+  [data-theme="light"] .hero p {
+    color: var(--text-primary);
   }
 
   .hero-actions {
@@ -421,6 +434,61 @@
     max-width: 460px;
   }
 
+  /* ============ FOOTER ============ */
+  .footer {
+    border-top: 1px solid var(--card-border);
+    padding: 40px 0 28px;
+  }
+
+  .footer-name {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+  }
+
+  .footer-tagline {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    max-width: 420px;
+    line-height: 1.6;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .social-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all var(--transition);
+  }
+
+  .social-btn:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .footer-bottom {
+    padding-top: 20px;
+    border-top: 1px solid var(--card-border);
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
   /* ============ RESPONSIVE ============ */
   @media (max-width: 900px) {
     .nav-links { display: none; }
@@ -436,7 +504,6 @@
     .feature-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
     .hero-actions { flex-direction: column; }
     .hero-actions .btn { width: 100%; justify-content: center; }
-    .nav-actions .btn-secondary { display: none; }
     .mission-card { padding: 20px; }
   }
 </style>
@@ -459,8 +526,8 @@
 
   <div class="nav-actions">
     <button class="theme-toggle" id="themeToggle" aria-label="تبديل الوضع">🌙</button>
-    <a href="#" class="btn btn-secondary">دخول</a>
-    <a href="#" class="btn btn-primary">انضم إلينا</a>
+    <a href="login.html" class="btn btn-secondary">دخول</a>
+    <a href="activate.html" class="btn btn-primary">انضم إلينا</a>
     <button class="mobile-menu-btn">☰</button>
   </div>
 </nav>
@@ -481,7 +548,7 @@
       <p>جيل جديد من طلاب الهندسة المدنية، بطموح لا حدود له ورؤية تتجاوز مقاعد الدراسة، نصنع مستقبلنا بأيدينا ونمهد الطريق نحو التميز.</p>
       <div class="hero-actions">
         <a href="#mission" class="btn btn-primary">اكتشف CESS-UofT →</a>
-        <a href="#" class="btn btn-secondary">انضم إلينا</a>
+        <a href="activate.html" class="btn btn-secondary">انضم إلينا</a>
       </div>
 
       <div class="feature-grid">
@@ -535,6 +602,26 @@
   </div>
 </section>
 
+<footer class="footer" id="contact">
+  <div class="container">
+    <div class="footer-name">جمعية الهندسة المدنية_الجامعة التكنولوجية — كلية الهندسة والعمارة</div>
+    <p class="footer-tagline">تواصل معنا عبر منصات التواصل الاجتماعي، ونسعد بانضمامك لمجتمعنا الهندسي.</p>
+
+    <div class="footer-social">
+      <a href="#" class="social-btn" id="linkFacebook" aria-label="فيسبوك">📘</a>
+      <a href="#" class="social-btn" id="linkInstagram" aria-label="إنستغرام">📷</a>
+      <a href="#" class="social-btn" id="linkX" aria-label="إكس">✕</a>
+      <a href="#" class="social-btn" id="linkWhatsapp" aria-label="واتساب">💬</a>
+      <a href="#" class="social-btn" id="linkTelegram" aria-label="تلجرام">✈️</a>
+      <a href="#" class="social-btn" id="linkEmail" aria-label="البريد الإلكتروني">✉️</a>
+    </div>
+
+    <div class="footer-bottom">
+      © 2026 CESS-UofT — جميع الحقوق محفوظة
+    </div>
+  </div>
+</footer>
+
 <script>
   // ============ CONFIG ============
   const SUPABASE_PROJECT_REF = "bibhljpmmmcxcxhpbuqf";
@@ -572,16 +659,13 @@
 
   function renderTopBanner(theme) {
     const images = theme === 'dark' ? NIGHT_IMAGES : DAY_IMAGES;
-
-    // Pick one random image ONCE per page load, keep the same index across theme toggles
     if (bannerImageForThisLoad === null) {
       bannerImageForThisLoad = Math.floor(Math.random() * images.length);
     }
-
     topBannerImg.src = images[bannerImageForThisLoad];
   }
 
-  // ============ HERO SLIDESHOW (continuous, behind text) ============
+  // ============ HERO SLIDESHOW ============
   const slideshowEl = document.getElementById('heroSlideshow');
   const indicatorsEl = document.getElementById('slideIndicators');
   let slideInterval = null;
@@ -614,6 +698,23 @@
       dots[currentSlideIndex].classList.add('active');
     }, SLIDE_DURATION);
   }
+
+  // ============ SOCIAL LINKS (placeholder — will be wired to Supabase settings table later) ============
+  const SOCIAL_LINKS = {
+    facebook: '#',
+    instagram: '#',
+    x: '#',
+    whatsapp: '#',
+    telegram: '#',
+    email: '#'
+  };
+
+  document.getElementById('linkFacebook').href = SOCIAL_LINKS.facebook;
+  document.getElementById('linkInstagram').href = SOCIAL_LINKS.instagram;
+  document.getElementById('linkX').href = SOCIAL_LINKS.x;
+  document.getElementById('linkWhatsapp').href = SOCIAL_LINKS.whatsapp;
+  document.getElementById('linkTelegram').href = SOCIAL_LINKS.telegram;
+  document.getElementById('linkEmail').href = SOCIAL_LINKS.email;
 
   // ============ INIT ============
   setTheme(getSavedTheme());
