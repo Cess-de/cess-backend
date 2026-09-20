@@ -17,7 +17,6 @@
 
     --white: #FFFFFF;
     --off-white: #F8F9FA;
-    --blue: #0066FF;
     --dark-navy: #0F172A;
     --gray: #64748B;
 
@@ -64,17 +63,13 @@
 
   /* ============ NAVBAR ============ */
   .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    position: relative;
     z-index: 100;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 14px 20px;
-    background: color-mix(in srgb, var(--bg) 85%, transparent);
-    backdrop-filter: blur(12px);
+    background: var(--bg);
     border-bottom: 1px solid var(--card-border);
   }
 
@@ -184,13 +179,27 @@
     cursor: pointer;
   }
 
-  /* ============ HERO ============ */
+  /* ============ TOP IMAGE BANNER (الطابق الأول) ============ */
+  .top-banner {
+    width: 100%;
+    height: 42vh;
+    min-height: 260px;
+    max-height: 420px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .top-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ============ HERO (الطابق الثاني) ============ */
   .hero {
     position: relative;
-    min-height: 92vh;
-    display: flex;
-    align-items: center;
-    padding: 90px 0 50px;
+    padding: 56px 0 50px;
     overflow: hidden;
   }
 
@@ -421,7 +430,8 @@
   }
 
   @media (max-width: 600px) {
-    .hero { padding: 80px 0 32px; min-height: 88vh; }
+    .top-banner { height: 32vh; min-height: 200px; }
+    .hero { padding: 40px 0 32px; }
     .container { padding: 0 16px; }
     .feature-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
     .hero-actions { flex-direction: column; }
@@ -454,6 +464,10 @@
     <button class="mobile-menu-btn">☰</button>
   </div>
 </nav>
+
+<div class="top-banner">
+  <img id="topBannerImg" src="" alt="CESS-UofT">
+</div>
 
 <section class="hero">
   <div class="hero-bg-slideshow" id="heroSlideshow"></div>
@@ -544,6 +558,7 @@
     localStorage.setItem('cess-theme', theme);
     themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
     renderSlideshow(theme);
+    renderTopBanner(theme);
   }
 
   themeToggle.addEventListener('click', () => {
@@ -551,7 +566,22 @@
     setTheme(current === 'dark' ? 'light' : 'dark');
   });
 
-  // ============ HERO SLIDESHOW ============
+  // ============ TOP BANNER (single random image per page load) ============
+  const topBannerImg = document.getElementById('topBannerImg');
+  let bannerImageForThisLoad = null;
+
+  function renderTopBanner(theme) {
+    const images = theme === 'dark' ? NIGHT_IMAGES : DAY_IMAGES;
+
+    // Pick one random image ONCE per page load, keep the same index across theme toggles
+    if (bannerImageForThisLoad === null) {
+      bannerImageForThisLoad = Math.floor(Math.random() * images.length);
+    }
+
+    topBannerImg.src = images[bannerImageForThisLoad];
+  }
+
+  // ============ HERO SLIDESHOW (continuous, behind text) ============
   const slideshowEl = document.getElementById('heroSlideshow');
   const indicatorsEl = document.getElementById('slideIndicators');
   let slideInterval = null;
