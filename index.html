@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CESS UofT — Civil Engineering Student Society</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B132B;
+    --navy-light: #1C2641;
+    --yellow: #FFC72C;
+    --text-white: #FFFFFF;
+    --text-gray: #A8B3CC;
+
+    --white: #FFFFFF;
+    --off-white: #F8F9FA;
+    --blue: #0066FF;
+    --dark-navy: #0F172A;
+    --gray: #64748B;
+
+    --bg: var(--navy);
+    --bg-elevated: var(--navy-light);
+    --accent: var(--yellow);
+    --text-primary: var(--text-white);
+    --text-secondary: var(--text-gray);
+    --card-bg: rgba(255,255,255,0.04);
+    --card-border: rgba(255,255,255,0.08);
+
+    --transition: 0.3s ease;
+  }
+
+  [data-theme="light"] {
+    --bg: var(--off-white);
+    --bg-elevated: var(--white);
+    --accent: var(--blue);
+    --text-primary: var(--dark-navy);
+    --text-secondary: var(--gray);
+    --card-bg: var(--white);
+    --card-border: rgba(15,23,42,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    transition: background var(--transition), color var(--transition);
+    overflow-x: hidden;
+  }
+
+  /* ============ NAVBAR ============ */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 6%;
+    background: color-mix(in srgb, var(--bg) 80%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--card-border);
+    transition: background var(--transition);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 20px;
+  }
+
+  .logo-icon {
+    width: 34px;
+    height: 34px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--navy);
+    font-size: 18px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    transition: color var(--transition);
+  }
+
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--text-primary);
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    transition: transform 0.2s;
+  }
+
+  .theme-toggle:active { transform: scale(0.9); }
+
+  .btn {
+    padding: 11px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all var(--transition);
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--navy);
+  }
+
+  [data-theme="light"] .btn-primary { color: var(--white); }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--accent) 40%, transparent);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1.5px solid var(--card-border);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--text-secondary);
+  }
+
+  .mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 100px 6% 60px;
+    overflow: hidden;
+  }
+
+  .hero-bg-slideshow {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-bg-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+  }
+
+  .hero-bg-slide.active {
+    opacity: 1;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      100deg,
+      var(--bg) 0%,
+      color-mix(in srgb, var(--bg) 75%, transparent) 45%,
+      color-mix(in srgb, var(--bg) 20%, transparent) 100%
+    );
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 620px;
+  }
+
+  .hero-eyebrow {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 6vw, 56px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 .accent { color: var(--accent); }
+
+  .hero p {
+    font-size: 17px;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 56px;
+    flex-wrap: wrap;
+  }
+
+  .btn-lg {
+    padding: 15px 30px;
+    font-size: 15px;
+    border-radius: 12px;
+  }
+
+  /* ============ FEATURE CARDS ============ */
+  .feature-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    max-width: 900px;
+  }
+
+  .feature-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    transition: transform var(--transition), border-color var(--transition);
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+  }
+
+  .feature-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--accent) 18%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .feature-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .feature-card p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  /* ============ SLIDE INDICATORS ============ */
+  .slide-indicators {
+    position: absolute;
+    bottom: 30px;
+    left: 6%;
+    z-index: 2;
+    display: flex;
+    gap: 8px;
+  }
+
+  .slide-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    transition: all 0.3s;
+  }
+
+  .slide-dot.active {
+    background: var(--accent);
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .mobile-menu-btn { display: block; }
+    .feature-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 90px 5% 40px; min-height: 90vh; }
+    .feature-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .hero-actions { flex-direction: column; }
+    .btn-lg { width: 100%; justify-content: center; }
+    .nav-actions .btn-secondary { display: none; }
+  }
+</style>
+</head>
+<body data-theme="dark">
+
+<nav class="navbar">
+  <div class="logo">
+    <div class="logo-icon">🎓</div>
+    <span>CESS UofT</span>
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="#" class="active">الرئيسية</a></li>
+    <li><a href="#about">عن الجمعية</a></li>
+    <li><a href="#activities">الأنشطة</a></li>
+    <li><a href="#resources">الموارد</a></li>
+    <li><a href="#contact">تواصل</a></li>
+  </ul>
+
+  <div class="nav-actions">
+    <button class="theme-toggle" id="themeToggle" aria-label="تبديل الوضع">🌙</button>
+    <a href="#" class="btn btn-secondary">دخول</a>
+    <a href="#" class="btn btn-primary">انضم إلينا</a>
+    <button class="mobile-menu-btn">☰</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg-slideshow" id="heroSlideshow"></div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">جامعة تورنتو — كلية الهندسة</div>
+    <h1>جمعية طلاب<br><span class="accent">الهندسة المدنية</span></h1>
+    <p>نبني معاً جيلاً من المهندسين القادرين على قيادة المستقبل، من خلال الأنشطة والمبادرات وشبكة تواصل قوية بين الطلاب.</p>
+    <div class="hero-actions">
+      <a href="#about" class="btn btn-primary btn-lg">اكتشف CESS →</a>
+      <a href="#" class="btn btn-secondary btn-lg">انضم إلينا</a>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">👥</div>
+        <h3>مجتمع</h3>
+        <p>تواصل مع زملائك وابنِ شبكة علاقات قوية</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <h3>تطوير</h3>
+        <p>طوّر مهاراتك من خلال ورش وفعاليات عملية</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📅</div>
+        <h3>فرص</h3>
+        <p>وصول حصري لفعاليات وفرص وظيفية</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>أثر</h3>
+        <p>اصنع فرقاً حقيقياً داخل مجتمعنا الطلابي</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-indicators" id="slideIndicators"></div>
+</section>
+
+<script>
+  // ============ CONFIG ============
+  const SUPABASE_PROJECT_REF = "bibhljpmmmcxcxhpbuqf";
+  const STORAGE_BASE = `https://${SUPABASE_PROJECT_REF}.supabase.co/storage/v1/object/public/hero-images`;
+
+  const NIGHT_IMAGES = [1,2,3,4,5,6].map(n => `${STORAGE_BASE}/night-${n}.jpg`);
+  const DAY_IMAGES = [1,2,3,4,5,6].map(n => `${STORAGE_BASE}/day-${n}.jpg`);
+
+  const SLIDE_DURATION = 6000; // 6 seconds per image
+
+  // ============ THEME ============
+  const body = document.body;
+  const themeToggle = document.getElementById('themeToggle');
+
+  function getSavedTheme() {
+    return localStorage.getItem('cess-theme') || 'dark';
+  }
+
+  function setTheme(theme) {
+    body.setAttribute('data-theme', theme);
+    localStorage.setItem('cess-theme', theme);
+    themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+    renderSlideshow(theme);
+  }
+
+  themeToggle.addEventListener('click', () => {
+    const current = body.getAttribute('data-theme');
+    setTheme(current === 'dark' ? 'light' : 'dark');
+  });
+
+  // ============ HERO SLIDESHOW ============
+  const slideshowEl = document.getElementById('heroSlideshow');
+  const indicatorsEl = document.getElementById('slideIndicators');
+  let slideInterval = null;
+  let currentSlideIndex = 0;
+
+  function renderSlideshow(theme) {
+    clearInterval(slideInterval);
+    const images = theme === 'dark' ? NIGHT_IMAGES : DAY_IMAGES;
+
+    slideshowEl.innerHTML = images.map((url, i) =>
+      `<div class="hero-bg-slide${i === 0 ? ' active' : ''}" style="background-image:url('${url}')"></div>`
+    ).join('');
+
+    indicatorsEl.innerHTML = images.map((_, i) =>
+      `<div class="slide-dot${i === 0 ? ' active' : ''}"></div>`
+    ).join('');
+
+    currentSlideIndex = 0;
+
+    slideInterval = setInterval(() => {
+      const slides = slideshowEl.querySelectorAll('.hero-bg-slide');
+      const dots = indicatorsEl.querySelectorAll('.slide-dot');
+
+      slides[currentSlideIndex].classList.remove('active');
+      dots[currentSlideIndex].classList.remove('active');
+
+      currentSlideIndex = (currentSlideIndex + 1) % images.length;
+
+      slides[currentSlideIndex].classList.add('active');
+      dots[currentSlideIndex].classList.add('active');
+    }, SLIDE_DURATION);
+  }
+
+  // ============ INIT ============
+  setTheme(getSavedTheme());
+</script>
+
+</body>
+</html>
