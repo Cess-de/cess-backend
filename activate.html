@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تفعيل الحساب — CESS-UofT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B132B; --navy-light: #1C2641; --yellow: #FFC72C;
+    --text-white: #FFFFFF; --text-gray: #A8B3CC;
+    --white: #FFFFFF; --off-white: #F8F9FA; --dark-navy: #0F172A; --gray: #64748B;
+    --red: #EF4444; --green: #22C55E;
+    --bg: var(--navy); --bg-elevated: var(--navy-light); --accent: var(--yellow);
+    --text-primary: var(--text-white); --text-secondary: var(--text-gray);
+    --card-bg: rgba(255,255,255,0.04); --card-border: rgba(255,255,255,0.08);
+    --input-bg: rgba(255,255,255,0.05); --transition: 0.25s ease;
+  }
+  [data-theme="light"] {
+    --bg: var(--off-white); --bg-elevated: var(--white); --accent: var(--yellow);
+    --text-primary: var(--dark-navy); --text-secondary: var(--gray);
+    --card-bg: var(--white); --card-border: rgba(15,23,42,0.08); --input-bg: var(--white);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-primary);
+    min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+    padding: 40px 20px; font-size: 15px; transition: background var(--transition), color var(--transition);
+  }
+  .top-bar { width: 100%; max-width: 420px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; text-decoration: none; color: var(--text-primary); }
+  .logo-icon { width: 26px; height: 26px; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--navy); font-size: 13px; }
+  .theme-toggle { width: 32px; height: 32px; border-radius: 50%; background: var(--card-bg); border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 13px; }
+  .card { width: 100%; max-width: 420px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 28px 24px; }
+  .step-indicator { display: flex; gap: 6px; margin-bottom: 22px; }
+  .step-dot { flex: 1; height: 3px; border-radius: 2px; background: var(--card-border); transition: background var(--transition); }
+  .step-dot.done { background: var(--accent); }
+  .step-dot.current { background: var(--accent); opacity: 0.5; }
+  .card h2 { font-size: 19px; font-weight: 800; margin-bottom: 6px; }
+  .card .subtitle { font-size: 13px; color: var(--text-secondary); margin-bottom: 22px; line-height: 1.5; }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 12.5px; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary); }
+  .field input, .field select {
+    width: 100%; padding: 12px 14px; border-radius: 10px; border: 1.5px solid var(--card-border);
+    background: var(--input-bg); color: var(--text-primary); font-size: 14px; font-family: inherit; outline: none; transition: border-color var(--transition);
+  }
+  .field input:focus, .field select:focus { border-color: var(--accent); }
+  .field .hint { font-size: 11.5px; color: var(--text-secondary); margin-top: 5px; }
+  .btn {
+    width: 100%; padding: 13px; border-radius: 10px; font-weight: 700; font-size: 14px; border: none;
+    cursor: pointer; background: var(--accent); color: var(--navy); transition: all var(--transition); margin-top: 6px;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .btn-link { background: none; border: none; color: var(--accent); font-size: 13px; font-weight: 600; cursor: pointer; width: 100%; padding: 10px; margin-top: 4px; }
+  .alert { padding: 12px 14px; border-radius: 10px; font-size: 13px; margin-bottom: 16px; display: none; line-height: 1.5; }
+  .alert.error { background: color-mix(in srgb, var(--red) 12%, transparent); border: 1px solid color-mix(in srgb, var(--red) 30%, transparent); color: var(--red); }
+  .alert.success { background: color-mix(in srgb, var(--green) 12%, transparent); border: 1px solid color-mix(in srgb, var(--green) 30%, transparent); color: var(--green); }
+  .alert.show { display: block; }
+  .question-select { margin-bottom: 6px; }
+  .footer-link { text-align: center; margin-top: 18px; font-size: 13px; color: var(--text-secondary); }
+  .footer-link a { color: var(--accent); text-decoration: none; font-weight: 600; }
+  .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(11,19,43,0.3); border-top-color: var(--navy); border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-left: 6px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .step { display: none; }
+  .step.active { display: block; }
+  .success-icon { width: 56px; height: 56px; border-radius: 50%; background: color-mix(in srgb, var(--green) 15%, transparent); display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 16px; }
+  .text-center { text-align: center; }
+</style>
+</head>
+<body data-theme="dark">
+
+<div class="top-bar">
+  <a href="index.html" class="logo"><div class="logo-icon">🎓</div><span>CESS-UofT</span></a>
+  <button class="theme-toggle" id="themeToggle">🌙</button>
+</div>
+
+<div class="card">
+  <div class="step-indicator" id="stepIndicator"></div>
+  <div id="alertBox" class="alert"></div>
+
+  <div class="step active" data-step="1">
+    <h2>تفعيل الحساب</h2>
+    <p class="subtitle">أدخل رقمك الجامعي للبدء في عملية التفعيل</p>
+    <div class="field"><label>الرقم الجامعي</label><input type="text" id="studentId" placeholder="مثال: 11443546" inputmode="numeric"></div>
+    <button class="btn" id="btnStep1">التالي</button>
+  </div>
+
+  <div class="step" data-step="2">
+    <h2>البريد الإلكتروني</h2>
+    <p class="subtitle">أدخل بريدك الإلكتروني لإرسال رمز التحقق إليه</p>
+    <div class="field"><label>البريد الإلكتروني</label><input type="email" id="email" placeholder="name@example.com" dir="ltr"></div>
+    <button class="btn" id="btnStep2">إرسال رمز التحقق</button>
+  </div>
+
+  <div class="step" data-step="3">
+    <h2>رمز التحقق</h2>
+    <p class="subtitle">أدخل الرمز المكون من 6 أرقام المرسل إلى بريدك الإلكتروني</p>
+    <div class="field">
+      <label>رمز التحقق</label>
+      <input type="text" id="verifyCode" placeholder="000000" maxlength="6" inputmode="numeric" dir="ltr" style="text-align:center; letter-spacing:6px; font-size:20px; font-weight:700;">
+      <div class="hint">صالح لمدة 10 دقائق</div>
+    </div>
+    <button class="btn" id="btnStep3">تحقق</button>
+    <button class="btn-link" id="btnResendCode">إعادة إرسال الرمز</button>
+  </div>
+
+  <div class="step" data-step="4">
+    <h2>كلمة المرور</h2>
+    <p class="subtitle">اختر كلمة مرور قوية (10 أحرف على الأقل)</p>
+    <div class="field"><label>كلمة المرور</label><input type="password" id="password" placeholder="••••••••••" dir="ltr"></div>
+    <div class="field"><label>تأكيد كلمة المرور</label><input type="password" id="confirmPassword" placeholder="••••••••••" dir="ltr"></div>
+    <button class="btn" id="btnStep4">التالي</button>
+  </div>
+
+  <div class="step" data-step="5">
+    <h2>أسئلة الأمان</h2>
+    <p class="subtitle">اختر سؤالين مختلفين للمساعدة في استرداد حسابك لاحقاً</p>
+    <div class="field question-select"><label>السؤال الأول</label><select id="q1Select"></select></div>
+    <div class="field"><label>الإجابة</label><input type="text" id="a1" placeholder="إجابتك"></div>
+    <div class="field question-select"><label>السؤال الثاني</label><select id="q2Select"></select></div>
+    <div class="field"><label>الإجابة</label><input type="text" id="a2" placeholder="إجابتك"></div>
+    <button class="btn" id="btnStep5">تفعيل الحساب</button>
+  </div>
+
+  <div class="step" data-step="6">
+    <div class="text-center">
+      <div class="success-icon">✓</div>
+      <h2>تم تفعيل حسابك بنجاح!</h2>
+      <p class="subtitle">يمكنك الآن تسجيل الدخول والاستفادة من جميع خدمات CESS-UofT</p>
+      <a href="login.html" class="btn" style="display:block; text-decoration:none; text-align:center;">تسجيل الدخول</a>
+    </div>
+  </div>
+</div>
+
+<div class="footer-link">لديك حساب بالفعل؟ <a href="login.html">سجّل الدخول</a></div>
+
+<script>
+  const SUPABASE_PROJECT_REF = "bibhljpmmmcxcxhpbuqf";
+  const AUTH_URL = `https://${SUPABASE_PROJECT_REF}.supabase.co/functions/v1/auth`;
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
+
+  const SECURITY_QUESTIONS = [
+    { id: "q1", ar: "ما اسم أول مدرسة درست فيها؟" },
+    { id: "q2", ar: "ما اسم مدينة تتذكرها جيدًا؟" },
+    { id: "q3", ar: "ما لقبك في طفولتك؟" },
+    { id: "q4", ar: "ما مادتك الدراسية المفضلة؟" },
+    { id: "q5", ar: "ما أول كتاب تتذكر أنك قرأته؟" },
+    { id: "q6", ar: "ما اسم معلم تتذكره؟" }
+  ];
+
+  const body = document.body;
+  const themeToggle = document.getElementById('themeToggle');
+  function setTheme(theme) {
+    body.setAttribute('data-theme', theme);
+    localStorage.setItem('cess-theme', theme);
+    themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+  }
+  themeToggle.addEventListener('click', () => setTheme(body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+  setTheme(localStorage.getItem('cess-theme') || 'dark');
+
+  let state = { studentId: '', email: '', activationToken: '' };
+  const TOTAL_STEPS = 5;
+  let currentStep = 1;
+
+  const stepIndicator = document.getElementById('stepIndicator');
+  function renderStepIndicator() {
+    stepIndicator.innerHTML = '';
+    for (let i = 1; i <= TOTAL_STEPS; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'step-dot' + (i < currentStep ? ' done' : i === currentStep ? ' current' : '');
+      stepIndicator.appendChild(dot);
+    }
+  }
+
+  function goToStep(n) {
+    document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+    document.querySelector(`.step[data-step="${n}"]`).classList.add('active');
+    currentStep = n;
+    if (n <= TOTAL_STEPS) renderStepIndicator(); else stepIndicator.style.display = 'none';
+    hideAlert();
+  }
+
+  const alertBox = document.getElementById('alertBox');
+  function showAlert(message, type = 'error') { alertBox.textContent = message; alertBox.className = `alert show ${type}`; }
+  function hideAlert() { alertBox.className = 'alert'; }
+
+  async function callAuth(action, input) {
+    const res = await fetch(AUTH_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
+      body: JSON.stringify({ action, input })
+    });
+    const json = await res.json();
+    if (!json.ok) throw new Error(json.error || 'حدث خطأ غير متوقع');
+    return json.data;
+  }
+
+  function setLoading(btn, loading) {
+    btn.disabled = loading;
+    btn.dataset.originalText = btn.dataset.originalText || btn.textContent;
+    btn.innerHTML = loading ? `${btn.dataset.originalText}<span class="spinner"></span>` : btn.dataset.originalText;
+  }
+
+  document.getElementById('btnStep1').addEventListener('click', async () => {
+    const btn = document.getElementById('btnStep1');
+    const studentId = document.getElementById('studentId').value.trim();
+    if (!studentId) return showAlert('الرجاء إدخال الرقم الجامعي.');
+    hideAlert(); setLoading(btn, true);
+    try {
+      await callAuth('startActivation', { student_id: studentId });
+      state.studentId = studentId;
+      goToStep(2);
+    } catch (e) { showAlert(e.message); } finally { setLoading(btn, false); }
+  });
+
+  document.getElementById('btnStep2').addEventListener('click', async () => {
+    const btn = document.getElementById('btnStep2');
+    const email = document.getElementById('email').value.trim();
+    if (!email) return showAlert('الرجاء إدخال البريد الإلكتروني.');
+    hideAlert(); setLoading(btn, true);
+    try {
+      await callAuth('startActivation', { student_id: state.studentId, email });
+      state.email = email;
+      goToStep(3);
+    } catch (e) { showAlert(e.message); } finally { setLoading(btn, false); }
+  });
+
+  document.getElementById('btnStep3').addEventListener('click', async () => {
+    const btn = document.getElementById('btnStep3');
+    const code = document.getElementById('verifyCode').value.trim();
+    if (!/^\d{6}$/.test(code)) return showAlert('الرجاء إدخال رمز مكوّن من 6 أرقام.');
+    hideAlert(); setLoading(btn, true);
+    try {
+      const data = await callAuth('verifyActivationCode', { student_id: state.studentId, code });
+      state.activationToken = data.activation_token;
+      goToStep(4);
+    } catch (e) { showAlert(e.message); } finally { setLoading(btn, false); }
+  });
+
+  document.getElementById('btnResendCode').addEventListener('click', async () => {
+    hideAlert();
+    try {
+      await callAuth('startActivation', { student_id: state.studentId, email: state.email });
+      showAlert('تم إرسال رمز جديد إلى بريدك الإلكتروني.', 'success');
+    } catch (e) { showAlert(e.message); }
+  });
+
+  document.getElementById('btnStep4').addEventListener('click', async () => {
+    const btn = document.getElementById('btnStep4');
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    if (password.length < 10) return showAlert('كلمة المرور يجب أن تكون 10 أحرف على الأقل.');
+    if (password !== confirmPassword) return showAlert('كلمتا المرور غير متطابقتين.');
+    hideAlert(); setLoading(btn, true);
+    try {
+      const data = await callAuth('setPassword', { activation_token: state.activationToken, password, confirm_password: confirmPassword });
+      state.activationToken = data.activation_token;
+      renderQuestionSelects();
+      goToStep(5);
+    } catch (e) { showAlert(e.message); } finally { setLoading(btn, false); }
+  });
+
+  function renderQuestionSelects() {
+    const q1Select = document.getElementById('q1Select');
+    const q2Select = document.getElementById('q2Select');
+    const options = SECURITY_QUESTIONS.map(q => `<option value="${q.id}">${q.ar}</option>`).join('');
+    q1Select.innerHTML = options;
+    q2Select.innerHTML = options;
+    q2Select.selectedIndex = 1;
+  }
+
+  document.getElementById('btnStep5').addEventListener('click', async () => {
+    const btn = document.getElementById('btnStep5');
+    const q1_id = document.getElementById('q1Select').value;
+    const q2_id = document.getElementById('q2Select').value;
+    const a1 = document.getElementById('a1').value.trim();
+    const a2 = document.getElementById('a2').value.trim();
+    if (q1_id === q2_id) return showAlert('الرجاء اختيار سؤالين مختلفين.');
+    if (!a1 || !a2) return showAlert('الرجاء إدخال إجابتين.');
+    hideAlert(); setLoading(btn, true);
+    try {
+      await callAuth('setSecurityQuestions', { activation_token: state.activationToken, q1_id, a1, q2_id, a2 });
+      goToStep(6);
+    } catch (e) { showAlert(e.message); } finally { setLoading(btn, false); }
+  });
+
+  renderStepIndicator();
+</script>
+</body>
+</html>
