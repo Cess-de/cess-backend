@@ -14,12 +14,10 @@
     --yellow: #FFC72C;
     --text-white: #FFFFFF;
     --text-gray: #A8B3CC;
-
     --white: #FFFFFF;
     --off-white: #F8F9FA;
     --dark-navy: #0F172A;
     --gray: #64748B;
-
     --bg: var(--navy);
     --bg-elevated: var(--navy-light);
     --accent: var(--yellow);
@@ -28,7 +26,6 @@
     --text-secondary: var(--text-gray);
     --card-bg: rgba(255,255,255,0.04);
     --card-border: rgba(255,255,255,0.08);
-
     --transition: 0.25s ease;
   }
 
@@ -44,7 +41,6 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -59,13 +55,8 @@
 
   body[dir="ltr"] { direction: ltr; }
 
-  .container {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
+  .container { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
 
-  /* ============ NAVBAR ============ */
   .navbar {
     position: relative;
     z-index: 100;
@@ -77,449 +68,174 @@
     border-bottom: 1px solid var(--card-border);
   }
 
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 700;
-    font-size: 16px;
-  }
-
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px; }
   .logo-icon {
-    width: 28px;
-    height: 28px;
-    background: var(--accent);
-    border-radius: 7px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--navy);
-    font-size: 14px;
-    flex-shrink: 0;
+    width: 28px; height: 28px; background: var(--accent); border-radius: 7px;
+    display: flex; align-items: center; justify-content: center; color: var(--navy);
+    font-size: 14px; flex-shrink: 0;
   }
 
-  .nav-links {
-    display: flex;
-    gap: 24px;
-    list-style: none;
-  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; font-size: 13.5px; transition: color var(--transition); }
+  .nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
 
-  .nav-links a {
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 13.5px;
-    transition: color var(--transition);
-  }
-
-  .nav-links a:hover, .nav-links a.active {
-    color: var(--text-primary);
-  }
-
-  .nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
 
   .theme-toggle, .lang-toggle {
-    height: 34px;
-    border-radius: 999px;
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 13px;
-    transition: transform 0.2s, border-color var(--transition);
-    flex-shrink: 0;
-    color: var(--text-primary);
-    font-family: inherit;
+    height: 34px; border-radius: 999px; background: var(--card-bg); border: 1px solid var(--card-border);
+    display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 13px;
+    transition: transform 0.2s, border-color var(--transition); flex-shrink: 0; color: var(--text-primary); font-family: inherit;
   }
-
-  .theme-toggle {
-    width: 34px;
-    font-size: 14px;
-  }
-
-  .lang-toggle {
-    padding: 0 12px;
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: 0.3px;
-  }
-
+  .theme-toggle { width: 34px; font-size: 14px; }
+  .lang-toggle { padding: 0 12px; font-weight: 700; font-size: 12px; letter-spacing: 0.3px; }
   .theme-toggle:active, .lang-toggle:active { transform: scale(0.92); }
   .lang-toggle:hover { border-color: var(--accent); }
 
   .btn {
-    padding: 8px 16px;
-    border-radius: 999px;
-    font-weight: 600;
-    font-size: 13px;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: all var(--transition);
-    white-space: nowrap;
+    padding: 8px 16px; border-radius: 999px; font-weight: 600; font-size: 13px; border: none; cursor: pointer;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all var(--transition); white-space: nowrap;
   }
-
-  .btn-primary {
-    background: var(--accent);
-    color: var(--navy);
-    border-radius: 10px;
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 35%, transparent);
-  }
-
-  .btn-secondary {
-    background: rgba(255,255,255,0.1);
-    color: var(--text-primary);
-    border: 1.5px solid rgba(255,255,255,0.15);
-    backdrop-filter: blur(6px);
-  }
-
-  [data-theme="light"] .btn-secondary {
-    background: rgba(15,23,42,0.05);
-    border: 1.5px solid rgba(15,23,42,0.1);
-  }
-
-  .btn-secondary:hover {
-    border-color: var(--accent);
-  }
+  .btn-primary { background: var(--accent); color: var(--navy); border-radius: 10px; }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 35%, transparent); }
+  .btn-secondary { background: rgba(255,255,255,0.1); color: var(--text-primary); border: 1.5px solid rgba(255,255,255,0.15); backdrop-filter: blur(6px); }
+  [data-theme="light"] .btn-secondary { background: rgba(15,23,42,0.05); border: 1.5px solid rgba(15,23,42,0.1); }
+  .btn-secondary:hover { border-color: var(--accent); }
 
   .mobile-menu-btn {
     display: none;
-    background: none;
-    border: none;
-    color: var(--text-primary);
-    font-size: 20px;
-    cursor: pointer;
-  }
-
-  /* ============ TOP IMAGE BANNER ============ */
-  .top-banner {
-    width: 100%;
-    height: 42vh;
-    min-height: 260px;
-    max-height: 420px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .top-banner img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  /* ============ HERO ============ */
-  .hero {
-    position: relative;
-    padding: 56px 0 50px;
-    overflow: hidden;
-  }
-
-  .hero-bg-slideshow {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-  }
-
-  .hero-bg-slide {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    opacity: 0;
-    transition: opacity 2.2s ease-in-out;
-  }
-
-  .hero-bg-slide.active { opacity: 1; }
-
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      100deg,
-      var(--bg) 0%,
-      color-mix(in srgb, var(--bg) 55%, transparent) 42%,
-      color-mix(in srgb, var(--bg) 8%, transparent) 100%
-    );
-    z-index: 1;
-  }
-
-  body[dir="ltr"] .hero-overlay {
-    background: linear-gradient(
-      260deg,
-      var(--bg) 0%,
-      color-mix(in srgb, var(--bg) 55%, transparent) 42%,
-      color-mix(in srgb, var(--bg) 8%, transparent) 100%
-    );
-  }
-
-  .hero-inner {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-  }
-
-  .hero-content { max-width: 540px; }
-
-  .hero-eyebrow {
-    color: var(--hero-accent);
-    font-weight: 600;
-    font-size: 12.5px;
-    margin-bottom: 14px;
-  }
-
-  .hero h1 {
-    font-size: clamp(28px, 5.5vw, 42px);
-    font-weight: 800;
-    line-height: 1.18;
-    margin-bottom: 4px;
-    color: var(--text-primary);
-  }
-
-  .hero h1 .accent { color: var(--hero-accent); }
-
-  .hero-tagline {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--hero-accent);
-    margin: 14px 0;
-    letter-spacing: 0.3px;
-  }
-
-  .hero p {
-    font-size: 14.5px;
-    color: var(--text-white);
-    margin-bottom: 24px;
-    line-height: 1.65;
-    max-width: 460px;
-  }
-
-  [data-theme="light"] .hero p {
-    color: var(--text-primary);
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 40px;
-    flex-wrap: wrap;
-  }
-
-  /* ============ FEATURE CARDS ============ */
-  .feature-grid {
-    position: relative;
-    z-index: 2;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    max-width: 760px;
-  }
-
-  .feature-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 12px;
-    padding: 14px;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--card-bg); border: 1px solid var(--card-border);
     backdrop-filter: blur(10px);
-    transition: transform var(--transition), border-color var(--transition);
+    color: var(--text-primary); font-size: 17px; cursor: pointer;
+    align-items: center; justify-content: center;
+    transition: transform 0.15s ease;
+  }
+  .mobile-menu-btn:active { transform: scale(0.9); }
+
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    top: 62px; left: 12px; right: 12px;
+    z-index: 99;
+    background: color-mix(in srgb, var(--bg-elevated) 92%, transparent);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 10px;
+    flex-direction: column;
+    gap: 2px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .mobile-nav.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .mobile-nav a {
+    color: var(--text-primary); text-decoration: none; font-weight: 500; font-size: 15px;
+    padding: 13px 14px; border-radius: 12px; transition: background 0.15s ease; display: block;
+  }
+  .mobile-nav a:active { background: var(--card-bg); }
+
+  /* ============ BRAND TITLE STRIP ============ */
+  .brand-strip {
+    padding: 18px 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--card-border);
+    text-align: center;
   }
 
-  .feature-card:hover {
-    transform: translateY(-2px);
-    border-color: var(--accent);
-  }
-
-  .feature-icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-    background: color-mix(in srgb, var(--accent) 18%, transparent);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    margin-bottom: 8px;
-  }
-
-  .feature-card h3 {
-    font-size: 13px;
-    font-weight: 700;
-    margin-bottom: 4px;
-    color: var(--text-primary);
-  }
-
-  .feature-card p {
-    font-size: 11.5px;
-    color: var(--text-secondary);
-    margin: 0;
+  .brand-strip h2 {
+    font-size: clamp(18px, 4vw, 26px);
+    font-weight: 800;
     line-height: 1.4;
   }
 
-  /* ============ SLIDE INDICATORS ============ */
-  .slide-indicators {
-    position: absolute;
-    bottom: 20px;
-    z-index: 2;
-    display: flex;
-    gap: 6px;
-    right: 20px;
+  .brand-strip .part-ar { color: var(--yellow); }
+  .brand-strip .separator { color: var(--text-secondary); font-weight: 400; margin: 0 6px; }
+  .brand-strip .part-uni {
+    color: #0066FF;
+  }
+  [data-theme="light"] .brand-strip .part-uni { color: var(--navy); }
+
+  .top-banner { width: 100%; height: 42vh; min-height: 260px; max-height: 420px; overflow: hidden; position: relative; }
+  .top-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .hero { position: relative; padding: 56px 0 50px; overflow: hidden; }
+  .hero-bg-slideshow { position: absolute; inset: 0; z-index: 0; }
+  .hero-bg-slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 2.2s ease-in-out; }
+  .hero-bg-slide.active { opacity: 1; }
+
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(100deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 55%, transparent) 42%, color-mix(in srgb, var(--bg) 8%, transparent) 100%);
+    z-index: 1;
+  }
+  body[dir="ltr"] .hero-overlay {
+    background: linear-gradient(260deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 55%, transparent) 42%, color-mix(in srgb, var(--bg) 8%, transparent) 100%);
   }
 
+  .hero-inner { position: relative; z-index: 2; width: 100%; }
+  .hero-content { max-width: 540px; }
+
+  .hero-eyebrow { color: var(--hero-accent); font-weight: 600; font-size: 12.5px; margin-bottom: 14px; }
+  .hero h1 { font-size: clamp(28px, 5.5vw, 42px); font-weight: 800; line-height: 1.18; margin-bottom: 4px; color: var(--text-primary); }
+  .hero h1 .accent { color: var(--hero-accent); }
+  .hero-tagline { font-size: 15px; font-weight: 600; color: var(--hero-accent); margin: 14px 0; letter-spacing: 0.3px; }
+  .hero p { font-size: 14.5px; color: var(--text-white); margin-bottom: 24px; line-height: 1.65; max-width: 460px; }
+  [data-theme="light"] .hero p { color: var(--text-primary); }
+  .hero-actions { display: flex; gap: 10px; margin-bottom: 40px; flex-wrap: wrap; }
+
+  .feature-grid { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; max-width: 760px; }
+  .feature-card {
+    background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 14px;
+    backdrop-filter: blur(10px); transition: transform var(--transition), border-color var(--transition);
+  }
+  .feature-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+  .feature-icon {
+    width: 30px; height: 30px; border-radius: 8px; background: color-mix(in srgb, var(--accent) 18%, transparent);
+    display: flex; align-items: center; justify-content: center; font-size: 14px; margin-bottom: 8px;
+  }
+  .feature-card h3 { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: var(--text-primary); }
+  .feature-card p { font-size: 11.5px; color: var(--text-secondary); margin: 0; line-height: 1.4; }
+
+  .slide-indicators { position: absolute; bottom: 20px; z-index: 2; display: flex; gap: 6px; right: 20px; }
   body[dir="ltr"] .slide-indicators { right: auto; left: 20px; }
+  .slide-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: all 0.3s; }
+  .slide-dot.active { background: var(--accent); width: 18px; border-radius: 3px; }
 
-  .slide-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.3);
-    transition: all 0.3s;
-  }
-
-  .slide-dot.active {
-    background: var(--accent);
-    width: 18px;
-    border-radius: 3px;
-  }
-
-  /* ============ MISSION / VISION SECTION ============ */
-  .mission-section {
-    padding: 64px 0;
-    border-top: 1px solid var(--card-border);
-  }
-
-  .mission-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-
-  .mission-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 14px;
-    padding: 26px;
-  }
-
-  .mission-card .label {
-    color: var(--accent);
-    font-weight: 700;
-    font-size: 13px;
-    margin-bottom: 10px;
-  }
-
-  .mission-card p {
-    font-size: 14px;
-    line-height: 1.75;
-    color: var(--text-secondary);
-  }
+  .mission-section { padding: 64px 0; border-top: 1px solid var(--card-border); }
+  .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .mission-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 26px; }
+  .mission-card .label { color: var(--accent); font-weight: 700; font-size: 13px; margin-bottom: 10px; }
+  .mission-card p { font-size: 14px; line-height: 1.75; color: var(--text-secondary); }
 
   .mission-note {
-    margin-top: 20px;
-    padding: 20px 22px;
-    border-radius: 10px;
+    margin-top: 20px; padding: 20px 22px; border-radius: 10px;
     background: color-mix(in srgb, var(--accent) 10%, transparent);
     border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
   }
+  .mission-note .label { color: var(--accent); font-weight: 700; font-size: 13px; margin-bottom: 10px; }
+  .mission-note p { font-size: 14px; line-height: 1.8; color: var(--text-primary); }
 
-  .mission-note .label {
-    color: var(--accent);
-    font-weight: 700;
-    font-size: 13px;
-    margin-bottom: 10px;
-  }
+  .section-title { font-size: 22px; font-weight: 800; margin-bottom: 8px; color: var(--text-primary); }
+  .section-subtitle { font-size: 13.5px; color: var(--text-secondary); margin-bottom: 32px; max-width: 460px; }
 
-  .mission-note p {
-    font-size: 14px;
-    line-height: 1.8;
-    color: var(--text-primary);
-  }
-
-  .section-title {
-    font-size: 22px;
-    font-weight: 800;
-    margin-bottom: 8px;
-    color: var(--text-primary);
-  }
-
-  .section-subtitle {
-    font-size: 13.5px;
-    color: var(--text-secondary);
-    margin-bottom: 32px;
-    max-width: 460px;
-  }
-
-  /* ============ FOOTER ============ */
-  .footer {
-    border-top: 1px solid var(--card-border);
-    padding: 40px 0 28px;
-  }
-
-  .footer-name {
-    font-size: 16px;
-    font-weight: 800;
-    margin-bottom: 6px;
-    color: var(--text-primary);
-  }
-
-  .footer-tagline {
-    font-size: 12.5px;
-    color: var(--text-secondary);
-    margin-bottom: 24px;
-    max-width: 420px;
-    line-height: 1.6;
-  }
-
-  .footer-social {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-  }
-
+  .footer { border-top: 1px solid var(--card-border); padding: 40px 0 28px; }
+  .footer-name { font-size: 16px; font-weight: 800; margin-bottom: 6px; color: var(--text-primary); }
+  .footer-tagline { font-size: 12.5px; color: var(--text-secondary); margin-bottom: 24px; max-width: 420px; line-height: 1.6; }
+  .footer-social { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
   .social-btn {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    color: var(--text-primary);
-    transition: all var(--transition);
+    width: 38px; height: 38px; border-radius: 50%; background: var(--card-bg); border: 1px solid var(--card-border);
+    display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--text-primary); transition: all var(--transition);
   }
+  .social-btn:hover { border-color: var(--accent); transform: translateY(-2px); color: var(--accent); }
+  .footer-bottom { padding-top: 20px; border-top: 1px solid var(--card-border); font-size: 12px; color: var(--text-secondary); }
 
-  .social-btn:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-    color: var(--accent);
-  }
-
-  .footer-bottom {
-    padding-top: 20px;
-    border-top: 1px solid var(--card-border);
-    font-size: 12px;
-    color: var(--text-secondary);
-  }
-
-  /* ============ RESPONSIVE ============ */
   @media (max-width: 900px) {
     .nav-links { display: none; }
-    .mobile-menu-btn { display: block; }
+    .mobile-menu-btn { display: flex; }
+    .mobile-nav { display: flex; }
     .feature-grid { grid-template-columns: repeat(2, 1fr); }
     .mission-grid { grid-template-columns: 1fr; }
   }
@@ -545,9 +261,9 @@
 
   <ul class="nav-links">
     <li><a href="#" class="active" data-i18n="nav_home">الرئيسية</a></li>
+    <li><a href="about.html" data-i18n="nav_about">الجمعية</a></li>
     <li><a href="#mission" data-i18n="nav_mission">رؤيتنا</a></li>
     <li><a href="#activities" data-i18n="nav_activities">الأنشطة</a></li>
-    <li><a href="#resources" data-i18n="nav_resources">الموارد</a></li>
     <li><a href="#contact" data-i18n="nav_contact">تواصل</a></li>
   </ul>
 
@@ -556,9 +272,21 @@
     <button class="theme-toggle" id="themeToggle" aria-label="تبديل الوضع">🌙</button>
     <a href="login.html" class="btn btn-secondary" data-i18n="nav_login">دخول</a>
     <a href="activate.html" class="btn btn-primary" data-i18n="nav_join">انضم إلينا</a>
-    <button class="mobile-menu-btn">☰</button>
+    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
   </div>
 </nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html" data-i18n="nav_home">الرئيسية</a>
+  <a href="about.html" data-i18n="nav_about">الجمعية</a>
+  <a href="index.html#activities" data-i18n="nav_activities">الأنشطة</a>
+  <a href="index.html#resources" data-i18n="nav_resources">الموارد</a>
+  <a href="index.html#contact" data-i18n="nav_contact">تواصل</a>
+</div>
+
+<div class="brand-strip">
+  <h2><span class="part-ar">جمعية الهندسة المدنية</span><span class="separator">_</span><span class="part-uni">الجامعة التكنولوجية</span></h2>
+</div>
 
 <div class="top-banner">
   <img id="topBannerImg" src="" alt="CESS-UofT">
@@ -636,27 +364,13 @@
     <p class="footer-tagline" data-i18n="footer_tagline">تواصل معنا عبر منصات التواصل الاجتماعي، ونسعد بانضمامك لمجتمعنا الهندسي.</p>
 
     <div class="footer-social">
-      <a href="#" class="social-btn" id="linkFacebook" aria-label="Facebook">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
-      </a>
-      <a href="#" class="social-btn" id="linkInstagram" aria-label="Instagram">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.256 1.216.6 1.772 1.153a4.908 4.908 0 011.153 1.772c.247.637.415 1.363.465 2.428.047 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 01-1.153 1.772 4.915 4.915 0 01-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.047-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 01-1.772-1.153 4.904 4.904 0 01-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 011.153-1.772A4.897 4.897 0 015.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 1.802c-2.67 0-2.986.01-4.04.059-.976.045-1.505.207-1.858.344-.466.181-.8.398-1.15.748-.35.35-.566.683-.747 1.15-.137.352-.3.881-.344 1.857-.05 1.054-.06 1.37-.06 4.04 0 2.67.01 2.987.06 4.04.045.976.207 1.505.344 1.858.181.466.397.8.747 1.15.35.35.684.566 1.15.747.353.137.882.3 1.857.344 1.055.05 1.37.06 4.041.06 2.67 0 2.987-.01 4.04-.06.976-.045 1.505-.207 1.858-.344a3.09 3.09 0 001.15-.747c.35-.35.566-.684.747-1.15.137-.353.3-.882.344-1.857.05-1.055.06-1.37.06-4.041 0-2.67-.01-2.987-.06-4.04-.045-.976-.207-1.505-.344-1.858a3.09 3.09 0 00-.747-1.15 3.09 3.09 0 00-1.15-.747c-.353-.137-.882-.3-1.857-.344-1.055-.05-1.37-.06-4.041-.06zm0 4.595a5.603 5.603 0 110 11.206 5.603 5.603 0 010-11.206zM12 16a4 4 0 100-8 4 4 0 000 8zm5.838-9.808a1.31 1.31 0 11-2.62 0 1.31 1.31 0 012.62 0z"/></svg>
-      </a>
-      <a href="#" class="social-btn" id="linkX" aria-label="X">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-      </a>
-      <a href="#" class="social-btn" id="linkLinkedin" aria-label="LinkedIn">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-      </a>
-      <a href="#" class="social-btn" id="linkWhatsapp" aria-label="WhatsApp">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.001 2c5.514 0 9.999 4.485 9.999 10 0 5.514-4.485 9.999-9.999 9.999a9.95 9.95 0 01-5.14-1.42l-5.632 1.418 1.44-5.485A9.945 9.945 0 012.002 12c0-5.515 4.485-10 9.999-10zm0 1.802a8.19 8.19 0 00-8.198 8.198c0 1.71.485 3.32 1.402 4.688l-.907 3.457 3.543-.892a8.16 8.16 0 004.16 1.145 8.19 8.19 0 008.199-8.198 8.19 8.19 0 00-8.199-8.198z"/></svg>
-      </a>
-      <a href="#" class="social-btn" id="linkTelegram" aria-label="Telegram">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024q-.16.038-3.977 2.627-.564.387-1.024.375-.505-.011-1.478-.34-1.193-.398-1.907-.611-.92-.276-.852-.611.036-.204.436-.336l8.108-3.517q.6-.211 1.032-.319z"/></svg>
-      </a>
-      <a href="#" class="social-btn" id="linkEmail" aria-label="Email">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-10.5 6.415L1.5 8.67z"/><path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l10.5 6.42 10.5-6.42z"/></svg>
-      </a>
+      <a href="#" class="social-btn" id="linkFacebook" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg></a>
+      <a href="#" class="social-btn" id="linkInstagram" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.256 1.216.6 1.772 1.153a4.908 4.908 0 011.153 1.772c.247.637.415 1.363.465 2.428.047 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 01-1.153 1.772 4.915 4.915 0 01-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.047-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 01-1.772-1.153 4.904 4.904 0 01-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 011.153-1.772A4.897 4.897 0 015.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 1.802c-2.67 0-2.986.01-4.04.059-.976.045-1.505.207-1.858.344-.466.181-.8.398-1.15.748-.35.35-.566.683-.747 1.15-.137.352-.3.881-.344 1.857-.05 1.054-.06 1.37-.06 4.04 0 2.67.01 2.987.06 4.04.045.976.207 1.505.344 1.858.181.466.397.8.747 1.15.35.35.684.566 1.15.747.353.137.882.3 1.857.344 1.055.05 1.37.06 4.041.06 2.67 0 2.987-.01 4.04-.06.976-.045 1.505-.207 1.858-.344a3.09 3.09 0 001.15-.747c.35-.35.566-.684.747-1.15.137-.353.3-.882.344-1.857.05-1.055.06-1.37.06-4.041 0-2.67-.01-2.987-.06-4.04-.045-.976-.207-1.505-.344-1.858a3.09 3.09 0 00-.747-1.15 3.09 3.09 0 00-1.15-.747c-.353-.137-.882-.3-1.857-.344-1.055-.05-1.37-.06-4.041-.06zm0 4.595a5.603 5.603 0 110 11.206 5.603 5.603 0 010-11.206zM12 16a4 4 0 100-8 4 4 0 000 8zm5.838-9.808a1.31 1.31 0 11-2.62 0 1.31 1.31 0 012.62 0z"/></svg></a>
+      <a href="#" class="social-btn" id="linkX" aria-label="X"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a href="#" class="social-btn" id="linkLinkedin" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="#" class="social-btn" id="linkWhatsapp" aria-label="WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.001 2c5.514 0 9.999 4.485 9.999 10 0 5.514-4.485 9.999-9.999 9.999a9.95 9.95 0 01-5.14-1.42l-5.632 1.418 1.44-5.485A9.945 9.945 0 012.002 12c0-5.515 4.485-10 9.999-10zm0 1.802a8.19 8.19 0 00-8.198 8.198c0 1.71.485 3.32 1.402 4.688l-.907 3.457 3.543-.892a8.16 8.16 0 004.16 1.145 8.19 8.19 0 008.199-8.198 8.19 8.19 0 00-8.199-8.198z"/></svg></a>
+      <a href="#" class="social-btn" id="linkTelegram" aria-label="Telegram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024q-.16.038-3.977 2.627-.564.387-1.024.375-.505-.011-1.478-.34-1.193-.398-1.907-.611-.92-.276-.852-.611.036-.204.436-.336l8.108-3.517q.6-.211 1.032-.319z"/></svg></a>
+      <a href="#" class="social-btn" id="linkEmail" aria-label="Email"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-10.5 6.415L1.5 8.67z"/><path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l10.5 6.42 10.5-6.42z"/></svg></a>
     </div>
 
     <div class="footer-bottom" data-i18n="footer_copyright">© 2026 CESS-UofT — جميع الحقوق محفوظة</div>
@@ -664,40 +378,25 @@
 </footer>
 
 <script>
-  // ============ CONFIG ============
   const SUPABASE_PROJECT_REF = "bibhljpmmmcxcxhpbuqf";
   const STORAGE_BASE = `https://${SUPABASE_PROJECT_REF}.supabase.co/storage/v1/object/public/hero-images`;
-
   const NIGHT_IMAGES = [1,2,3,4,5,6].map(n => `${STORAGE_BASE}/night-${n}.jpg.JPG`);
   const DAY_IMAGES = [1,2,3,4,5,6].map(n => `${STORAGE_BASE}/day-${n}.jpg.JPG`);
-
   const SLIDE_DURATION = 6000;
 
-  // ============ I18N ============
   const TRANSLATIONS = {
     ar: {
-      nav_home: "الرئيسية",
-      nav_mission: "رؤيتنا",
-      nav_activities: "الأنشطة",
-      nav_resources: "الموارد",
-      nav_contact: "تواصل",
-      nav_login: "دخول",
-      nav_join: "انضم إلينا",
+      nav_home: "الرئيسية", nav_about: "الجمعية", nav_mission: "رؤيتنا", nav_activities: "الأنشطة", nav_resources: "الموارد", nav_contact: "تواصل",
+      nav_login: "دخول", nav_join: "انضم إلينا",
       hero_eyebrow: "الجامعة التكنولوجية — كلية الهندسة والعمارة",
-      hero_h1_line1: "نبني اليوم",
-      hero_h1_line2: "ثم المستقبل",
+      hero_h1_line1: "نبني اليوم", hero_h1_line2: "ثم المستقبل",
       hero_tagline: "ابنِ. تواصل. قُد.",
       hero_desc: "جيل جديد من طلاب الهندسة المدنية، بطموح لا حدود له ورؤية تتجاوز مقاعد الدراسة، نصنع مستقبلنا بأيدينا ونمهد الطريق نحو التميز.",
-      hero_btn_discover: "اكتشف CESS-UofT →",
-      hero_btn_join: "انضم إلينا",
-      feat_community_title: "مجتمع",
-      feat_community_desc: "تواصل مع زملائك وابنِ شبكة علاقات قوية",
-      feat_dev_title: "تطوير",
-      feat_dev_desc: "طوّر مهاراتك من خلال ورش وفعاليات عملية",
-      feat_opp_title: "فرص",
-      feat_opp_desc: "وصول حصري لفعاليات وفرص وظيفية",
-      feat_impact_title: "أثر",
-      feat_impact_desc: "اصنع فرقاً حقيقياً داخل مجتمعنا الطلابي",
+      hero_btn_discover: "اكتشف CESS-UofT →", hero_btn_join: "انضم إلينا",
+      feat_community_title: "مجتمع", feat_community_desc: "تواصل مع زملائك وابنِ شبكة علاقات قوية",
+      feat_dev_title: "تطوير", feat_dev_desc: "طوّر مهاراتك من خلال ورش وفعاليات عملية",
+      feat_opp_title: "فرص", feat_opp_desc: "وصول حصري لفعاليات وفرص وظيفية",
+      feat_impact_title: "أثر", feat_impact_desc: "اصنع فرقاً حقيقياً داخل مجتمعنا الطلابي",
       mission_title: "رؤيتنا ورسالتنا",
       mission_subtitle: "لسنا مجرد نشاطات ثقافية أو اجتماعات — نحن حلقة الوصل بين الجامعة والتدريب وسوق العمل والمجتمع الهندسي.",
       vision_label: "الرؤية",
@@ -711,28 +410,17 @@
       footer_copyright: "© 2026 CESS-UofT — جميع الحقوق محفوظة"
     },
     en: {
-      nav_home: "Home",
-      nav_mission: "Vision",
-      nav_activities: "Activities",
-      nav_resources: "Resources",
-      nav_contact: "Contact",
-      nav_login: "Log In",
-      nav_join: "Join Us",
+      nav_home: "Home", nav_about: "About", nav_mission: "Vision", nav_activities: "Activities", nav_resources: "Resources", nav_contact: "Contact",
+      nav_login: "Log In", nav_join: "Join Us",
       hero_eyebrow: "Technological University — Faculty of Engineering & Architecture",
-      hero_h1_line1: "We Build Today,",
-      hero_h1_line2: "Then the Future",
+      hero_h1_line1: "We Build Today,", hero_h1_line2: "Then the Future",
       hero_tagline: "Build. Connect. Lead.",
       hero_desc: "A new generation of civil engineering students, with limitless ambition and a vision beyond the classroom, building our future with our own hands and paving the way toward excellence.",
-      hero_btn_discover: "Discover CESS-UofT →",
-      hero_btn_join: "Join Us",
-      feat_community_title: "Community",
-      feat_community_desc: "Connect with peers and build a strong network",
-      feat_dev_title: "Development",
-      feat_dev_desc: "Grow your skills through hands-on workshops and events",
-      feat_opp_title: "Opportunities",
-      feat_opp_desc: "Exclusive access to events and career opportunities",
-      feat_impact_title: "Impact",
-      feat_impact_desc: "Make a real difference within our student community",
+      hero_btn_discover: "Discover CESS-UofT →", hero_btn_join: "Join Us",
+      feat_community_title: "Community", feat_community_desc: "Connect with peers and build a strong network",
+      feat_dev_title: "Development", feat_dev_desc: "Grow your skills through hands-on workshops and events",
+      feat_opp_title: "Opportunities", feat_opp_desc: "Exclusive access to events and career opportunities",
+      feat_impact_title: "Impact", feat_impact_desc: "Make a real difference within our student community",
       mission_title: "Our Vision & Mission",
       mission_subtitle: "We are not just cultural activities or meetings — we are the bridge between the university, training, the job market, and the engineering community.",
       vision_label: "Vision",
@@ -747,9 +435,7 @@
     }
   };
 
-  function getSavedLang() {
-    return localStorage.getItem('cess-lang') || 'ar';
-  }
+  function getSavedLang() { return localStorage.getItem('cess-lang') || 'ar'; }
 
   function applyLanguage(lang) {
     const dict = TRANSLATIONS[lang];
@@ -757,7 +443,6 @@
       const key = el.getAttribute('data-i18n');
       if (dict[key]) el.textContent = dict[key];
     });
-
     document.documentElement.lang = lang;
     document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
     document.getElementById('langToggle').textContent = lang === 'ar' ? 'EN' : 'AR';
@@ -765,17 +450,13 @@
   }
 
   document.getElementById('langToggle').addEventListener('click', () => {
-    const current = getSavedLang();
-    applyLanguage(current === 'ar' ? 'en' : 'ar');
+    applyLanguage(getSavedLang() === 'ar' ? 'en' : 'ar');
   });
 
-  // ============ THEME ============
   const body = document.body;
   const themeToggle = document.getElementById('themeToggle');
 
-  function getSavedTheme() {
-    return localStorage.getItem('cess-theme') || 'dark';
-  }
+  function getSavedTheme() { return localStorage.getItem('cess-theme') || 'dark'; }
 
   function setTheme(theme) {
     body.setAttribute('data-theme', theme);
@@ -786,11 +467,9 @@
   }
 
   themeToggle.addEventListener('click', () => {
-    const current = body.getAttribute('data-theme');
-    setTheme(current === 'dark' ? 'light' : 'dark');
+    setTheme(body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
   });
 
-  // ============ TOP BANNER ============
   const topBannerImg = document.getElementById('topBannerImg');
   let bannerImageForThisLoad = null;
 
@@ -802,7 +481,6 @@
     topBannerImg.src = images[bannerImageForThisLoad];
   }
 
-  // ============ HERO SLIDESHOW ============
   const slideshowEl = document.getElementById('heroSlideshow');
   const indicatorsEl = document.getElementById('slideIndicators');
   let slideInterval = null;
@@ -825,28 +503,15 @@
     slideInterval = setInterval(() => {
       const slides = slideshowEl.querySelectorAll('.hero-bg-slide');
       const dots = indicatorsEl.querySelectorAll('.slide-dot');
-
       slides[currentSlideIndex].classList.remove('active');
       dots[currentSlideIndex].classList.remove('active');
-
       currentSlideIndex = (currentSlideIndex + 1) % images.length;
-
       slides[currentSlideIndex].classList.add('active');
       dots[currentSlideIndex].classList.add('active');
     }, SLIDE_DURATION);
   }
 
-  // ============ SOCIAL LINKS (placeholder — will be wired to Supabase settings table later) ============
-  const SOCIAL_LINKS = {
-    facebook: '#',
-    instagram: '#',
-    x: '#',
-    linkedin: '#',
-    whatsapp: '#',
-    telegram: '#',
-    email: '#'
-  };
-
+  const SOCIAL_LINKS = { facebook: '#', instagram: '#', x: '#', linkedin: '#', whatsapp: '#', telegram: '#', email: '#' };
   document.getElementById('linkFacebook').href = SOCIAL_LINKS.facebook;
   document.getElementById('linkInstagram').href = SOCIAL_LINKS.instagram;
   document.getElementById('linkX').href = SOCIAL_LINKS.x;
@@ -855,7 +520,15 @@
   document.getElementById('linkTelegram').href = SOCIAL_LINKS.telegram;
   document.getElementById('linkEmail').href = SOCIAL_LINKS.email;
 
-  // ============ INIT ============
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileNav = document.getElementById('mobileNav');
+  mobileMenuBtn.addEventListener('click', () => mobileNav.classList.toggle('open'));
+  document.addEventListener('click', (e) => {
+    if (!mobileNav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+      mobileNav.classList.remove('open');
+    }
+  });
+
   setTheme(getSavedTheme());
   applyLanguage(getSavedLang());
 </script>
