@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تسجيل الدخول — CESS-UofT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B132B; --navy-light: #1C2641; --yellow: #FFC72C;
+    --text-white: #FFFFFF; --text-gray: #A8B3CC;
+    --white: #FFFFFF; --off-white: #F8F9FA; --dark-navy: #0F172A; --gray: #64748B;
+    --red: #EF4444; --green: #22C55E;
+    --bg: var(--navy); --bg-elevated: var(--navy-light); --accent: var(--yellow);
+    --text-primary: var(--text-white); --text-secondary: var(--text-gray);
+    --card-bg: rgba(255,255,255,0.04); --card-border: rgba(255,255,255,0.08);
+    --input-bg: rgba(255,255,255,0.05); --transition: 0.25s ease;
+  }
+  [data-theme="light"] {
+    --bg: var(--off-white); --bg-elevated: var(--white); --accent: var(--yellow);
+    --text-primary: var(--dark-navy); --text-secondary: var(--gray);
+    --card-bg: var(--white); --card-border: rgba(15,23,42,0.08); --input-bg: var(--white);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-primary);
+    min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+    padding: 40px 20px; font-size: 15px; transition: background var(--transition), color var(--transition);
+  }
+  .top-bar { width: 100%; max-width: 420px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; text-decoration: none; color: var(--text-primary); }
+  .logo-icon { width: 26px; height: 26px; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--navy); font-size: 13px; }
+  .theme-toggle { width: 32px; height: 32px; border-radius: 50%; background: var(--card-bg); border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 13px; }
+  .card { width: 100%; max-width: 420px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 28px 24px; }
+  .card h2 { font-size: 19px; font-weight: 800; margin-bottom: 6px; }
+  .card .subtitle { font-size: 13px; color: var(--text-secondary); margin-bottom: 22px; line-height: 1.5; }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 12.5px; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary); }
+  .field input {
+    width: 100%; padding: 12px 14px; border-radius: 10px; border: 1.5px solid var(--card-border);
+    background: var(--input-bg); color: var(--text-primary); font-size: 14px; font-family: inherit; outline: none; transition: border-color var(--transition);
+  }
+  .field input:focus { border-color: var(--accent); }
+  .btn {
+    width: 100%; padding: 13px; border-radius: 10px; font-weight: 700; font-size: 14px; border: none;
+    cursor: pointer; background: var(--accent); color: var(--navy); transition: all var(--transition); margin-top: 6px;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .alert { padding: 12px 14px; border-radius: 10px; font-size: 13px; margin-bottom: 16px; display: none; line-height: 1.5; }
+  .alert.error { background: color-mix(in srgb, var(--red) 12%, transparent); border: 1px solid color-mix(in srgb, var(--red) 30%, transparent); color: var(--red); }
+  .alert.show { display: block; }
+  .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(11,19,43,0.3); border-top-color: var(--navy); border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-left: 6px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .footer-link { text-align: center; margin-top: 18px; font-size: 13px; color: var(--text-secondary); }
+  .footer-link a { color: var(--accent); text-decoration: none; font-weight: 600; }
+  .forgot-link { text-align: center; margin-top: 14px; }
+  .forgot-link a { color: var(--text-secondary); text-decoration: none; font-size: 12.5px; }
+</style>
+</head>
+<body data-theme="dark">
+
+<div class="top-bar">
+  <a href="index.html" class="logo"><div class="logo-icon">🎓</div><span>CESS-UofT</span></a>
+  <button class="theme-toggle" id="themeToggle">🌙</button>
+</div>
+
+<div class="card">
+  <h2>تسجيل الدخول</h2>
+  <p class="subtitle">أدخل بياناتك للوصول إلى حسابك</p>
+  <div id="alertBox" class="alert"></div>
+
+  <div class="field"><label>الرقم الجامعي</label><input type="text" id="studentId" placeholder="مثال: 11443546" inputmode="numeric"></div>
+  <div class="field"><label>كلمة المرور</label><input type="password" id="password" placeholder="••••••••••" dir="ltr"></div>
+
+  <button class="btn" id="btnLogin">تسجيل الدخول</button>
+
+  <div class="forgot-link"><a href="forgot-password.html">نسيت كلمة المرور؟</a></div>
+</div>
+
+<div class="footer-link">ليس لديك حساب؟ <a href="activate.html">فعّل حسابك</a></div>
+
+<script>
+  const SUPABASE_PROJECT_REF = "bibhljpmmmcxcxhpbuqf";
+  const AUTH_URL = `https://${SUPABASE_PROJECT_REF}.supabase.co/functions/v1/auth`;
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
+
+  const body = document.body;
+  const themeToggle = document.getElementById('themeToggle');
+  function setTheme(theme) {
+    body.setAttribute('data-theme', theme);
+    localStorage.setItem('cess-theme', theme);
+    themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+  }
+  themeToggle.addEventListener('click', () => setTheme(body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+  setTheme(localStorage.getItem('cess-theme') || 'dark');
+
+  const alertBox = document.getElementById('alertBox');
+  function showAlert(message) { alertBox.textContent = message; alertBox.className = 'alert show error'; }
+  function hideAlert() { alertBox.className = 'alert'; }
+
+  async function callAuth(action, input) {
+    const res = await fetch(AUTH_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
+      body: JSON.stringify({ action, input })
+    });
+    const json = await res.json();
+    if (!json.ok) throw new Error(json.error || 'حدث خطأ غير متوقع');
+    return json.data;
+  }
+
+  function setLoading(btn, loading) {
+    btn.disabled = loading;
+    btn.dataset.originalText = btn.dataset.originalText || btn.textContent;
+    btn.innerHTML = loading ? `${btn.dataset.originalText}<span class="spinner"></span>` : btn.dataset.originalText;
+  }
+
+  document.getElementById('btnLogin').addEventListener('click', async () => {
+    const btn = document.getElementById('btnLogin');
+    const studentId = document.getElementById('studentId').value.trim();
+    const password = document.getElementById('password').value;
+
+    if (!studentId || !password) return showAlert('الرجاء إدخال الرقم الجامعي وكلمة المرور.');
+
+    hideAlert(); setLoading(btn, true);
+    try {
+      const data = await callAuth('login', { student_id: studentId, password });
+      localStorage.setItem('cess-session-token', data.token);
+      localStorage.setItem('cess-member', JSON.stringify(data.member));
+      window.location.href = 'dashboard.html';
+    } catch (e) {
+      showAlert(e.message);
+    } finally {
+      setLoading(btn, false);
+    }
+  });
+
+  document.getElementById('password').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') document.getElementById('btnLogin').click();
+  });
+</script>
+
+</body>
+</html>
