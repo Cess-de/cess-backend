@@ -10,12 +10,12 @@
 [data-theme=light]{--bg:#F4F6F9;--el:#fff;--t1:#0F172A;--t2:#64748B;--card:#fff;--bd:rgba(15,23,42,.1);--info:#2563EB;--warn:#B45309;--ok:#15803D}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Inter,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;font-size:15px;padding:16px 16px calc(32px + env(safe-area-inset-bottom))}
-.w{max-width:880px;margin:0 auto}[hidden]{display:none!important}
-.top{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.w{max-width:900px;margin:0 auto}[hidden]{display:none!important}
+.top{display:flex;align-items:center;gap:10px}
 .logo{display:flex;align-items:center;gap:8px;font-weight:800;text-decoration:none;color:var(--t1);flex:1}
 .logo i{width:28px;height:28px;background:var(--ac);border-radius:7px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:14px}
 .btn{position:relative;height:40px;padding:0 16px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--t1);font:600 13.5px Inter,sans-serif;cursor:pointer;--spc:var(--t1);white-space:nowrap}
-.btn:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.btn:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 .btn:disabled{opacity:.55;cursor:not-allowed}
 .pri{background:var(--ac);color:#0B132B;border-color:transparent;--spc:#0B132B}
 .danger{background:var(--bad);color:#fff;border-color:transparent;--spc:#fff}
@@ -23,15 +23,18 @@ body{font-family:Inter,sans-serif;background:var(--bg);color:var(--t1);min-heigh
 .loading{color:transparent!important;pointer-events:none}
 .loading::after{content:"";position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border:2px solid var(--spc);border-top-color:transparent;border-radius:50%;animation:sp .7s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
-h1{font-size:22px;font-weight:800}.sub{font-size:13px;color:var(--t2);line-height:1.7;margin:6px 0 14px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+h1{font-size:22px;font-weight:800;margin-top:14px}.sub{font-size:13px;color:var(--t2);line-height:1.7;margin:6px 0 14px}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin:6px 0 14px;padding-bottom:4px}
+.tab{height:36px;padding:0 14px;border-radius:10px;border:1px solid var(--bd);background:transparent;color:var(--t2);font:600 13px Inter,sans-serif;cursor:pointer;white-space:nowrap}
+.tab.on{background:var(--card);color:var(--t1);border-color:var(--ac)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 14px}
 .st{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;text-align:start;cursor:pointer;color:var(--t1);font-family:inherit}
-.st b{display:block;font-size:24px;font-weight:800}.st span{font-size:12px;color:var(--t2)}
-.st.on{border-color:var(--ac)}
+.st b{display:block;font-size:24px;font-weight:800}.st span{font-size:12px;color:var(--t2)}.st.on{border-color:var(--ac)}
 .bar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
-.bar input{flex:1;min-width:180px;height:40px;padding:0 14px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--t1);font:inherit}
+.bar input,.bar select{height:40px;padding:0 12px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--t1);font:inherit}
+.bar input{flex:1;min-width:170px}.bar select option{color:#0F172A}
 .chips{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px;padding-bottom:4px}
-.chip{height:32px;padding:0 14px;border-radius:999px;border:1px solid var(--bd);background:transparent;color:var(--t2);font:600 12.5px Inter;cursor:pointer;white-space:nowrap}
+.chip{height:32px;padding:0 14px;border-radius:999px;border:1px solid var(--bd);background:transparent;color:var(--t2);font:600 12.5px Inter,sans-serif;cursor:pointer;white-space:nowrap}
 .chip.on{background:var(--ac);color:#0B132B;border-color:transparent}
 .list{background:var(--card);border:1px solid var(--bd);border-radius:14px;overflow:hidden}
 .rs{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;padding:14px;border-bottom:1px solid var(--bd)}.rs:last-child{border:0}
@@ -40,15 +43,21 @@ h1{font-size:22px;font-weight:800}.sub{font-size:13px;color:var(--t2);line-heigh
 .badge{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;border:1px solid currentColor}
 .gray{color:var(--t2)}.warn{color:var(--warn)}.info{color:var(--info)}.ok{color:var(--ok)}.bad{color:var(--bad)}
 .acts{display:flex;gap:6px}
-.empty{padding:48px 16px;text-align:center;color:var(--t2);line-height:1.8}
+.empty,.ph{padding:48px 16px;text-align:center;color:var(--t2);line-height:1.9}.ph b{display:block;color:var(--t1);font-size:18px}
 .sk{height:64px;margin:8px;border-radius:12px;background:linear-gradient(90deg,var(--card),var(--bd),var(--card));background-size:200% 100%;animation:sh 1.2s infinite}
 @keyframes sh{to{background-position:-200% 0}}
 @media(prefers-reduced-motion:reduce){.sk{animation:none}}
-dialog{border:1px solid var(--bd);border-radius:18px;background:var(--el);color:var(--t1);padding:24px;width:min(92vw,520px);margin:auto}
-dialog::backdrop{background:rgba(0,0,0,.55)}
-dialog h3{font-size:18px;font-weight:800}
+dialog{border:1px solid var(--bd);border-radius:18px;background:var(--el);color:var(--t1);padding:24px;width:min(92vw,540px);margin:auto;max-height:92vh;overflow:auto}
+dialog::backdrop{background:rgba(0,0,0,.55)}dialog h3{font-size:18px;font-weight:800}
+.seg{display:flex;gap:4px;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:4px;margin:14px 0}
+.seg button{flex:1;height:36px;border:0;border-radius:9px;background:transparent;color:var(--t2);font:600 13px Inter,sans-serif;cursor:pointer}
+.seg button.on{background:var(--ac);color:#0B132B}
+.fld{margin-bottom:12px}.fld label{display:block;font-size:12.5px;font-weight:600;color:var(--t2);margin-bottom:6px}
+.fld input{width:100%;height:42px;padding:0 12px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--t1);font:inherit}
+.fld small{display:block;min-height:18px;font-size:12px;margin-top:4px;color:var(--bad)}
 textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--t1);font:13px/1.7 Inter,monospace;resize:vertical}
 .row{display:flex;gap:8px;margin-top:16px}.row .btn{flex:1}
+.pvt{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}.pvt td,.pvt th{padding:6px;border-bottom:1px solid var(--bd);text-align:start}
 .codes{max-height:42vh;overflow:auto;border:1px solid var(--bd);border-radius:10px}
 .codes div{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--bd);font-size:13px}.codes div:last-child{border:0}
 .codes small{color:var(--t2)}code{font:700 15px ui-monospace,monospace;letter-spacing:1px;direction:ltr}
@@ -67,17 +76,22 @@ textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--bd);b
       <button class="btn sm" id="tt" aria-label="تبديل المظهر">🌙</button>
       <button class="btn sm" id="out">خروج</button>
     </div>
-    <h1>الطلاب والتفعيل</h1>
     <p class="sub" id="who"></p>
-    <div class="stats" id="stats"></div>
-    <div class="bar">
-      <input id="q" type="search" placeholder="ابحث بالاسم أو الرقم الجامعي" aria-label="بحث">
-      <button class="btn pri" id="add">+ إضافة طلاب</button>
-      <button class="btn" id="rf" aria-label="تحديث">↻</button>
-    </div>
-    <div class="bar" id="bulk" hidden><button class="btn" id="all"></button></div>
-    <div class="chips" id="chips"></div>
-    <div class="list" id="list"></div>
+    <div class="tabs" id="tabs"></div>
+    <section id="s-students">
+      <div class="stats" id="stats"></div>
+      <div class="bar">
+        <input id="q" type="search" placeholder="ابحث بالاسم أو الرقم أو الدفعة" aria-label="بحث">
+        <select id="bf" aria-label="الدفعة"></select>
+        <button class="btn pri" id="add">+ إضافة طلاب</button>
+        <button class="btn" id="ex">تصدير</button>
+        <button class="btn" id="rf" aria-label="تحديث">↻</button>
+      </div>
+      <div class="bar" id="bulk" hidden><button class="btn" id="all"></button></div>
+      <div class="chips" id="chips"></div>
+      <div class="list" id="list"></div>
+    </section>
+    <section id="s-other" hidden></section>
   </div>
 </div>
 <dialog id="dlg"></dialog>
@@ -87,6 +101,8 @@ const URL_="https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/smooth-handler
 const $=s=>document.querySelector(s),TOKEN=localStorage.getItem("cess-session-token"),dlg=$("#dlg");
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const dig=s=>String(s).replace(/[٠-٩]/g,d=>d.charCodeAt(0)-1632).replace(/[۰-۹]/g,d=>d.charCodeAt(0)-1776);
+const nz=s=>dig(s).replace(/[\u200e\u200f\ufeff]/g,"").trim();
+const hn=s=>nz(s).toLowerCase().replace(/[أإآ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي").replace(/\s+/g," ");
 function leave(){localStorage.removeItem("cess-session-token");location.href="login.html"}
 async function call(a,i={}){let r;try{r=await fetch(URL_,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+ANON},body:JSON.stringify({action:a,input:{...i,token:TOKEN}})})}catch{throw new Error("تعذّر الاتصال بالخادم، تحقق من الإنترنت.")}
 const j=await r.json().catch(()=>({}));if(r.status===401)leave();if(!j.ok)throw new Error(j.error||"حدث خطأ غير متوقع");return j.data}
@@ -95,33 +111,39 @@ async function busy(b,fn){if(b.disabled)return;b.classList.add("loading");b.disa
 function modal(h){dlg.onclose=null;dlg.innerHTML=h;dlg.showModal()}
 function confirmBox(t,x,ok,danger){return new Promise(r=>{modal(`<h3>${t}</h3><p class="sub">${x}</p><div class="row"><button class="btn ${danger?"danger":"pri"}" id="y">${ok}</button><button class="btn" id="n">إلغاء</button></div>`);$("#y").onclick=()=>{dlg.close();r(true)};$("#n").onclick=()=>{dlg.close();r(false)};dlg.onclose=()=>r(false)})}
 async function copy(t){try{await navigator.clipboard.writeText(t)}catch{const a=document.createElement("textarea");a.value=t;document.body.append(a);a.select();document.execCommand("copy");a.remove()}}
+function csv(name,head,rows){const sf=v=>{v=String(v??"");return '"'+(/^[=+\-@]/.test(v)?"'"+v:v).replace(/"/g,'""')+'"'};const u=URL.createObjectURL(new Blob(["\ufeff"+[head,...rows].map(r=>r.map(sf).join(",")).join("\n")],{type:"text/csv"})),a=document.createElement("a");a.href=u;a.download=name;a.click();URL.revokeObjectURL(u)}
 function theme(t){document.body.dataset.theme=t;localStorage.setItem("cess-theme",t);$("#tt").textContent=t==="dark"?"🌙":"☀️"}
 $("#tt").onclick=()=>theme(document.body.dataset.theme==="dark"?"light":"dark");theme(localStorage.getItem("cess-theme")||"dark");
 
-let S=[],F="all",Q="";
+const SEC=[["students","الطلاب"],["roles","الأدوار والصلاحيات","تعيين المشرفين وتحديد ما يستطيع كل واحد فعله."],["offices","الأمانات واللجان","الهيكل الإداري وأعضاء كل أمانة."],["activities","الأنشطة","إنشاء الأنشطة وتسجيل المشاركين."],["news","الإعلانات","نشر الأخبار والإعلانات للأعضاء."],["resources","الموارد","رفع الملفات وربط Drive."],["site","إعدادات الموقع","النصوص والروابط والشعار والصور."],["vote","الانتخابات","مناصب ومرشحون وتصويت سري."],["log","سجل العمليات","من فعل ماذا ومتى."]];
+let SC="students",S=[],F="all",Q="",BF="";
+function tabs(){$("#tabs").innerHTML=SEC.map(([k,l])=>`<button class="tab ${SC===k?"on":""}" data-s="${k}">${l}</button>`).join("");const o=SEC.find(x=>x[0]===SC);$("#s-students").hidden=SC!=="students";$("#s-other").hidden=SC==="students";if(SC!=="students")$("#s-other").innerHTML=`<div class="list"><div class="ph"><b>${o[1]}</b>${o[2]}<br>هذا القسم قيد البناء ضمن خطة المشروع، وسيُضاف هنا.</div></div>`}
 const L={none:["بلا رمز","gray"],code:["رمز صادر","warn"],pending:["قيد التفعيل","info"],active:["مفعّل","ok"],suspended:["موقوف","bad"]};
 const match={all:()=>1,wait:s=>s.state==="code"||s.state==="pending",none:s=>s.state==="none",active:s=>s.state==="active",suspended:s=>s.state==="suspended"};
+const batches=()=>[...new Set(S.map(s=>s.batch).filter(Boolean))].sort();
 async function load(quiet){if(!quiet)$("#list").innerHTML='<div class="sk"></div><div class="sk"></div><div class="sk"></div>';try{S=(await call("adminList")).students}catch(e){toast(e.message,"bad")}render()}
 function render(){
   const n=k=>S.filter(match[k]).length;
   $("#stats").innerHTML=[["all","الإجمالي"],["active","مفعّل"],["wait","بانتظار التفعيل"],["none","بلا رمز"]].map(([k,l])=>`<button class="st ${F===k?"on":""}" data-f="${k}"><b>${n(k)}</b><span>${l}</span></button>`).join("");
   $("#chips").innerHTML=[["all","الكل"],["none","بلا رمز"],["wait","بانتظار التفعيل"],["active","مفعّل"],["suspended","موقوف"]].map(([k,l])=>`<button class="chip ${F===k?"on":""}" data-f="${k}">${l}</button>`).join("");
+  const bs=batches();if(!bs.includes(BF))BF="";$("#bf").innerHTML='<option value="">كل الدفعات</option>'+bs.map(b=>`<option ${b===BF?"selected":""}>${esc(b)}</option>`).join("");
   const z=n("none");$("#bulk").hidden=!z;$("#all").textContent=`إصدار رموز لكل من لا رمز له (${z})`;
-  const q=dig(Q).trim().toLowerCase(),rows=S.filter(match[F]).filter(s=>!q||s.student_id.includes(q)||(s.full_name||"").toLowerCase().includes(q));
-  $("#list").innerHTML=rows.length?rows.slice(0,300).map(row).join("")+(rows.length>300?`<div class="empty">يُعرض أول 300 فقط. استخدم البحث للوصول إلى البقية.</div>`:""):`<div class="empty">${S.length?"لا نتائج مطابقة.":"لا يوجد طلاب بعد.<br>اضغط «إضافة طلاب» والصق قائمة الأرقام الجامعية."}</div>`}
+  const q=nz(Q).toLowerCase(),rows=S.filter(match[F]).filter(s=>!BF||s.batch===BF).filter(s=>!q||s.student_id.includes(q)||(s.full_name||"").toLowerCase().includes(q)||(s.batch||"").toLowerCase().includes(q));
+  $("#list").innerHTML=rows.length?rows.slice(0,300).map(row).join("")+(rows.length>300?`<div class="empty">يُعرض أول 300 فقط. استخدم البحث أو فلتر الدفعة.</div>`:""):`<div class="empty">${S.length?"لا نتائج مطابقة.":"لا يوجد طلاب بعد.<br>اضغط «إضافة طلاب»."}</div>`}
 function row(s){const[t,c]=L[s.state],A={none:[["issue","إصدار رمز","pri"]],code:[["issue","رمز جديد",""]],pending:[["issue","رمز جديد",""]],active:[["reset","إعادة تعيين",""],["suspend","إيقاف","dng"]],suspended:[["unsus","إلغاء الإيقاف",""],["reset","إعادة تعيين",""]]}[s.state];
-return `<div class="rs"><div class="av">${esc((s.full_name||s.student_id).trim().slice(0,1))}</div><div class="who"><b>${esc(s.full_name||"بدون اسم")}</b><span dir="ltr">${esc(s.student_id)}</span></div><span class="badge ${c}">${t}</span><div class="acts">${A.map(([a,l,k])=>`<button class="btn sm ${k}" data-a="${a}" data-id="${esc(s.student_id)}">${l}</button>`).join("")}</div></div>`}
-document.addEventListener("click",e=>{const f=e.target.closest("[data-f]");if(f){F=f.dataset.f;render()}});
-$("#q").oninput=e=>{Q=e.target.value;render()};
+return `<div class="rs"><div class="av">${esc((s.full_name||s.student_id).trim().slice(0,1))}</div><div class="who"><b>${esc(s.full_name||"بدون اسم")}</b><span><bdi>${esc(s.student_id)}</bdi>${s.batch?` · دفعة ${esc(s.batch)}`:""}</span></div><span class="badge ${c}">${t}</span><div class="acts">${A.map(([a,l,k])=>`<button class="btn sm ${k}" data-a="${a}" data-id="${esc(s.student_id)}">${l}</button>`).join("")}<button class="btn sm" data-a="edit" data-id="${esc(s.student_id)}" aria-label="تعديل">✎</button></div></div>`}
+document.addEventListener("click",e=>{const f=e.target.closest("[data-f]");if(f){F=f.dataset.f;render()}const t=e.target.closest("[data-s]");if(t){SC=t.dataset.s;tabs()}});
+$("#q").oninput=e=>{Q=e.target.value;render()};$("#bf").onchange=e=>{BF=e.target.value;render()};
 $("#rf").onclick=e=>busy(e.currentTarget,()=>load(true));
+$("#ex").onclick=()=>csv("students.csv",["الرقم الجامعي","الاسم","الدفعة","البريد","الحالة"],S.map(s=>[s.student_id,s.full_name,s.batch,s.email,L[s.state][0]]));
 
 function showCodes(c){modal(`<h3>رموز التفعيل (${c.length})</h3><p class="wn">⚠️ احفظها الآن، لن تظهر مرة أخرى.</p><div class="codes">${c.map(x=>`<div><span>${esc(x.full_name||"—")} <small dir="ltr">${esc(x.student_id)}</small></span><code>${esc(x.code)}</code></div>`).join("")}</div><div class="row"><button class="btn pri" id="cp">نسخ الكل</button><button class="btn" id="dl">تنزيل CSV</button><button class="btn" id="x">إغلاق</button></div>`);
-const sf=v=>/^[=+\-@]/.test(v)?"'"+v:v;
 $("#cp").onclick=async()=>{await copy(c.map(x=>`${x.full_name||""}\t${x.student_id}\t${x.code}`).join("\n"));toast("تم النسخ")};
-$("#dl").onclick=()=>{const u=URL.createObjectURL(new Blob(["\ufeffالاسم,الرقم الجامعي,الرمز\n"+c.map(x=>`"${sf(x.full_name||"").replace(/"/g,'""')}",${x.student_id},${x.code}`).join("\n")],{type:"text/csv"})),a=document.createElement("a");a.href=u;a.download="activation-codes.csv";a.click();URL.revokeObjectURL(u)};
+$("#dl").onclick=()=>csv("activation-codes.csv",["الاسم","الرقم الجامعي","الرمز"],c.map(x=>[x.full_name||"",x.student_id,x.code]));
 $("#x").onclick=()=>dlg.close()}
 
 $("#list").onclick=async e=>{const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a,id=b.dataset.id,s=S.find(x=>x.student_id===id),n=esc(s.full_name||id);
+if(a==="edit")return openEdit(s);
 const C={issue:s.state==="none"?null:["رمز جديد؟",`سيُبطل الرمز السابق للطالب <b>${n}</b> ويُنشئ رمزًا جديدًا.`,"إنشاء رمز جديد"],
 reset:["إعادة تعيين الحساب؟",`سيُحذف حساب <b>${n}</b> وكلمة مروره ويخرج من كل أجهزته، ثم يُنشأ رمز جديد ليفعّل حسابه من جديد. استخدمها إن نسي بياناته أو سُرق حسابه.`,"إعادة التعيين"],
 suspend:["إيقاف الحساب؟",`سيُمنع <b>${n}</b> من الدخول فورًا ويخرج من كل أجهزته. يمكنك إلغاء الإيقاف لاحقًا.`,"إيقاف الحساب"],unsus:null}[a];
@@ -135,17 +157,53 @@ $("#all").onclick=async e=>{const ids=S.filter(s=>s.state==="none").map(s=>s.stu
 if(!await confirmBox("إصدار رموز للجميع؟",`ستُصدر رموز لـ <b>${ids.length}</b> طالب لا رمز لهم. الرموز تظهر مرة واحدة فقط، فجهّز نسخها أو تنزيلها.`,"إصدار الرموز"))return;
 await busy(e.currentTarget,async()=>{const d=await call("adminIssueCodes",{ids});await load(true);showCodes(d.codes)})};
 
-$("#add").onclick=()=>{modal(`<h3>إضافة طلاب</h3><p class="sub">الصق القائمة، كل طالب في سطر: الرقم الجامعي ثم الاسم (اختياري) ثم البريد الجامعي (اختياري). يمكنك نسخها مباشرة من Excel.</p><textarea id="ta" rows="7" placeholder="11443546&#9;أحمد محمد&#9;ahmed@uni.edu&#10;11443547&#9;سارة علي"></textarea><p class="sub" id="pv">لم تُدخل شيئًا بعد.</p><div class="row"><button class="btn pri" id="go" disabled>إضافة</button><button class="btn" id="x">إلغاء</button></div>`);
+function openEdit(s){modal(`<h3>تعديل بيانات الطالب</h3><p class="sub" dir="ltr" style="text-align:start">${esc(s.student_id)}</p>
+<datalist id="bl">${batches().map(b=>`<option value="${esc(b)}">`).join("")}</datalist>
+<div class="fld"><label>الاسم الكامل</label><input id="e2" value="${esc(s.full_name||"")}"></div>
+<div class="fld"><label>الدفعة</label><input id="e3" list="bl" value="${esc(s.batch||"")}"></div>
+<div class="fld"><label>البريد الجامعي</label><input id="e4" type="email" dir="ltr" value="${esc(s.email||"")}"></div>
+<div class="row"><button class="btn pri" id="sv">حفظ</button><button class="btn" id="x">إلغاء</button></div>
+${["none","code"].includes(s.state)?'<div class="row"><button class="btn dng" id="del">حذف الطالب من القائمة</button></div>':""}`);
+$("#sv").onclick=e=>busy(e.currentTarget,async()=>{await call("adminUpdateStudent",{student_id:s.student_id,full_name:$("#e2").value,batch:$("#e3").value,email:$("#e4").value});dlg.close();toast("تم الحفظ");await load(true)});
+if($("#del"))$("#del").onclick=async e=>{if(!await confirmBox("حذف الطالب؟",`سيُحذف <b>${esc(s.full_name||s.student_id)}</b> من القائمة مع رمزه إن وُجد. لا يمكن التراجع.`,"حذف نهائي",true))return;await busy(e.currentTarget,async()=>{await call("adminDeleteStudent",{student_id:s.student_id});dlg.close();toast("تم الحذف");await load(true)})};
+$("#x").onclick=()=>dlg.close()}
+
+const HD={id:["الرقم الجامعي","رقم جامعي","رقم الطالب","الرقم","رقم","student id","student_id","student number","id","no","number"],name:["الاسم","اسم الطالب","الاسم الكامل","name","full name","student name"],batch:["الدفعة","دفعة","batch","cohort","year","intake"],email:["البريد","البريد الجامعي","البريد الالكتروني","الايميل","ايميل","email","e-mail","mail"]};
+Object.keys(HD).forEach(k=>HD[k]=HD[k].map(hn));
+const cut=l=>(l.includes("\t")?l.split("\t"):l.split(/;|,|،/)).map(nz);
+function parse(txt){const lines=txt.replace(/\r/g,"").split("\n").filter(l=>l.trim());let map={id:0,name:1,batch:2,email:3},start=0,hdr=false;
+if(lines.length){const m={};cut(lines[0]).forEach((x,i)=>{const h=hn(x);for(const k in HD)if(HD[k].includes(h)&&!(k in m))m[k]=i});if("id" in m){map={id:-1,name:-1,batch:-1,email:-1,...m};start=1;hdr=true}}
+const ok=[],bad=[],seen=new Set();
+lines.slice(start).forEach(l=>{const c=cut(l),g=k=>map[k]>=0?c[map[k]]||"":"",id=g("id");if(!/^\d{4,20}$/.test(id)){bad.push(l);return}if(seen.has(id))return;seen.add(id);ok.push({student_id:id,full_name:g("name"),batch:g("batch"),email:g("email")||c.find(x=>x.includes("@"))||""})});
+return{ok,bad,hdr}}
+
+function openAdd(){modal(`<h3>إضافة طلاب</h3>
+<div class="seg"><button class="on" data-t="one">طالب واحد</button><button data-t="xl">لصق من Excel</button></div>
+<datalist id="bl">${batches().map(b=>`<option value="${esc(b)}">`).join("")}</datalist>
+<div id="p1"><div class="fld"><label>الرقم الجامعي *</label><input id="f1" inputmode="numeric" dir="ltr" autocomplete="off"><small id="e1"></small></div>
+<div class="fld"><label>الاسم الكامل</label><input id="f2" autocomplete="off"></div>
+<div class="fld"><label>الدفعة</label><input id="f3" list="bl" autocomplete="off" placeholder="مثال: 2022"></div>
+<div class="fld"><label>البريد الجامعي</label><input id="f4" type="email" dir="ltr" autocomplete="off"><small id="e4"></small></div>
+<div class="row"><button class="btn pri" id="s1" disabled>حفظ</button><button class="btn" id="s2" disabled>حفظ وإضافة آخر</button></div></div>
+<div id="p2" hidden><p class="sub">انسخ الجدول من Excel (بعناوينه أو بدونها) والصقه هنا. العناوين العربية والإنجليزية مدعومة، وتُحوَّل الأرقام العربية (٠١٢) تلقائيًا. بدون عناوين يُفترض الترتيب: الرقم، الاسم، الدفعة، البريد.</p>
+<textarea id="ta" rows="6"></textarea><div class="sub" id="pv">لم تلصق شيئًا بعد.</div><div class="row"><button class="btn pri" id="go" disabled>إضافة</button></div></div>
+<div class="row"><button class="btn" id="x">إغلاق</button></div>`);
+document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".seg button").forEach(x=>x.classList.toggle("on",x===b));$("#p1").hidden=b.dataset.t!=="one";$("#p2").hidden=b.dataset.t!=="xl"});
+const valid=()=>{const id=nz($("#f1").value),em=$("#f4").value.trim(),idOk=/^\d{4,20}$/.test(id),emOk=!em||/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em);$("#e1").textContent=id&&!idOk?"الرقم الجامعي أرقام فقط (4 خانات على الأقل).":"";$("#e4").textContent=em&&!emOk?"صيغة البريد غير صحيحة.":"";$("#s1").disabled=$("#s2").disabled=!(idOk&&emOk);return idOk&&emOk};
+["f1","f4"].forEach(i=>$("#"+i).oninput=valid);
+const save=(b,more)=>busy(b,async()=>{if(!valid())return;const d=await call("adminAddStudents",{rows:[{student_id:nz($("#f1").value),full_name:$("#f2").value,batch:$("#f3").value,email:$("#f4").value}]});toast(d.added?"تمت إضافة الطالب":"الطالب موجود، حُدّثت بياناته");await load(true);if(more){["f1","f2","f4"].forEach(i=>$("#"+i).value="");valid();$("#f1").focus()}else dlg.close()});
+$("#s1").onclick=e=>save(e.currentTarget,false);$("#s2").onclick=e=>save(e.currentTarget,true);
 let rows=[];
-$("#ta").oninput=()=>{const bad=[],seen=new Set();rows=[];$("#ta").value.split("\n").forEach(l=>{if(!l.trim())return;const p=l.split(/[\t,;،]+/).map(x=>x.trim()),id=dig(p[0]);if(!/^\d{4,20}$/.test(id)){bad.push(l);return}if(seen.has(id))return;seen.add(id);rows.push({student_id:id,full_name:p.slice(1).find(x=>x&&!x.includes("@"))||"",email:p.find((x,i)=>i&&x.includes("@"))||""})});
-$("#pv").innerHTML=rows.length||bad.length?`<span class="ok">✓ ${rows.length} صالح</span>${bad.length?` · <span class="bad">✗ ${bad.length} سطر مرفوض (الرقم الجامعي أرقام فقط): <span dir="auto">${esc(bad.slice(0,3).join(" | "))}</span></span>`:""}`:"لم تُدخل شيئًا بعد.";
+$("#ta").oninput=()=>{const r=parse($("#ta").value);rows=r.ok;
+$("#pv").innerHTML=rows.length||r.bad.length?`<span class="ok">✓ ${rows.length} صالح</span>${r.bad.length?` · <span class="bad">✗ ${r.bad.length} سطر مرفوض (الرقم الجامعي أرقام فقط)</span>`:""}<br>${r.hdr?"تم التعرف على العناوين.":"لم تُكتشف عناوين، سيُفترض الترتيب الافتراضي."}${rows.length?`<table class="pvt"><tr><th>الرقم</th><th>الاسم</th><th>الدفعة</th><th>البريد</th></tr>${rows.slice(0,4).map(x=>`<tr><td dir="ltr">${esc(x.student_id)}</td><td>${esc(x.full_name)}</td><td>${esc(x.batch)}</td><td dir="ltr">${esc(x.email)}</td></tr>`).join("")}</table>`:""}`:"لم تلصق شيئًا بعد.";
 $("#go").disabled=!rows.length;$("#go").textContent=rows.length?`إضافة ${rows.length} طالب`:"إضافة"};
 $("#go").onclick=e=>busy(e.currentTarget,async()=>{const d=await call("adminAddStudents",{rows});dlg.close();toast(`أُضيف ${d.added} · حُدّث ${d.updated}${d.skipped?` · موجود مسبقًا ${d.skipped}`:""}`);await load(true)});
-$("#x").onclick=()=>dlg.close();$("#ta").focus()};
+$("#x").onclick=()=>dlg.close();$("#f1").focus()}
+$("#add").onclick=openAdd;
 
 $("#out").onclick=e=>busy(e.currentTarget,async()=>{try{await call("logout")}catch{}leave()});
 (async()=>{if(!TOKEN)return leave();try{const m=await call("me");if(!m.is_admin){location.replace("dashboard.html");return}
-$("#who").textContent="مرحبًا "+(m.member.full_name||m.member.student_id)+" — أنت مشرف";$("#boot").hidden=true;$("#app").hidden=false;load()}catch{leave()}})();
+$("#who").textContent="مرحبًا "+(m.member.full_name||m.member.student_id)+" — أنت مشرف";$("#boot").hidden=true;$("#app").hidden=false;tabs();load()}catch{leave()}})();
 </script>
 </body>
 </html>
