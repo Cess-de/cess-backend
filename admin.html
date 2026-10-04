@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>لوحة التحكم — CESS-UofT</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B132B;--el:#141d38;--ac:#FFC72C;--t1:#fff;--t2:#A8B3CC;--card:rgba(255,255,255,.04);--bd:rgba(255,255,255,.1);--ok:#22C55E;--bad:#EF4444;--info:#60A5FA;--warn:#FFC72C}
+[data-theme=light]{--bg:#F4F6F9;--el:#fff;--t1:#0F172A;--t2:#64748B;--card:#fff;--bd:rgba(15,23,42,.1);--info:#2563EB;--warn:#B45309;--ok:#15803D}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;font-size:15px;padding:16px 16px calc(32px + env(safe-area-inset-bottom))}
+.w{max-width:880px;margin:0 auto}[hidden]{display:none!important}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.logo{display:flex;align-items:center;gap:8px;font-weight:800;text-decoration:none;color:var(--t1);flex:1}
+.logo i{width:28px;height:28px;background:var(--ac);border-radius:7px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:14px}
+.btn{position:relative;height:40px;padding:0 16px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--t1);font:600 13.5px Inter,sans-serif;cursor:pointer;--spc:var(--t1);white-space:nowrap}
+.btn:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.pri{background:var(--ac);color:#0B132B;border-color:transparent;--spc:#0B132B}
+.danger{background:var(--bad);color:#fff;border-color:transparent;--spc:#fff}
+.dng{color:var(--bad)}.sm{height:32px;padding:0 12px;font-size:12.5px}
+.loading{color:transparent!important;pointer-events:none}
+.loading::after{content:"";position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border:2px solid var(--spc);border-top-color:transparent;border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+h1{font-size:22px;font-weight:800}.sub{font-size:13px;color:var(--t2);line-height:1.7;margin:6px 0 14px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+.st{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;text-align:start;cursor:pointer;color:var(--t1);font-family:inherit}
+.st b{display:block;font-size:24px;font-weight:800}.st span{font-size:12px;color:var(--t2)}
+.st.on{border-color:var(--ac)}
+.bar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.bar input{flex:1;min-width:180px;height:40px;padding:0 14px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--t1);font:inherit}
+.chips{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px;padding-bottom:4px}
+.chip{height:32px;padding:0 14px;border-radius:999px;border:1px solid var(--bd);background:transparent;color:var(--t2);font:600 12.5px Inter;cursor:pointer;white-space:nowrap}
+.chip.on{background:var(--ac);color:#0B132B;border-color:transparent}
+.list{background:var(--card);border:1px solid var(--bd);border-radius:14px;overflow:hidden}
+.rs{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;padding:14px;border-bottom:1px solid var(--bd)}.rs:last-child{border:0}
+.av{width:38px;height:38px;border-radius:50%;background:var(--bd);display:flex;align-items:center;justify-content:center;font-weight:700}
+.who{flex:1;min-width:130px}.who b{display:block;font-size:14px}.who span{font-size:12px;color:var(--t2)}
+.badge{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;border:1px solid currentColor}
+.gray{color:var(--t2)}.warn{color:var(--warn)}.info{color:var(--info)}.ok{color:var(--ok)}.bad{color:var(--bad)}
+.acts{display:flex;gap:6px}
+.empty{padding:48px 16px;text-align:center;color:var(--t2);line-height:1.8}
+.sk{height:64px;margin:8px;border-radius:12px;background:linear-gradient(90deg,var(--card),var(--bd),var(--card));background-size:200% 100%;animation:sh 1.2s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+@media(prefers-reduced-motion:reduce){.sk{animation:none}}
+dialog{border:1px solid var(--bd);border-radius:18px;background:var(--el);color:var(--t1);padding:24px;width:min(92vw,520px);margin:auto}
+dialog::backdrop{background:rgba(0,0,0,.55)}
+dialog h3{font-size:18px;font-weight:800}
+textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--t1);font:13px/1.7 Inter,monospace;resize:vertical}
+.row{display:flex;gap:8px;margin-top:16px}.row .btn{flex:1}
+.codes{max-height:42vh;overflow:auto;border:1px solid var(--bd);border-radius:10px}
+.codes div{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--bd);font-size:13px}.codes div:last-child{border:0}
+.codes small{color:var(--t2)}code{font:700 15px ui-monospace,monospace;letter-spacing:1px;direction:ltr}
+.wn{color:var(--warn);font-size:13px;font-weight:600;margin:10px 0}
+#toasts{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:8px;z-index:99;width:min(92vw,420px)}
+.toast{padding:12px 16px;border-radius:12px;background:var(--el);border:1px solid var(--bd);font-size:13.5px;box-shadow:0 8px 24px rgba(0,0,0,.3)}.toast.bad{border-color:var(--bad)}.toast.ok{border-color:var(--ok)}
+@media(max-width:600px){.stats{grid-template-columns:1fr 1fr}dialog{margin:auto auto 0;width:100%;max-width:none;border-radius:18px 18px 0 0}}
+</style>
+</head>
+<body data-theme="dark">
+<div class="w">
+  <div id="boot"><div class="sk"></div><div class="sk"></div></div>
+  <div id="app" hidden>
+    <div class="top">
+      <a href="dashboard.html" class="logo"><i>🎓</i><span>لوحة التحكم</span></a>
+      <button class="btn sm" id="tt" aria-label="تبديل المظهر">🌙</button>
+      <button class="btn sm" id="out">خروج</button>
+    </div>
+    <h1>الطلاب والتفعيل</h1>
+    <p class="sub" id="who"></p>
+    <div class="stats" id="stats"></div>
+    <div class="bar">
+      <input id="q" type="search" placeholder="ابحث بالاسم أو الرقم الجامعي" aria-label="بحث">
+      <button class="btn pri" id="add">+ إضافة طلاب</button>
+      <button class="btn" id="rf" aria-label="تحديث">↻</button>
+    </div>
+    <div class="bar" id="bulk" hidden><button class="btn" id="all"></button></div>
+    <div class="chips" id="chips"></div>
+    <div class="list" id="list"></div>
+  </div>
+</div>
+<dialog id="dlg"></dialog>
+<div id="toasts" aria-live="polite"></div>
+<script>
+const URL_="https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/smooth-handler",ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
+const $=s=>document.querySelector(s),TOKEN=localStorage.getItem("cess-session-token"),dlg=$("#dlg");
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const dig=s=>String(s).replace(/[٠-٩]/g,d=>d.charCodeAt(0)-1632).replace(/[۰-۹]/g,d=>d.charCodeAt(0)-1776);
+function leave(){localStorage.removeItem("cess-session-token");location.href="login.html"}
+async function call(a,i={}){let r;try{r=await fetch(URL_,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+ANON},body:JSON.stringify({action:a,input:{...i,token:TOKEN}})})}catch{throw new Error("تعذّر الاتصال بالخادم، تحقق من الإنترنت.")}
+const j=await r.json().catch(()=>({}));if(r.status===401)leave();if(!j.ok)throw new Error(j.error||"حدث خطأ غير متوقع");return j.data}
+function toast(m,t="ok"){const e=document.createElement("div");e.className="toast "+t;e.textContent=m;$("#toasts").append(e);setTimeout(()=>e.remove(),4200)}
+async function busy(b,fn){if(b.disabled)return;b.classList.add("loading");b.disabled=true;try{return await fn()}catch(e){toast(e.message,"bad")}finally{b.classList.remove("loading");b.disabled=false}}
+function modal(h){dlg.onclose=null;dlg.innerHTML=h;dlg.showModal()}
+function confirmBox(t,x,ok,danger){return new Promise(r=>{modal(`<h3>${t}</h3><p class="sub">${x}</p><div class="row"><button class="btn ${danger?"danger":"pri"}" id="y">${ok}</button><button class="btn" id="n">إلغاء</button></div>`);$("#y").onclick=()=>{dlg.close();r(true)};$("#n").onclick=()=>{dlg.close();r(false)};dlg.onclose=()=>r(false)})}
+async function copy(t){try{await navigator.clipboard.writeText(t)}catch{const a=document.createElement("textarea");a.value=t;document.body.append(a);a.select();document.execCommand("copy");a.remove()}}
+function theme(t){document.body.dataset.theme=t;localStorage.setItem("cess-theme",t);$("#tt").textContent=t==="dark"?"🌙":"☀️"}
+$("#tt").onclick=()=>theme(document.body.dataset.theme==="dark"?"light":"dark");theme(localStorage.getItem("cess-theme")||"dark");
+
+let S=[],F="all",Q="";
+const L={none:["بلا رمز","gray"],code:["رمز صادر","warn"],pending:["قيد التفعيل","info"],active:["مفعّل","ok"],suspended:["موقوف","bad"]};
+const match={all:()=>1,wait:s=>s.state==="code"||s.state==="pending",none:s=>s.state==="none",active:s=>s.state==="active",suspended:s=>s.state==="suspended"};
+async function load(quiet){if(!quiet)$("#list").innerHTML='<div class="sk"></div><div class="sk"></div><div class="sk"></div>';try{S=(await call("adminList")).students}catch(e){toast(e.message,"bad")}render()}
+function render(){
+  const n=k=>S.filter(match[k]).length;
+  $("#stats").innerHTML=[["all","الإجمالي"],["active","مفعّل"],["wait","بانتظار التفعيل"],["none","بلا رمز"]].map(([k,l])=>`<button class="st ${F===k?"on":""}" data-f="${k}"><b>${n(k)}</b><span>${l}</span></button>`).join("");
+  $("#chips").innerHTML=[["all","الكل"],["none","بلا رمز"],["wait","بانتظار التفعيل"],["active","مفعّل"],["suspended","موقوف"]].map(([k,l])=>`<button class="chip ${F===k?"on":""}" data-f="${k}">${l}</button>`).join("");
+  const z=n("none");$("#bulk").hidden=!z;$("#all").textContent=`إصدار رموز لكل من لا رمز له (${z})`;
+  const q=dig(Q).trim().toLowerCase(),rows=S.filter(match[F]).filter(s=>!q||s.student_id.includes(q)||(s.full_name||"").toLowerCase().includes(q));
+  $("#list").innerHTML=rows.length?rows.slice(0,300).map(row).join("")+(rows.length>300?`<div class="empty">يُعرض أول 300 فقط. استخدم البحث للوصول إلى البقية.</div>`:""):`<div class="empty">${S.length?"لا نتائج مطابقة.":"لا يوجد طلاب بعد.<br>اضغط «إضافة طلاب» والصق قائمة الأرقام الجامعية."}</div>`}
+function row(s){const[t,c]=L[s.state],A={none:[["issue","إصدار رمز","pri"]],code:[["issue","رمز جديد",""]],pending:[["issue","رمز جديد",""]],active:[["reset","إعادة تعيين",""],["suspend","إيقاف","dng"]],suspended:[["unsus","إلغاء الإيقاف",""],["reset","إعادة تعيين",""]]}[s.state];
+return `<div class="rs"><div class="av">${esc((s.full_name||s.student_id).trim().slice(0,1))}</div><div class="who"><b>${esc(s.full_name||"بدون اسم")}</b><span dir="ltr">${esc(s.student_id)}</span></div><span class="badge ${c}">${t}</span><div class="acts">${A.map(([a,l,k])=>`<button class="btn sm ${k}" data-a="${a}" data-id="${esc(s.student_id)}">${l}</button>`).join("")}</div></div>`}
+document.addEventListener("click",e=>{const f=e.target.closest("[data-f]");if(f){F=f.dataset.f;render()}});
+$("#q").oninput=e=>{Q=e.target.value;render()};
+$("#rf").onclick=e=>busy(e.currentTarget,()=>load(true));
+
+function showCodes(c){modal(`<h3>رموز التفعيل (${c.length})</h3><p class="wn">⚠️ احفظها الآن، لن تظهر مرة أخرى.</p><div class="codes">${c.map(x=>`<div><span>${esc(x.full_name||"—")} <small dir="ltr">${esc(x.student_id)}</small></span><code>${esc(x.code)}</code></div>`).join("")}</div><div class="row"><button class="btn pri" id="cp">نسخ الكل</button><button class="btn" id="dl">تنزيل CSV</button><button class="btn" id="x">إغلاق</button></div>`);
+const sf=v=>/^[=+\-@]/.test(v)?"'"+v:v;
+$("#cp").onclick=async()=>{await copy(c.map(x=>`${x.full_name||""}\t${x.student_id}\t${x.code}`).join("\n"));toast("تم النسخ")};
+$("#dl").onclick=()=>{const u=URL.createObjectURL(new Blob(["\ufeffالاسم,الرقم الجامعي,الرمز\n"+c.map(x=>`"${sf(x.full_name||"").replace(/"/g,'""')}",${x.student_id},${x.code}`).join("\n")],{type:"text/csv"})),a=document.createElement("a");a.href=u;a.download="activation-codes.csv";a.click();URL.revokeObjectURL(u)};
+$("#x").onclick=()=>dlg.close()}
+
+$("#list").onclick=async e=>{const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a,id=b.dataset.id,s=S.find(x=>x.student_id===id),n=esc(s.full_name||id);
+const C={issue:s.state==="none"?null:["رمز جديد؟",`سيُبطل الرمز السابق للطالب <b>${n}</b> ويُنشئ رمزًا جديدًا.`,"إنشاء رمز جديد"],
+reset:["إعادة تعيين الحساب؟",`سيُحذف حساب <b>${n}</b> وكلمة مروره ويخرج من كل أجهزته، ثم يُنشأ رمز جديد ليفعّل حسابه من جديد. استخدمها إن نسي بياناته أو سُرق حسابه.`,"إعادة التعيين"],
+suspend:["إيقاف الحساب؟",`سيُمنع <b>${n}</b> من الدخول فورًا ويخرج من كل أجهزته. يمكنك إلغاء الإيقاف لاحقًا.`,"إيقاف الحساب"],unsus:null}[a];
+if(C&&!await confirmBox(C[0],C[1],C[2],a!=="issue"))return;
+await busy(b,async()=>{
+ if(a==="issue"){const d=await call("adminIssueCodes",{ids:[id]});await load(true);showCodes(d.codes)}
+ else if(a==="reset"){const d=await call("adminResetAccount",{student_id:id});await load(true);showCodes([{student_id:id,full_name:s.full_name,code:d.code}])}
+ else{await call("adminSetStatus",{student_id:id,status:a==="suspend"?"suspended":"active"});await load(true);toast(a==="suspend"?"أُوقف الحساب":"أُلغي الإيقاف")}})};
+
+$("#all").onclick=async e=>{const ids=S.filter(s=>s.state==="none").map(s=>s.student_id);
+if(!await confirmBox("إصدار رموز للجميع؟",`ستُصدر رموز لـ <b>${ids.length}</b> طالب لا رمز لهم. الرموز تظهر مرة واحدة فقط، فجهّز نسخها أو تنزيلها.`,"إصدار الرموز"))return;
+await busy(e.currentTarget,async()=>{const d=await call("adminIssueCodes",{ids});await load(true);showCodes(d.codes)})};
+
+$("#add").onclick=()=>{modal(`<h3>إضافة طلاب</h3><p class="sub">الصق القائمة، كل طالب في سطر: الرقم الجامعي ثم الاسم (اختياري) ثم البريد الجامعي (اختياري). يمكنك نسخها مباشرة من Excel.</p><textarea id="ta" rows="7" placeholder="11443546&#9;أحمد محمد&#9;ahmed@uni.edu&#10;11443547&#9;سارة علي"></textarea><p class="sub" id="pv">لم تُدخل شيئًا بعد.</p><div class="row"><button class="btn pri" id="go" disabled>إضافة</button><button class="btn" id="x">إلغاء</button></div>`);
+let rows=[];
+$("#ta").oninput=()=>{const bad=[],seen=new Set();rows=[];$("#ta").value.split("\n").forEach(l=>{if(!l.trim())return;const p=l.split(/[\t,;،]+/).map(x=>x.trim()),id=dig(p[0]);if(!/^\d{4,20}$/.test(id)){bad.push(l);return}if(seen.has(id))return;seen.add(id);rows.push({student_id:id,full_name:p.slice(1).find(x=>x&&!x.includes("@"))||"",email:p.find((x,i)=>i&&x.includes("@"))||""})});
+$("#pv").innerHTML=rows.length||bad.length?`<span class="ok">✓ ${rows.length} صالح</span>${bad.length?` · <span class="bad">✗ ${bad.length} سطر مرفوض (الرقم الجامعي أرقام فقط): <span dir="auto">${esc(bad.slice(0,3).join(" | "))}</span></span>`:""}`:"لم تُدخل شيئًا بعد.";
+$("#go").disabled=!rows.length;$("#go").textContent=rows.length?`إضافة ${rows.length} طالب`:"إضافة"};
+$("#go").onclick=e=>busy(e.currentTarget,async()=>{const d=await call("adminAddStudents",{rows});dlg.close();toast(`أُضيف ${d.added} · حُدّث ${d.updated}${d.skipped?` · موجود مسبقًا ${d.skipped}`:""}`);await load(true)});
+$("#x").onclick=()=>dlg.close();$("#ta").focus()};
+
+$("#out").onclick=e=>busy(e.currentTarget,async()=>{try{await call("logout")}catch{}leave()});
+(async()=>{if(!TOKEN)return leave();try{const m=await call("me");if(!m.is_admin){location.replace("dashboard.html");return}
+$("#who").textContent="مرحبًا "+(m.member.full_name||m.member.student_id)+" — أنت مشرف";$("#boot").hidden=true;$("#app").hidden=false;load()}catch{leave()}})();
+</script>
+</body>
+</html>
