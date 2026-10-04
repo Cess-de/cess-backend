@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحتي — CESS-UofT</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0B132B;--bg:#0B132B;--accent:#FFC72C;--t1:#fff;--t2:#A8B3CC;--card:rgba(255,255,255,.04);--bd:rgba(255,255,255,.08)}
+[data-theme=light]{--bg:#F8F9FA;--t1:#0F172A;--t2:#64748B;--card:#fff;--bd:rgba(15,23,42,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;padding:20px;font-size:15px}
+.wrap{max-width:720px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;gap:10px}
+.logo{display:flex;align-items:center;gap:8px;font-weight:700;text-decoration:none;color:var(--t1)}
+.logo i{width:26px;height:26px;background:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:13px}
+.acts{display:flex;gap:8px}
+.tt,.out{height:32px;border-radius:999px;background:var(--card);border:1px solid var(--bd);color:var(--t1);cursor:pointer;font-family:inherit;font-size:13px}
+.tt{width:32px}.out{padding:0 14px;font-weight:600}
+.hello{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:24px;margin-bottom:16px}
+.hello h1{font-size:20px;font-weight:800;margin-bottom:6px}.hello p{font-size:13px;color:var(--t2)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px}
+.c b{display:block;font-size:14px;margin:6px 0 4px}.c span{font-size:12px;color:var(--t2)}
+.c .e{font-size:22px}
+.load{text-align:center;color:var(--t2);padding:80px 0}
+#app{display:none}
+</style>
+</head>
+<body data-theme="dark">
+<div class="wrap">
+  <div class="load" id="load">جارٍ التحقق من الجلسة...</div>
+  <div id="app">
+    <div class="top">
+      <a href="index.html" class="logo"><i>🎓</i><span>CESS-UofT</span></a>
+      <div class="acts"><button class="tt" id="tt">🌙</button><button class="out" id="out">خروج</button></div>
+    </div>
+    <div class="hello"><h1 id="name"></h1><p id="sid"></p></div>
+    <div class="grid">
+      <div class="c"><div class="e">📅</div><b>الأنشطة</b><span>قريبًا</span></div>
+      <div class="c"><div class="e">📚</div><b>الموارد</b><span>قريبًا</span></div>
+      <div class="c"><div class="e">📢</div><b>الإعلانات</b><span>قريبًا</span></div>
+      <div class="c"><div class="e">🗳️</div><b>الانتخابات</b><span>قريبًا</span></div>
+    </div>
+  </div>
+</div>
+<script>
+const AUTH_URL="https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/smooth-handler";
+const ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
+const $=id=>document.getElementById(id),body=document.body;
+function theme(t){body.dataset.theme=t;localStorage.setItem("cess-theme",t);$("tt").textContent=t==="dark"?"🌙":"☀️"}
+$("tt").onclick=()=>theme(body.dataset.theme==="dark"?"light":"dark");theme(localStorage.getItem("cess-theme")||"dark");
+async function call(action,input){const r=await fetch(AUTH_URL,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+ANON},body:JSON.stringify({action,input})});const j=await r.json().catch(()=>({}));if(!j.ok)throw new Error(j.error||"error");return j.data}
+function leave(){localStorage.removeItem("cess-session-token");localStorage.removeItem("cess-member");location.href="login.html"}
+(async()=>{
+  const token=localStorage.getItem("cess-session-token");
+  if(!token)return leave();
+  try{
+    const {member}=await call("me",{token});
+    $("name").textContent="مرحبًا "+(member.full_name||"بك");
+    $("sid").textContent="الرقم الجامعي: "+member.student_id;
+    $("load").style.display="none";$("app").style.display="block";
+  }catch(e){leave()}
+})();
+$("out").onclick=async()=>{try{await call("logout",{token:localStorage.getItem("cess-session-token")})}catch(e){}leave()};
+</script>
+</body>
+</html>
