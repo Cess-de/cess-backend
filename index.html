@@ -511,6 +511,29 @@
   setTheme(getSavedTheme());
   applyLanguage(getSavedLang());
 </script>
+<script>
+(async () => {
+  const t = localStorage.getItem("cess-session-token");
+  if (!t) return;
+  try {
+    const r = await fetch("https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/smooth-handler", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0" },
+      body: JSON.stringify({ action: "me", input: { token: t } })
+    });
+    const j = await r.json();
+    if (!j.ok) return;
+    const en = document.documentElement.lang === "en", adm = j.data.is_admin;
+    const dest = adm ? "admin.html" : "dashboard.html";
+    const label = adm ? (en ? "Admin panel" : "لوحة التحكم") : (en ? "My dashboard" : "لوحتي");
+    const login = document.querySelector('.nav-actions a[href="login.html"]');
+    const join = document.querySelector('.nav-actions a[href="activate.html"]');
+    if (login) { login.href = dest; login.textContent = label; login.removeAttribute("data-i18n"); }
+    if (join) join.style.display = "none";
+    document.querySelectorAll('.hero-actions a[href="activate.html"]').forEach(a => { a.href = dest; a.textContent = label; a.removeAttribute("data-i18n"); });
+  } catch (e) {}
+})();
+</script>
 
 </body>
 </html>
