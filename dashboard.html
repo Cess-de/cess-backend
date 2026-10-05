@@ -43,8 +43,8 @@ dialog{border:1px solid var(--bd);border-radius:18px;background:var(--el);color:
 dialog::backdrop{background:rgba(0,0,0,.55)}dialog h3{font-size:18px;font-weight:800}
 .row{display:flex;gap:8px;margin-top:16px}.row .btn{flex:1}
 #toasts{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:8px;z-index:99;width:min(92vw,420px)}
-.toast{padding:12px 16px;border-radius:12px;background:var(--el);border:1px solid var(--bd);font-size:13.5px;box-shadow:0 8px 24px rgba(0,0,0,.3)}.toast.bad{border-color:var(--bad)}.toast.ok{border-color:var(--ok)}
-@media(max-width:520px){.grid{grid-template-columns:1fr 1fr}dialog{margin:auto auto 0;width:100%;max-width:none;border-radius:18px 18px 0 0}}
+.toast{padding:12px 16px;border-radius:12px;background:var(--el);border:1px solid var(--bd);font-size:13.5px;line-height:1.6;box-shadow:0 8px 24px rgba(0,0,0,.3)}.toast.bad{border-color:var(--bad)}.toast.ok{border-color:var(--ok)}
+@media(max-width:520px){dialog{margin:auto auto 0;width:100%;max-width:none;border-radius:18px 18px 0 0}}
 @media(prefers-reduced-motion:reduce){.sk{animation:none}}
 </style>
 </head>
@@ -77,7 +77,8 @@ dialog::backdrop{background:rgba(0,0,0,.55)}dialog h3{font-size:18px;font-weight
         <h2>تغيير كلمة المرور</h2>
         <p class="sub">بعد التغيير تخرج بقية أجهزتك تلقائيًا، وتبقى أنت داخل هذا الجهاز.</p>
         <div class="fld"><label>كلمة المرور الحالية</label><input id="p0" type="password" dir="ltr" autocomplete="current-password"></div>
-        <div class="fld"><label>كلمة المرور الجديدة (10 أحرف فأكثر)</label><input id="p1" type="password" dir="ltr" autocomplete="new-password"><small id="e1"></small></div>
+        <div class="fld"><label>كلمة المرور الجديدة</label><input id="p1" type="password" dir="ltr" autocomplete="new-password"><small id="e1"></small></div>
+        <div id="rules" style="margin:-8px 0 14px"></div>
         <div class="fld"><label>تأكيد كلمة المرور الجديدة</label><input id="p2" type="password" dir="ltr" autocomplete="new-password"><small id="e2"></small></div>
         <button class="btn pri" id="chg" style="width:100%" disabled>حفظ كلمة المرور</button>
       </div>
@@ -91,24 +92,26 @@ dialog::backdrop{background:rgba(0,0,0,.55)}dialog h3{font-size:18px;font-weight
 </div>
 <dialog id="dlg"></dialog>
 <div id="toasts" aria-live="polite"></div>
+<script src="cess.js"></script>
 <script>
-const URL_="https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/smooth-handler",ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
+const URL_="https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/"+CESS_FN,ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
 const $=s=>document.querySelector(s),TOKEN=localStorage.getItem("cess-session-token"),dlg=$("#dlg");
 function leave(){localStorage.removeItem("cess-session-token");localStorage.removeItem("cess-member");location.href="login.html"}
 async function call(a,i={}){let r;try{r=await fetch(URL_,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+ANON},body:JSON.stringify({action:a,input:{...i,token:TOKEN}})})}catch{throw new Error("تعذّر الاتصال بالخادم، تحقق من الإنترنت.")}
 const j=await r.json().catch(()=>({}));if(r.status===401&&a!=="changePassword")leave();if(!j.ok)throw new Error(j.error||"حدث خطأ غير متوقع");return j.data}
-function toast(m,t="ok"){const e=document.createElement("div");e.className="toast "+t;e.textContent=m;$("#toasts").append(e);setTimeout(()=>e.remove(),4200)}
+function toast(m,t="ok"){const e=document.createElement("div");e.className="toast "+t;e.textContent=m;$("#toasts").append(e);setTimeout(()=>e.remove(),t==="bad"?7000:4200)}
 async function busy(b,fn){if(b.disabled)return;b.classList.add("loading");b.disabled=true;try{return await fn()}catch(e){toast(e.message,"bad")}finally{b.classList.remove("loading");b.disabled=false;if(b.id==="chg")check()}}
 function theme(t){document.body.dataset.theme=t;localStorage.setItem("cess-theme",t);$("#tt").textContent=t==="dark"?"🌙":"☀️"}
 $("#tt").onclick=()=>theme(document.body.dataset.theme==="dark"?"light":"dark");theme(localStorage.getItem("cess-theme")||"dark");
 function view(v){$("#v-home").hidden=v!=="home";$("#v-sec").hidden=v!=="sec";scrollTo(0,0)}
 $("#go-sec").onclick=()=>view("sec");$("#back").onclick=()=>view("home");
 function check(){const a=$("#p0").value,b=$("#p1").value,c=$("#p2").value;
-$("#e1").textContent=b&&b.length<10?"يجب ألا تقل عن 10 أحرف.":b&&b===a?"اختر كلمة مختلفة عن الحالية.":"";
+$("#e1").textContent=b&&b===a?"اختر كلمة مختلفة عن الحالية.":"";
 $("#e2").textContent=c&&c!==b?"كلمتا المرور غير متطابقتين.":"";
-$("#chg").disabled=!(a&&b.length>=10&&b!==a&&b===c)}
+$("#chg").disabled=!(a&&!pwErr(b)&&b!==a&&b===c)}
 ["p0","p1","p2"].forEach(i=>$("#"+i).oninput=check);
-$("#chg").onclick=e=>busy(e.currentTarget,async()=>{await call("changePassword",{current_password:$("#p0").value,new_password:$("#p1").value});["p0","p1","p2"].forEach(i=>$("#"+i).value="");toast("تم تغيير كلمة المرور");view("home")});
+pwMeter($("#p1"),$("#rules"));
+$("#chg").onclick=e=>busy(e.currentTarget,async()=>{await call("changePassword",{current_password:$("#p0").value,new_password:$("#p1").value});["p0","p1","p2"].forEach(i=>$("#"+i).value="");$("#p1").dispatchEvent(new Event("input"));toast("تم تغيير كلمة المرور");view("home")});
 $("#all").onclick=()=>{dlg.innerHTML=`<h3>الخروج من كل الأجهزة؟</h3><p class="sub" style="margin-top:8px">ستخرج من هذا الجهاز وكل الأجهزة الأخرى، وتحتاج إلى تسجيل الدخول من جديد.</p><div class="row"><button class="btn danger" id="y">خروج من الكل</button><button class="btn" id="n">إلغاء</button></div>`;dlg.showModal();
 $("#n").onclick=()=>dlg.close();$("#y").onclick=e=>busy(e.currentTarget,async()=>{await call("logoutAll");leave()})};
 $("#out").onclick=e=>busy(e.currentTarget,async()=>{try{await call("logout")}catch{}leave()});
