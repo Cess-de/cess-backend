@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>فحص</title></head>
+<body style="font-family:sans-serif;padding:16px;line-height:2;font-size:16px">
+<h3>فحص تعديل الطالب</h3>
+<label>اسم الدالة (من قائمة Edge Functions)</label>
+<input id="fn" value="smooth-handler" dir="ltr" style="width:100%;padding:12px;font-size:16px;margin:4px 0 10px">
+<label>رقمك الجامعي</label>
+<input id="id" inputmode="numeric" style="width:100%;padding:12px;font-size:16px;margin:4px 0 10px">
+<button id="go" style="padding:12px 20px;font-size:16px">ابدأ الفحص</button>
+<div id="o" style="margin-top:16px"></div>
+<script>
+const BASE="https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/",
+A="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
+const T=localStorage.getItem("cess-session-token");
+async function c(fn,a,i){const r=await fetch(BASE+fn,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+A},body:JSON.stringify({action:a,input:{...i,token:T}})});let j={};try{j=await r.json()}catch(e){}return{s:r.status,j}}
+document.getElementById("go").onclick=async()=>{
+  const o=document.getElementById("o"),fn=document.getElementById("fn").value.trim(),id=document.getElementById("id").value.trim(),L=[];
+  o.innerHTML="جارٍ الفحص...";
+  try{
+    const me=await c(fn,"me",{});
+    if(me.s===404){o.innerHTML="❌ لا توجد دالة بهذا الاسم: "+fn;return}
+    L.push("1) الدالة موجودة: ✅ ("+fn+")");
+    L.push(me.s===200&&me.j.data&&me.j.data.is_admin?"2) الجلسة والصلاحية: ✅ مشرف":"2) الجلسة والصلاحية: ❌ سجّل الدخول من جديد ("+me.s+")");
+    const ls=await c(fn,"adminList",{});
+    const has=ls.s===200&&ls.j.data&&ls.j.data.students.length&&("batch" in ls.j.data.students[0]);
+    L.push("3) نسخة الدالة: "+(has?"✅ جديدة":"❌ قديمة (لم يصلها آخر كود)"));
+    if(!id){L.push("4) اكتب رقمك الجامعي لإتمام فحص التعديل")}
+    else{const up=await c(fn,"adminUpdateStudent",{student_id:id,full_name:"اختبار",batch:"2022",email:""});
+    L.push("4) التعديل: "+(up.s===200&&up.j.ok?"✅ يعمل":"❌ فشل — "+(up.j.error||("HTTP "+up.s))))}
+  }catch(e){L.push("خطأ في الاتصال: "+e.message)}
+  o.innerHTML=L.map(x=>"<div>"+x+"</div>").join("");
+};
+</script></body></html>
