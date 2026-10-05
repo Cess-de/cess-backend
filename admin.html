@@ -11,10 +11,10 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Inter,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;font-size:15px;padding:16px 16px calc(32px + env(safe-area-inset-bottom))}
 .w{max-width:900px;margin:0 auto}[hidden]{display:none!important}
-.top{display:flex;align-items:center;gap:10px}
-.logo{display:flex;align-items:center;gap:8px;font-weight:800;text-decoration:none;color:var(--t1);flex:1}
+.top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:8px;font-weight:800;text-decoration:none;color:var(--t1);flex:1;min-width:130px}
 .logo i{width:28px;height:28px;background:var(--ac);border-radius:7px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:14px}
-.btn{position:relative;height:40px;padding:0 16px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--t1);font:600 13.5px Inter,sans-serif;cursor:pointer;--spc:var(--t1);white-space:nowrap}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 16px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--t1);font:600 13.5px Inter,sans-serif;cursor:pointer;text-decoration:none;--spc:var(--t1);white-space:nowrap}
 .btn:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 .btn:disabled{opacity:.55;cursor:not-allowed}
 .pri{background:var(--ac);color:#0B132B;border-color:transparent;--spc:#0B132B}
@@ -63,7 +63,8 @@ textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--bd);b
 .codes small{color:var(--t2)}code{font:700 15px ui-monospace,monospace;letter-spacing:1px;direction:ltr}
 .wn{color:var(--warn);font-size:13px;font-weight:600;margin:10px 0}
 #toasts{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:8px;z-index:99;width:min(92vw,420px)}
-.toast{padding:12px 16px;border-radius:12px;background:var(--el);border:1px solid var(--bd);font-size:13.5px;box-shadow:0 8px 24px rgba(0,0,0,.3)}.toast.bad{border-color:var(--bad)}.toast.ok{border-color:var(--ok)}
+.toast{padding:12px 16px;border-radius:12px;background:var(--el);border:1px solid var(--bd);font-size:13.5px;line-height:1.6;box-shadow:0 8px 24px rgba(0,0,0,.3)}.toast.bad{border-color:var(--bad)}.toast.ok{border-color:var(--ok)}
+.toast.in{position:fixed;top:calc(12px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:min(92vw,420px);z-index:9}
 @media(max-width:600px){.stats{grid-template-columns:1fr 1fr}dialog{margin:auto auto 0;width:100%;max-width:none;border-radius:18px 18px 0 0}}
 </style>
 </head>
@@ -73,7 +74,8 @@ textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--bd);b
   <div id="app" hidden>
     <div class="top">
       <a href="dashboard.html" class="logo"><i>🎓</i><span>لوحة التحكم</span></a>
-<a class="btn sm" href="index.html" style="display:inline-flex;align-items:center">الرئيسية</a><a class="btn sm" href="dashboard.html" style="display:inline-flex;align-items:center">لوحة العضو</a>
+      <a class="btn sm" href="index.html">الرئيسية</a>
+      <a class="btn sm" href="dashboard.html">لوحة العضو</a>
       <button class="btn sm" id="tt" aria-label="تبديل المظهر">🌙</button>
       <button class="btn sm" id="out">خروج</button>
     </div>
@@ -107,7 +109,7 @@ const hn=s=>nz(s).toLowerCase().replace(/[أإآ]/g,"ا").replace(/ة/g,"ه").re
 function leave(){localStorage.removeItem("cess-session-token");location.href="login.html"}
 async function call(a,i={}){let r;try{r=await fetch(URL_,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+ANON},body:JSON.stringify({action:a,input:{...i,token:TOKEN}})})}catch{throw new Error("تعذّر الاتصال بالخادم، تحقق من الإنترنت.")}
 const j=await r.json().catch(()=>({}));if(r.status===401)leave();if(!j.ok)throw new Error(j.error||"حدث خطأ غير متوقع");return j.data}
-function toast(m,t="ok"){const e=document.createElement("div");e.className="toast "+t;e.textContent=m;$("#toasts").append(e);setTimeout(()=>e.remove(),4200)}
+function toast(m,t="ok"){const e=document.createElement("div");e.className="toast "+t+(dlg.open?" in":"");e.textContent=m;(dlg.open?dlg:$("#toasts")).append(e);setTimeout(()=>e.remove(),t==="bad"?7000:4200)}
 async function busy(b,fn){if(b.disabled)return;b.classList.add("loading");b.disabled=true;try{return await fn()}catch(e){toast(e.message,"bad")}finally{b.classList.remove("loading");b.disabled=false}}
 function modal(h){dlg.onclose=null;dlg.innerHTML=h;dlg.showModal()}
 function confirmBox(t,x,ok,danger){return new Promise(r=>{modal(`<h3>${t}</h3><p class="sub">${x}</p><div class="row"><button class="btn ${danger?"danger":"pri"}" id="y">${ok}</button><button class="btn" id="n">إلغاء</button></div>`);$("#y").onclick=()=>{dlg.close();r(true)};$("#n").onclick=()=>{dlg.close();r(false)};dlg.onclose=()=>r(false)})}
