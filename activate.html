@@ -45,8 +45,9 @@ h2{font-size:19px;font-weight:800;margin-bottom:6px}.sub{font-size:13px;color:va
 
   <div class="step" id="s2">
     <h2>كلمة المرور</h2>
-    <p class="sub">اختر كلمة مرور لا تقل عن 10 أحرف.</p>
+    <p class="sub">اختر كلمة مرور تحقق الشروط الظاهرة أسفل الحقل.</p>
     <div class="f"><label>كلمة المرور</label><input id="pw" type="password" dir="ltr" autocomplete="new-password"></div>
+    <div id="rules" style="margin:-6px 0 14px"></div>
     <div class="f"><label>تأكيد كلمة المرور</label><input id="pw2" type="password" dir="ltr" autocomplete="new-password"></div>
     <button class="btn" id="b2">متابعة</button>
   </div>
@@ -70,8 +71,9 @@ h2{font-size:19px;font-weight:800;margin-bottom:6px}.sub{font-size:13px;color:va
 </div>
 <div class="foot">لديك حساب مفعّل؟ <a href="login.html">تسجيل الدخول</a></div>
 
+<script src="cess.js"></script>
 <script>
-const AUTH_URL="https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/smooth-handler";
+const AUTH_URL="https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/"+CESS_FN;
 const ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
 const Q={q1:"ما اسم أول مدرسة التحقت بها؟",q2:"ما اسم أقرب صديق في طفولتك؟",q3:"ما اسم الشارع الذي نشأت فيه؟",q4:"ما لقب معلمك المفضل؟",q5:"في أي مدينة وُلد والدك؟",q6:"ما ماركة أول سيارة امتلكتها عائلتك؟"};
 const $=id=>document.getElementById(id);let token="",step=1;
@@ -85,8 +87,9 @@ async function call(action,input){const r=await fetch(AUTH_URL,{method:"POST",he
 function run(btn,fn){btn.onclick=async()=>{err("");btn.disabled=true;try{await fn()}catch(e){err(e.message)}finally{btn.disabled=false}}}
 $("code").oninput=e=>{let v=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,8);e.target.value=v.length>4?v.slice(0,4)+"-"+v.slice(4):v};
 run($("b1"),async()=>{const sid=$("sid").value.trim(),code=$("code").value.trim();if(!sid||code.length<9)throw new Error("أدخل الرقم الجامعي ورمز التفعيل كاملًا.");token=(await call("verifyActivationCode",{student_id:sid,code})).activation_token;go(2)});
-run($("b2"),async()=>{const pw=$("pw").value;if(pw.length<10)throw new Error("كلمة المرور يجب ألا تقل عن 10 أحرف.");if(pw!==$("pw2").value)throw new Error("كلمتا المرور غير متطابقتين.");token=(await call("setPassword",{activation_token:token,password:pw,confirm_password:$("pw2").value})).activation_token;go(3)});
+run($("b2"),async()=>{const pw=$("pw").value,pe=pwErr(pw);if(pe)throw new Error(pe);if(pw!==$("pw2").value)throw new Error("كلمتا المرور غير متطابقتين.");token=(await call("setPassword",{activation_token:token,password:pw,confirm_password:$("pw2").value})).activation_token;go(3)});
 run($("b3"),async()=>{if($("q1").value===$("q2").value)throw new Error("اختر سؤالين مختلفين.");if(!$("a1").value.trim()||!$("a2").value.trim())throw new Error("أجب عن السؤالين.");await call("setSecurityQuestions",{activation_token:token,q1_id:$("q1").value,a1:$("a1").value,q2_id:$("q2").value,a2:$("a2").value});go(4)});
+pwMeter($("pw"),$("rules"));
 </script>
 </body>
 </html>
