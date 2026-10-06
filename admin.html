@@ -208,5 +208,6 @@ $("#out").onclick=e=>busy(e.currentTarget,async()=>{try{await call("logout")}cat
 (async()=>{if(!TOKEN)return leave();try{const m=await call("me");if(!m.is_admin){location.replace("dashboard.html");return}
 $("#who").textContent="مرحبًا "+(m.member.full_name||m.member.student_id)+" — أنت مشرف";$("#boot").hidden=true;$("#app").hidden=false;tabs();load()}catch{leave()}})();
 </script>
+<script src="admin-ext.js"></script>
 </body>
 </html>
