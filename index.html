@@ -534,6 +534,33 @@
   } catch (e) {}
 })();
 </script>
+<script>
+(async () => {
+  try {
+    const r = await fetch("https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/smooth-handler", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0" },
+      body: JSON.stringify({ action: "siteSettings", input: {} })
+    });
+    const j = await r.json();
+    if (!j.ok) return;
+    const S = j.data.settings;
+    for (const k in S) {
+      if (k.startsWith("social_")) continue;
+      if (S[k].ar) TRANSLATIONS.ar[k] = S[k].ar;
+      if (S[k].en) TRANSLATIONS.en[k] = S[k].en;
+    }
+    applyLanguage(getSavedLang());
+    const L = { facebook: "linkFacebook", instagram: "linkInstagram", x: "linkX", linkedin: "linkLinkedin", whatsapp: "linkWhatsapp", telegram: "linkTelegram", email: "linkEmail" };
+    for (const n in L) {
+      const e = document.getElementById(L[n]), v = (S["social_" + n] || {}).ar;
+      if (!e) continue;
+      if (v) { e.href = n === "email" ? "mailto:" + v : v; e.target = "_blank"; e.rel = "noopener"; }
+      else e.style.display = "none";
+    }
+  } catch (e) {}
+})();
+</script>
 
 </body>
 </html>
