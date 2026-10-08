@@ -215,11 +215,13 @@ $("#save").onclick=e=>busy(e.currentTarget,async()=>{
   const links=[...document.querySelectorAll("#lk input")].map(i=>i.value.trim()).filter(Boolean);
   if(links.some(u=>!pfPlat(u)))throw new Error("يوجد رابط غير صالح، راجع الروابط.");
   await call("pfSave",{headline:$("#hl").value,bio:$("#bio").value,skills:SK,links,visibility:document.querySelector("input[name=vis]:checked").value});
-  toast("تم حفظ ملفك");await load();
+    await load();location.href="members.html?id="+encodeURIComponent(P.pid);
 });
 
 async function load(){
-  P=await call("pfGet");
+    P=await call("pfGet");
+  if(FIRST&&P.exists&&!/edit/.test(location.search)){location.replace("members.html?id="+encodeURIComponent(P.pid));return}
+  FIRST=false;
   $("#nm").textContent=P.name||"—";$("#bt").textContent=P.batch?"دفعة "+P.batch:"";
   $("#hl").value=P.headline||"";$("#bio").value=P.bio||"";cnt();
   SK=[...(P.skills||[])];drawSK();
