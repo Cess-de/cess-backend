@@ -123,5 +123,8 @@ $("#name").textContent="مرحبًا "+(n||"بك");$("#sid").textContent="الر
 if(m.is_admin){$("#adm").hidden=false;$("#role").hidden=false}
 $("#boot").hidden=true;$("#app").hidden=false}catch{leave()}})();
 </script>
+  <script>
+(()=>{const t=setInterval(()=>{if(!$("#app").hidden){clearInterval(t);call("pfGet").then(d=>{if(d&&d.photo)$("#av").innerHTML=`<img src="${d.photo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`}).catch(()=>{})}},300)})();
+</script>
 </body>
 </html>
