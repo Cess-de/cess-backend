@@ -65,7 +65,7 @@ h1{font-size:22px;font-weight:800}.sub{font-size:13px;color:var(--t2);line-heigh
 <script src="cess.js"></script>
 <script src="pf.js"></script>
 <script>
-const URL_="https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/"+CESS_FN,ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
+const URL_="https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/"+CESS_FN,ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeHhwYnVxZiIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzg5Nzk0MDMyLCJleHAiOjIxMDUzNzAwMzJ9.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
 const $=s=>document.querySelector(s);let TOKEN=localStorage.getItem("cess-session-token");
 const PID=new URLSearchParams(location.search).get("id");
 function leave(){localStorage.removeItem("cess-session-token");location.href="login.html"}
@@ -100,7 +100,7 @@ async function showProfile(){
   const ach=(d.achievements||[]).map(x=>`<div class="ach"><b>${esc(x.title)}</b>${x.verified?'<span class="vf">✓ موثّق من الجمعية</span>':""}${x.date?`<div class="sub" style="margin:2px 0">${esc(x.date)}</div>`:""}${x.description?`<p>${esc(x.description)}</p>`:""}${x.url?`<a class="lnk" href="${esc(x.url)}" target="_blank" rel="noopener">رابط الإنجاز ↗</a>`:""}</div>`).join("");
   box.innerHTML=`<div style="margin-bottom:12px"><a class="btn sm" href="${TOKEN?"members.html":"index.html"}">← رجوع</a></div>
   ${d.blocked?'<div class="note">⚠️ هذا الملف مخفي من قِبل المشرف ولا يراه غيرك والمشرفون.</div>':d.visibility==="hidden"?'<div class="note">هذا الملف مخفي، لا يراه غيرك والمشرفون.</div>':""}
-  <div class="hero2"><div class="av big">${ini(d.name,d.photo)}</div><div style="flex:1;min-width:200px"><h1>${esc(d.name||"")}</h1><p class="sub" style="margin:4px 0">${d.batch?"دفعة "+esc(d.batch):""}${d.headline?" · "+esc(d.headline):""}</p><div class="socs">${pfIcons(d.links)}</div>${d.self?'<a class="btn pri sm" style="margin-top:10px" href="profile.html">تعديل ملفي</a>':""}</div></div>
+  <div class="hero2"><div class="av big">${ini(d.name,d.photo)}</div><div style="flex:1;min-width:200px"><h1>${esc(d.name||"")}</h1><p class="sub" style="margin:4px 0">${d.batch?"دفعة "+esc(d.batch):""}${d.headline?" · "+esc(d.headline):""}</p><div class="socs">${pfIcons(d.links)}</div>${d.self?'<a class="btn pri sm" style="margin-top:10px" href="profile.html?edit=1">تعديل ملفي</a>':""}</div></div>
   ${d.bio?`<div class="panel"><h2>نبذة</h2><p style="white-space:pre-wrap;line-height:1.9">${esc(d.bio)}</p></div>`:""}
   ${(d.skills||[]).length?`<div class="panel"><h2>المهارات</h2>${d.skills.map(s=>`<span class="tag2">${esc(s)}</span>`).join("")}</div>`:""}
   <div class="panel"><h2>الإنجازات</h2>${ach||'<p class="sub">لا توجد إنجازات بعد.</p>'}</div>`;
