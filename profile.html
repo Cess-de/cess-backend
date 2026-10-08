@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ملفي الشخصي — CESS-UofT</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--bg:#0B132B;--el:#141d38;--ac:#FFC72C;--t1:#fff;--t2:#A8B3CC;--card:rgba(255,255,255,.04);--bd:rgba(255,255,255,.1);--ok:#22C55E;--bad:#EF4444}
+[data-theme=light]{--bg:#F4F6F9;--el:#fff;--t1:#0F172A;--t2:#64748B;--card:#fff;--bd:rgba(15,23,42,.1);--ok:#15803D}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;font-size:15px;padding:16px 16px calc(40px + env(safe-area-inset-bottom))}
+.w{max-width:720px;margin:0 auto}[hidden]{display:none!important}
+.top{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:8px;font-weight:800;text-decoration:none;color:var(--t1);flex:1;min-width:120px}
+.logo i{width:28px;height:28px;background:var(--ac);border-radius:7px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:14px}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 16px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--t1);font:600 13.5px Inter,sans-serif;cursor:pointer;text-decoration:none;--spc:var(--t1);white-space:nowrap}
+.btn:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.pri{background:var(--ac);color:#0B132B;border-color:transparent;--spc:#0B132B}.danger{background:var(--bad);color:#fff;border-color:transparent;--spc:#fff}
+.dng{color:var(--bad)}.sm{height:34px;padding:0 12px;font-size:12.5px}
+.loading{color:transparent!important;pointer-events:none}
+.loading::after{content:"";position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border:2px solid var(--spc);border-top-color:transparent;border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+h1{font-size:22px;font-weight:800}.sub{font-size:13px;color:var(--t2);line-height:1.7;margin:4px 0 12px}
+.panel{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:20px;margin-bottom:14px}
+.panel h2{font-size:16px;font-weight:800;margin-bottom:4px}
+.fld{margin-bottom:12px}.fld label{display:block;font-size:12.5px;font-weight:600;color:var(--t2);margin-bottom:6px}
+.fld input,.fld textarea,.chipin input{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--t1);font:inherit}
+.fld textarea{resize:vertical;line-height:1.8}
+.pbox{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pav{width:96px;height:96px;border-radius:50%;background:var(--ac);color:#0B132B;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:800;overflow:hidden;flex-shrink:0}
+.pav img{width:100%;height:100%;object-fit:cover}
+.tag2{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:4px 12px;border-radius:999px;border:1px solid var(--bd);margin:0 0 6px 6px}
+.tag2 button{background:none;border:0;color:var(--t2);cursor:pointer;font-size:15px}
+.lkr{display:flex;gap:8px;align-items:flex-start;margin-bottom:10px}.lkf{flex:1}.lkf small{display:block;min-height:16px;font-size:12px;margin-top:3px}
+.soc{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--bd);background:var(--card);color:var(--t1);text-decoration:none;font-size:18px;flex-shrink:0}
+.vis{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--bd);border-radius:12px;margin-bottom:8px;cursor:pointer}
+.vis input{margin-top:4px;width:18px;height:18px;accent-color:#FFC72C}.vis b{display:block;font-size:14px}.vis span{font-size:12.5px;color:var(--t2)}
+.ach{display:flex;gap:10px;justify-content:space-between;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--bd)}.ach:last-child{border:0}
+.ach p{font-size:13px;color:var(--t2);line-height:1.7}.lnk{font-size:12.5px;color:var(--ac);text-decoration:none}
+.vf{font-size:11.5px;font-weight:700;color:var(--ok);border:1px solid var(--ok);border-radius:999px;padding:1px 8px;margin-inline-start:8px}
+.acts{display:flex;gap:6px}.empty{padding:18px;text-align:center;color:var(--t2)}
+.note{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);color:var(--bad);border-radius:12px;padding:12px;font-size:13px;margin-bottom:14px}
+.sk{height:80px;margin:8px 0;border-radius:14px;background:linear-gradient(90deg,var(--card),var(--bd),var(--card));background-size:200% 100%;animation:sh 1.2s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+dialog{border:1px solid var(--bd);border-radius:18px;background:var(--el);color:var(--t1);padding:24px;width:min(92vw,460px);margin:auto}
+dialog::backdrop{background:rgba(0,0,0,.55)}dialog h3{font-size:18px;font-weight:800;margin-bottom:12px}
+.row{display:flex;gap:8px;margin-top:14px}.row .btn{flex:1}
+#toasts{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:8px;z-index:99;width:min(92vw,420px)}
+.toast{padding:12px 16px;border-radius:12px;background:var(--el);border:1px solid var(--bd);font-size:13.5px;line-height:1.6;box-shadow:0 8px 24px rgba(0,0,0,.3)}.toast.bad{border-color:var(--bad)}.toast.ok{border-color:var(--ok)}
+.toast.in{position:fixed;top:calc(12px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:min(92vw,420px);z-index:9}
+@media(max-width:520px){dialog{margin:auto auto 0;width:100%;max-width:none;border-radius:18px 18px 0 0}}
+@media(prefers-reduced-motion:reduce){.sk{animation:none}}
+</style>
+</head>
+<body data-theme="dark">
+<div class="w">
+  <div id="boot"><div class="sk"></div><div class="sk"></div></div>
+  <div id="app" hidden>
+    <div class="top">
+      <a href="dashboard.html" class="logo"><i>🎓</i><span>CESS-UofT</span></a>
+      <a class="btn sm" href="dashboard.html">← لوحتي</a>
+      <a class="btn sm" href="members.html">الأعضاء</a>
+      <button class="btn sm" id="tt" aria-label="تبديل المظهر">🌙</button>
+    </div>
+    <h1>ملفي الشخصي</h1>
+    <p class="sub">هكذا يتعرف عليك أعضاء الجمعية. كل ما تكتبه هنا يظهر بحسب خصوصيتك.</p>
+    <div class="note" id="blk" hidden>⚠️ أخفى المشرف ملفك مؤقتًا، فلا يظهر لغيرك. تواصل مع الجمعية لمعرفة السبب.</div>
+
+    <div class="panel">
+      <div class="pbox">
+        <div class="pav" id="pav"></div>
+        <div>
+          <b id="nm" style="font-size:17px"></b>
+          <div class="sub" id="bt" style="margin:2px 0 10px"></div>
+          <label class="btn pri sm" id="pl" for="file">تغيير الصورة</label>
+          <input type="file" id="file" accept="image/*" hidden>
+          <button class="btn sm dng" id="rmph" type="button">حذف الصورة</button>
+        </div>
+      </div>
+      <p class="sub" style="margin:12px 0 0">الاسم والدفعة من سجلات الجمعية، وللتعديل راجع المشرف. تُصغَّر الصورة تلقائيًا.</p>
+    </div>
+
+    <div class="panel">
+      <h2>نبذة عنك</h2>
+      <div class="fld" style="margin-top:12px"><label>العنوان المهني (مثال: طالب هندسة مدنية، مهتم بالإنشاءات)</label><input id="hl" maxlength="100"></div>
+      <div class="fld"><label>النبذة <span id="cnt" style="float:left"></span></label><textarea id="bio" rows="5" maxlength="1000" placeholder="عرّف بنفسك واهتماماتك وما تطمح إليه..."></textarea></div>
+    </div>
+
+    <div class="panel">
+      <h2>المهارات</h2>
+      <p class="sub">اكتب مهارة واضغط Enter (حتى 15 مهارة).</p>
+      <div id="skl"></div>
+      <div class="chipin"><input id="ski" maxlength="30" placeholder="مثال: AutoCAD"></div>
+    </div>
+
+    <div class="panel">
+      <h2>الروابط</h2>
+      <p class="sub">الصق رابط حسابك وسنتعرف على المنصة ونضع أيقونتها تلقائيًا (فيسبوك، لينكدإن، GitHub...).</p>
+      <div id="lk"></div>
+      <button class="btn sm" id="addl" type="button">+ إضافة رابط</button>
+    </div>
+
+    <div class="panel">
+      <h2>الخصوصية</h2>
+      <p class="sub">من يستطيع رؤية ملفك وصورتك؟</p>
+      <label class="vis"><input type="radio" name="vis" value="members" checked><div><b>أعضاء الجمعية فقط</b><span>يظهر في قائمة الأعضاء لمن سجّل الدخول.</span></div></label>
+      <label class="vis"><input type="radio" name="vis" value="public"><div><b>عام</b><span>يظهر أيضًا في الصفحة الرئيسية ويراه الزوار.</span></div></label>
+      <label class="vis"><input type="radio" name="vis" value="hidden"><div><b>مخفي</b><span>لا يراه أحد غيرك والمشرفين.</span></div></label>
+    </div>
+
+    <div class="row" style="margin-bottom:20px"><button class="btn pri" id="save">حفظ ملفي</button><a class="btn" id="view" href="#" hidden>عرض ملفي</a></div>
+
+    <div class="panel">
+      <h2>الإنجازات</h2>
+      <p class="sub">يمكن للجمعية توثيق إنجازك ليظهر عليه «موثّق من الجمعية». تعديل إنجاز موثّق يعيده للمراجعة.</p>
+      <div id="al"></div>
+      <button class="btn sm" id="adda" type="button">+ إضافة إنجاز</button>
+    </div>
+  </div>
+</div>
+<dialog id="dlg"></dialog>
+<div id="toasts" aria-live="polite"></div>
+<script src="cess.js"></script>
+<script src="pf.js"></script>
+<script>
+const URL_="https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/"+CESS_FN,ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
+const $=s=>document.querySelector(s),TOKEN=localStorage.getItem("cess-session-token"),dlg=$("#dlg");
+function leave(){localStorage.removeItem("cess-session-token");location.href="login.html"}
+async function call(a,i={}){let r;try{r=await fetch(URL_,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+ANON},body:JSON.stringify({action:a,input:{...i,token:TOKEN}})})}catch{throw new Error("تعذّر الاتصال بالخادم، تحقق من الإنترنت.")}
+const j=await r.json().catch(()=>({}));if(r.status===401)leave();if(!j.ok)throw new Error(j.error||"حدث خطأ غير متوقع");return j.data}
+function toast(m,t="ok"){const e=document.createElement("div");e.className="toast "+t+(dlg.open?" in":"");e.textContent=m;(dlg.open?dlg:$("#toasts")).append(e);setTimeout(()=>e.remove(),t==="bad"?7000:4200)}
+async function busy(b,fn){if(b.disabled)return;b.classList.add("loading");b.disabled=true;try{return await fn()}catch(e){toast(e.message,"bad")}finally{b.classList.remove("loading");b.disabled=false}}
+function theme(t){document.body.dataset.theme=t;localStorage.setItem("cess-theme",t);$("#tt").textContent=t==="dark"?"🌙":"☀️"}
+$("#tt").onclick=()=>theme(document.body.dataset.theme==="dark"?"light":"dark");theme(localStorage.getItem("cess-theme")||"dark");
+
+let P=null,SK=[];
+function drawPhoto(){$("#pav").innerHTML=P.photo?`<img src="${esc(P.photo)}" alt="">`:esc((P.name||"؟").trim().slice(0,1));$("#rmph").hidden=!P.photo}
+function cnt(){$("#cnt").textContent=$("#bio").value.length+"/1000"}
+$("#bio").oninput=cnt;
+function drawSK(){$("#skl").innerHTML=SK.map((s,i)=>`<span class="tag2">${esc(s)}<button type="button" data-i="${i}" aria-label="حذف">×</button></span>`).join("")}
+function addSK(){const v=$("#ski").value.replace(/[,،]/g,"").trim();if(v&&v.length<=30&&!SK.includes(v)&&SK.length<15)SK.push(v);$("#ski").value="";drawSK()}
+$("#ski").onkeydown=e=>{if(e.key==="Enter"||e.key===","||e.key==="،"){e.preventDefault();addSK()}};
+$("#ski").onblur=addSK;
+$("#skl").onclick=e=>{const b=e.target.closest("[data-i]");if(b){SK.splice(+b.dataset.i,1);drawSK()}};
+
+function addLink(u=""){
+  if($("#lk").children.length>=8)return toast("الحد الأقصى 8 روابط.","bad");
+  const d=document.createElement("div");d.className="lkr";
+  d.innerHTML=`<span class="soc"><i class="fa-solid fa-link"></i></span><div class="lkf"><input dir="ltr" placeholder="https://facebook.com/اسمك" value="${esc(u)}"><small></small></div><button class="btn sm dng" type="button" aria-label="حذف">×</button>`;
+  const inp=d.querySelector("input"),sm=d.querySelector("small"),ic=d.querySelector(".soc i");
+  const upd=()=>{const v=inp.value.trim(),p=pfPlat(v);ic.className=p?PF_ICON[p]:"fa-solid fa-link";sm.textContent=v?(p?"✓ تم التعرف: "+PF_NAME[p]:"رابط غير صالح"):"";sm.style.color=!v||p?"var(--ok)":"var(--bad)"};
+  inp.oninput=upd;upd();
+  d.querySelector("button").onclick=()=>{d.remove();if(!$("#lk").children.length)addLink("")};
+  $("#lk").append(d);
+}
+$("#addl").onclick=()=>addLink("");
+
+function drawAch(){
+  const a=P.achievements||[];
+  $("#al").innerHTML=a.length?a.map(x=>`<div class="ach"><div><b>${esc(x.title)}</b>${x.verified?'<span class="vf">✓ موثّق من الجمعية</span>':""}${x.date?`<div class="sub" style="margin:2px 0">${esc(x.date)}</div>`:""}${x.description?`<p>${esc(x.description)}</p>`:""}${x.url?`<a class="lnk" href="${esc(x.url)}" target="_blank" rel="noopener">رابط الإنجاز ↗</a>`:""}</div><div class="acts"><button class="btn sm" data-ed="${esc(x.id)}">تعديل</button><button class="btn sm dng" data-rm="${esc(x.id)}">حذف</button></div></div>`).join(""):'<div class="empty">لم تضف إنجازات بعد.</div>';
+}
+function achForm(x){
+  dlg.innerHTML=`<h3>${x?"تعديل الإنجاز":"إضافة إنجاز"}</h3>
+  <div class="fld"><label>العنوان *</label><input id="a1" maxlength="120" value="${esc(x?x.title:"")}"></div>
+  <div class="fld"><label>التاريخ (مثال: 2025)</label><input id="a2" maxlength="30" value="${esc(x?x.date||"":"")}"></div>
+  <div class="fld"><label>الوصف</label><textarea id="a3" rows="3" maxlength="500">${esc(x?x.description||"":"")}</textarea></div>
+  <div class="fld"><label>رابط (اختياري)</label><input id="a4" dir="ltr" placeholder="https://..." value="${esc(x?x.url||"":"")}"></div>
+  ${x&&x.verified?'<p class="sub">⚠️ تعديل هذا الإنجاز يُلغي توثيقه حتى تراجعه الجمعية.</p>':""}
+  <div class="row"><button class="btn pri" id="as">حفظ</button><button class="btn" id="ax">إلغاء</button></div>`;
+  dlg.showModal();$("#ax").onclick=()=>dlg.close();
+  $("#as").onclick=e=>busy(e.currentTarget,async()=>{
+    if(!$("#a1").value.trim())throw new Error("اكتب عنوان الإنجاز.");
+    await call("pfAchSave",{id:x?x.id:null,title:$("#a1").value,date:$("#a2").value,description:$("#a3").value,url:$("#a4").value});
+    dlg.close();toast("تم الحفظ");await load();
+  });
+}
+$("#adda").onclick=()=>achForm(null);
+$("#al").onclick=e=>{
+  const ed=e.target.closest("[data-ed]");if(ed)return achForm(P.achievements.find(x=>x.id===ed.dataset.ed));
+  const rm=e.target.closest("[data-rm]");
+  if(rm){
+    dlg.innerHTML=`<h3>حذف الإنجاز؟</h3><p class="sub">لا يمكن التراجع.</p><div class="row"><button class="btn danger" id="y">حذف</button><button class="btn" id="n">إلغاء</button></div>`;dlg.showModal();
+    $("#n").onclick=()=>dlg.close();
+    $("#y").onclick=b=>busy(b.currentTarget,async()=>{await call("pfAchDelete",{id:rm.dataset.rm});dlg.close();toast("تم الحذف");await load()});
+  }
+};
+
+function toJpeg(file){
+  return new Promise((ok,no)=>{
+    const img=new Image(),u=URL.createObjectURL(file);
+    img.onload=()=>{
+      const S=400,c=document.createElement("canvas");c.width=c.height=S;
+      const x=c.getContext("2d"),m=Math.min(img.width,img.height);
+      x.fillStyle="#fff";x.fillRect(0,0,S,S);
+      x.drawImage(img,(img.width-m)/2,(img.height-m)/2,m,m,0,0,S,S);
+      URL.revokeObjectURL(u);ok(c.toDataURL("image/jpeg",.82));
+    };
+    img.onerror=()=>no(new Error("تعذّرت قراءة الصورة، جرّب صورة أخرى."));
+    img.src=u;
+  });
+}
+$("#file").onchange=async e=>{
+  const f=e.target.files[0];e.target.value="";if(!f)return;
+  const b=$("#pl");b.classList.add("loading");
+  try{const r=await call("pfPhoto",{data:await toJpeg(f)});P.photo=r.photo;drawPhoto();toast("تم تحديث الصورة")}
+  catch(err){toast(err.message,"bad")}finally{b.classList.remove("loading")}
+};
+$("#rmph").onclick=e=>busy(e.currentTarget,async()=>{await call("pfPhoto",{remove:true});P.photo=null;drawPhoto();toast("تم حذف الصورة")});
+
+$("#save").onclick=e=>busy(e.currentTarget,async()=>{
+  addSK();
+  const links=[...document.querySelectorAll("#lk input")].map(i=>i.value.trim()).filter(Boolean);
+  if(links.some(u=>!pfPlat(u)))throw new Error("يوجد رابط غير صالح، راجع الروابط.");
+  await call("pfSave",{headline:$("#hl").value,bio:$("#bio").value,skills:SK,links,visibility:document.querySelector("input[name=vis]:checked").value});
+  toast("تم حفظ ملفك");await load();
+});
+
+async function load(){
+  P=await call("pfGet");
+  $("#nm").textContent=P.name||"—";$("#bt").textContent=P.batch?"دفعة "+P.batch:"";
+  $("#hl").value=P.headline||"";$("#bio").value=P.bio||"";cnt();
+  SK=[...(P.skills||[])];drawSK();
+  $("#lk").innerHTML="";(P.links&&P.links.length?P.links.map(l=>l.url):[""]).forEach(addLink);
+  document.querySelector(`input[name=vis][value="${P.visibility||"members"}"]`).checked=true;
+  $("#blk").hidden=!P.blocked;
+  if(P.pid){$("#view").hidden=false;$("#view").href="members.html?id="+encodeURIComponent(P.pid)}
+  drawPhoto();drawAch();
+}
+(async()=>{
+  if(!TOKEN)return leave();
+  try{await load()}catch(e){toast(e.message,"bad");return}
+  $("#boot").hidden=true;$("#app").hidden=false;
+})();
+</script>
+</body>
+</html>
