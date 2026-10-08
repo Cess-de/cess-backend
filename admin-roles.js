@@ -1,6 +1,6 @@
 CESS_SEC.roles=function(el){
-  const PN={students:"الطلاب والتفعيل",offices:"الأمانات واللجان",activities:"الأنشطة",news:"الإعلانات",resources:"الموارد",site:"إعدادات الموقع",vote:"الانتخابات",log:"سجل العمليات"};
-  const PRE=[["أمين الإعلام",["news","resources"]],["أمين الأنشطة",["activities","resources"]],["شؤون الطلاب",["students"]]];
+  const PN={students:"الطلاب والتفعيل",offices:"الأمانات واللجان",activities:"الأنشطة",news:"الإعلانات",resources:"الموارد",site:"إعدادات الموقع",vote:"الانتخابات",log:"سجل العمليات",members:"الأعضاء والبورتفوليو"};
+  const PRE=[["أمين الإعلام",["news","resources"]],["أمين الأنشطة",["activities","resources"]],["شؤون الطلاب",["students"]],["إدارة الأعضاء",["members"]]];
   let D=null;
   async function refresh(){
     el.innerHTML='<div class="list"><div class="sk"></div><div class="sk"></div></div>';
