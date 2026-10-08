@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>فحص النظام</title></head>
+<body style="font-family:sans-serif;padding:16px;line-height:2;font-size:15px"><h3>فحص النظام</h3><button id="go" style="padding:10px 18px;font-size:16px">ابدأ الفحص</button><div id="o" style="margin-top:14px"></div>
+<script>
+const FILES=["index.html","login.html","activate.html","forgot-password.html","dashboard.html","admin.html","resources.html","profile.html","members.html","cess.js","pf.js","glass-strip.js","admin-ext.js","admin-roles.js","admin-site.js","admin-resources.js","admin-members.js"];
+const ACT=["siteSettings","pfPublic","pfStrip","pfDirectory","pfGet","resList","resFolder","recoverStart","changePassword","adminList","adminPfList","adminLeaderSet","adminAdmins"];
+const ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
+document.getElementById("go").onclick=async()=>{
+  const o=document.getElementById("o"),L=[],add=(ok,t)=>L.push((ok===true?"✅ ":ok===false?"❌ ":"⚠️ ")+t),show=()=>{o.innerHTML=L.map(x=>"<div>"+x+"</div>").join("")};
+  o.textContent="جارٍ الفحص...";let fn=null;
+  for(const f of FILES){
+    try{
+      const r=await fetch(f+"?v="+Date.now(),{cache:"no-store"});
+      if(!r.ok){add(false,f+" — غير موجود ("+r.status+")");continue}
+      const t=await r.text();
+      if(f.endsWith(".js")&&t.trim().length<30){add(false,f+" — الملف فارغ");continue}
+      if(f==="cess.js"){const m=t.match(/CESS_FN\s*=\s*"([^"]+)"/);fn=m&&m[1]}
+      add(true,f);
+    }catch(e){add(false,f+" — خطأ")}
+  }
+  if(!fn){add(false,"اسم الدالة في cess.js غير مقروء");show();return}
+  const T=localStorage.getItem("cess-session-token");
+  for(const a of ACT){
+    try{
+      const r=await fetch("https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/"+fn,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+ANON},body:JSON.stringify({action:a,input:{token:T}})});
+      const j=await r.json().catch(()=>({}));
+      if(j.error==="إجراء غير معروف.")add(false,"الدالة: "+a+" — غير منشورة (الصق الكتلة المناسبة)");
+      else if(r.status===500)add(null,"الدالة: "+a+" — خطأ قاعدة بيانات (جدول أو عمود ناقص، راجع SQL)");
+      else add(true,"الدالة: "+a);
+    }catch(e){add(false,"الدالة: "+a+" — تعذّر الاتصال")}
+  }
+  show();
+};
+</script></body></html>
