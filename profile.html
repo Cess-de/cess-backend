@@ -136,7 +136,7 @@ async function busy(b,fn){if(b.disabled)return;b.classList.add("loading");b.disa
 function theme(t){document.body.dataset.theme=t;localStorage.setItem("cess-theme",t);$("#tt").textContent=t==="dark"?"🌙":"☀️"}
 $("#tt").onclick=()=>theme(document.body.dataset.theme==="dark"?"light":"dark");theme(localStorage.getItem("cess-theme")||"dark");
 
-let P=null,SK=[];
+let P=null,SK=[],FIRST=true;
 function drawPhoto(){$("#pav").innerHTML=P.photo?`<img src="${esc(P.photo)}" alt="">`:esc((P.name||"؟").trim().slice(0,1));$("#rmph").hidden=!P.photo}
 function cnt(){$("#cnt").textContent=$("#bio").value.length+"/1000"}
 $("#bio").oninput=cnt;
