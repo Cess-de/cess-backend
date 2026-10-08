@@ -69,7 +69,6 @@ dialog::backdrop{background:rgba(0,0,0,.55)}dialog h3{font-size:18px;font-weight
         <div class="c off"><div class="e">📢</div><b>الإعلانات</b><span>قريبًا</span></div>
         <div class="c off"><div class="e">🗳️</div><b>الانتخابات</b><span>قريبًا</span></div>
         <a class="c" href="profile.html" style="text-decoration:none"><div class="e">👤</div><b>ملفي الشخصي</b><span>الصورة والنبذة والإنجازات</span></a>
-<a class="c" href="members.html" style="text-decoration:none"><div class="e">👥</div><b>أعضاء الجمعية</b><span>تعرّف على زملائك</span></a>
         <button class="c" id="go-sec"><div class="e">🔐</div><b>حسابي والأمان</b><span>تغيير كلمة المرور وإدارة الأجهزة</span></button>
       </div>
     </div>
@@ -126,5 +125,17 @@ $("#boot").hidden=true;$("#app").hidden=false}catch{leave()}})();
   <script>
 (()=>{const t=setInterval(()=>{if(!$("#app").hidden){clearInterval(t);call("pfGet").then(d=>{if(d&&d.photo)$("#av").innerHTML=`<img src="${d.photo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`}).catch(()=>{})}},300)})();
 </script>
+  <script src="glass-strip.js"></script>
+<script>
+(()=>{const t=setInterval(()=>{if($("#app").hidden)return;clearInterval(t);
+  call("pfGet").then(d=>{
+    if(d&&d.photo)$("#av").innerHTML=`<img src="${d.photo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+    if(d&&d.leader_title)$("#sid").parentNode.insertAdjacentHTML("afterend",`<div style="margin-top:6px;font-size:12.5px;color:var(--ac);font-weight:700">${String(d.leader_title).replace(/</g,"&lt;")}</div>`);
+  }).catch(()=>{});
+  const box=document.createElement("div");box.style.margin="0 0 14px";$("#v-home .hello").insertAdjacentElement("afterend",box);
+  CessStrip.mount(box,{url:URL_,anon:ANON,token:TOKEN,all:"members.html",onEmpty:()=>{box.innerHTML='<a class="c" href="profile.html" style="text-decoration:none"><b>كن أول من ينشئ ملفه 👤</b><span>أضف صورتك ونبذتك لتظهر هنا.</span></a>'}});
+},300)})();
+</script>
+
 </body>
 </html>
