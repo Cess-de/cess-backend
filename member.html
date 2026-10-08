@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>الأعضاء — CESS-UofT</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--bg:#0B132B;--el:#141d38;--ac:#FFC72C;--t1:#fff;--t2:#A8B3CC;--card:rgba(255,255,255,.04);--bd:rgba(255,255,255,.1);--ok:#22C55E;--bad:#EF4444}
+[data-theme=light]{--bg:#F4F6F9;--el:#fff;--t1:#0F172A;--t2:#64748B;--card:#fff;--bd:rgba(15,23,42,.1);--ok:#15803D}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;font-size:15px;padding:16px 16px calc(40px + env(safe-area-inset-bottom))}
+.w{max-width:900px;margin:0 auto}[hidden]{display:none!important}
+.top{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:8px;font-weight:800;text-decoration:none;color:var(--t1);flex:1;min-width:120px}
+.logo i{width:28px;height:28px;background:var(--ac);border-radius:7px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 16px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--t1);font:600 13.5px Inter,sans-serif;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn:focus-visible,input:focus-visible,select:focus-visible,.mc:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.pri{background:var(--ac);color:#0B132B;border-color:transparent}.sm{height:34px;padding:0 12px;font-size:12.5px}
+h1{font-size:22px;font-weight:800}.sub{font-size:13px;color:var(--t2);line-height:1.7;margin:4px 0 12px}
+.bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.bar input,.bar select{height:44px;padding:0 14px;border-radius:12px;border:1px solid var(--bd);background:var(--card);color:var(--t1);font:inherit}
+.bar input{flex:1;min-width:180px}.bar select option{color:#0F172A}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.mc{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:20px 14px;color:var(--t1);text-decoration:none}
+.mc:hover{border-color:var(--ac)}.mc b{font-size:15px}.mc p{font-size:13px;color:var(--t2);line-height:1.6}
+.av{width:84px;height:84px;border-radius:50%;background:var(--ac);color:#0B132B;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:800;overflow:hidden;flex-shrink:0}
+.av img{width:100%;height:100%;object-fit:cover}.av.big{width:112px;height:112px;font-size:42px}
+.tag2{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;border:1px solid var(--bd);margin:2px 3px;color:var(--t2)}
+.hero2{display:flex;align-items:center;gap:18px;background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:22px;margin-bottom:14px;flex-wrap:wrap}
+.socs{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.soc{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--bd);background:var(--card);color:var(--t1);text-decoration:none;font-size:18px}.soc:hover{border-color:var(--ac);color:var(--ac)}
+.panel{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:20px;margin-bottom:14px}.panel h2{font-size:16px;font-weight:800;margin-bottom:10px}
+.ach{padding:12px 0;border-bottom:1px solid var(--bd)}.ach:last-child{border:0}.ach p{font-size:13px;color:var(--t2);line-height:1.7}
+.lnk{font-size:12.5px;color:var(--ac);text-decoration:none}
+.vf{font-size:11.5px;font-weight:700;color:var(--ok);border:1px solid var(--ok);border-radius:999px;padding:1px 8px;margin-inline-start:8px}
+.note{background:rgba(255,199,44,.1);border:1px solid rgba(255,199,44,.35);border-radius:12px;padding:12px;font-size:13px;margin-bottom:14px}
+.empty{grid-column:1/-1;padding:48px 16px;text-align:center;color:var(--t2);line-height:1.9}
+.sk{height:150px;border-radius:16px;background:linear-gradient(90deg,var(--card),var(--bd),var(--card));background-size:200% 100%;animation:sh 1.2s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+@media(prefers-reduced-motion:reduce){.sk{animation:none}}
+</style>
+</head>
+<body data-theme="dark">
+<div class="w">
+  <div class="top">
+    <a href="index.html" class="logo"><i>🎓</i><span>CESS-UofT</span></a>
+    <a class="btn sm" href="index.html">الرئيسية</a>
+    <a class="btn sm" id="b1" href="dashboard.html">لوحتي</a>
+    <a class="btn sm" id="b2" href="member.html">الأعضاء</a>
+    <a class="btn sm pri" id="b3" href="login.html" hidden>دخول</a>
+    <button class="btn sm" id="tt" aria-label="تبديل المظهر">🌙</button>
+  </div>
+
+  <div id="dv" hidden>
+    <h1>أعضاء الجمعية</h1>
+    <p class="sub">تعرّف على زملائك ومهاراتهم وإنجازاتهم. يظهر هنا من اختار إظهار ملفه.</p>
+    <div class="bar"><input id="q" type="search" placeholder="ابحث بالاسم أو المهارة" aria-label="بحث"><select id="bf" aria-label="الدفعة"></select></div>
+    <div class="grid" id="grid"><div class="sk"></div><div class="sk"></div><div class="sk"></div></div>
+  </div>
+
+  <div id="pv" hidden></div>
+</div>
+<script src="cess.js"></script>
+<script src="pf.js"></script>
+<script>
+const URL_="https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/"+CESS_FN,ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeHhwYnVxZiIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzg5Nzk0MDMyLCJleHAiOjIxMDUzNzAwMzJ9.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
+const $=s=>document.querySelector(s);let TOKEN=localStorage.getItem("cess-session-token");
+const PID=new URLSearchParams(location.search).get("id");
+function leave(){localStorage.removeItem("cess-session-token");location.href="login.html"}
+async function call(a,i={}){let r;try{r=await fetch(URL_,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+ANON},body:JSON.stringify({action:a,input:{...i,token:TOKEN}})})}catch{throw new Error("تعذّر الاتصال بالخادم، تحقق من الإنترنت.")}
+const j=await r.json().catch(()=>({}));if(!j.ok){const e=new Error(j.error||"حدث خطأ غير متوقع");e.status=r.status;throw e}return j.data}
+function theme(t){document.body.dataset.theme=t;localStorage.setItem("cess-theme",t);$("#tt").textContent=t==="dark"?"🌙":"☀️"}
+$("#tt").onclick=()=>theme(document.body.dataset.theme==="dark"?"light":"dark");theme(localStorage.getItem("cess-theme")||"dark");
+const ini=(n,p)=>p?`<img src="${esc(p)}" alt="">`:esc((n||"؟").trim().slice(0,1));
+let ALL=[];
+function drawDir(){
+  const q=$("#q").value.trim().toLowerCase(),b=$("#bf").value;
+  const rs=ALL.filter(x=>(!b||x.batch===b)&&(!q||(x.name+" "+(x.headline||"")+" "+(x.skills||[]).join(" ")).toLowerCase().includes(q)));
+  $("#grid").innerHTML=rs.length?rs.map(x=>`<a class="mc" href="member.html?id=${encodeURIComponent(x.pid)}"><div class="av">${ini(x.name,x.photo)}</div><b>${esc(x.name)}</b><span class="sub" style="margin:0">${x.batch?"دفعة "+esc(x.batch):""}</span>${x.headline?`<p>${esc(x.headline)}</p>`:""}<div>${(x.skills||[]).slice(0,3).map(s=>`<span class="tag2">${esc(s)}</span>`).join("")}</div></a>`).join(""):`<div class="empty">${ALL.length?"لا نتائج مطابقة.":"لم يُنشئ أحد ملفه بعد. كن الأول من لوحتك!"}</div>`;
+}
+$("#q").oninput=drawDir;$("#bf").onchange=drawDir;
+async function showDir(){
+  $("#dv").hidden=false;
+  try{ALL=(await call("pfDirectory")).items}catch(e){if(e.status===401)return leave();$("#grid").innerHTML=`<div class="empty">${esc(e.message)}</div>`;return}
+  const bs=[...new Set(ALL.map(x=>x.batch).filter(Boolean))].sort();
+  $("#bf").innerHTML='<option value="">كل الدفعات</option>'+bs.map(b=>`<option>${esc(b)}</option>`).join("");
+  drawDir();
+}
+async function showProfile(){
+  const box=$("#pv");box.hidden=false;box.innerHTML='<div class="sk"></div>';
+  let d;
+  try{d=await call("pfGet",{pid:PID})}
+  catch(e){
+    if(e.status===401&&TOKEN){TOKEN=null;localStorage.removeItem("cess-session-token");$("#b1").hidden=$("#b2").hidden=true;$("#b3").hidden=false;try{d=await call("pfGet",{pid:PID})}catch(e2){e=e2}}
+    if(!d){box.innerHTML=`<div class="panel" style="text-align:center"><h2>${esc(e.message)}</h2><p class="sub">قد يكون الملف مخفيًا أو غير موجود.</p><a class="btn pri" href="${TOKEN?"member.html":"index.html"}">رجوع</a></div>`;return}
+  }
+  document.title=(d.name||"ملف عضو")+" — CESS-UofT";
+  const ach=(d.achievements||[]).map(x=>`<div class="ach"><b>${esc(x.title)}</b>${x.verified?'<span class="vf">✓ موثّق من الجمعية</span>':""}${x.date?`<div class="sub" style="margin:2px 0">${esc(x.date)}</div>`:""}${x.description?`<p>${esc(x.description)}</p>`:""}${x.url?`<a class="lnk" href="${esc(x.url)}" target="_blank" rel="noopener">رابط الإنجاز ↗</a>`:""}</div>`).join("");
+  box.innerHTML=`<div style="margin-bottom:12px"><a class="btn sm" href="${TOKEN?"member.html":"index.html"}">← رجوع</a></div>
+  ${d.blocked?'<div class="note">⚠️ هذا الملف مخفي من قِبل المشرف ولا يراه غيرك والمشرفون.</div>':d.visibility==="hidden"?'<div class="note">هذا الملف مخفي، لا يراه غيرك والمشرفون.</div>':""}
+  <div class="hero2"><div class="av big">${ini(d.name,d.photo)}</div><div style="flex:1;min-width:200px"><h1>${esc(d.name||"")}</h1><p class="sub" style="margin:4px 0">${d.batch?"دفعة "+esc(d.batch):""}${d.headline?" · "+esc(d.headline):""}</p><div class="socs">${pfIcons(d.links)}</div>${d.self?'<a class="btn pri sm" style="margin-top:10px" href="profile.html?edit=1">تعديل ملفي</a>':""}</div></div>
+  ${d.bio?`<div class="panel"><h2>نبذة</h2><p style="white-space:pre-wrap;line-height:1.9">${esc(d.bio)}</p></div>`:""}
+  ${(d.skills||[]).length?`<div class="panel"><h2>المهارات</h2>${d.skills.map(s=>`<span class="tag2">${esc(s)}</span>`).join("")}</div>`:""}
+  <div class="panel"><h2>الإنجازات</h2>${ach||'<p class="sub">لا توجد إنجازات بعد.</p>'}</div>`;
+}
+if(!TOKEN){$("#b1").hidden=$("#b2").hidden=true;$("#b3").hidden=false}
+if(PID)showProfile();else if(!TOKEN)leave();else showDir();
+</script>
+</body>
+</html>
