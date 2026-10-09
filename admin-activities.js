@@ -7,7 +7,7 @@ CESS_SEC.activities=function(el){
   async function refresh(){
     el.innerHTML='<div class="list"><div class="sk"></div><div class="sk"></div></div>';
     try{R=(await call("adminActList")).items}catch(e){el.innerHTML=`<div class="list"><div class="empty">${esc(e.message)}</div></div>`;return}
-    el.innerHTML=`<p class="sub">الأنشطة تظهر للأعضاء في صفحة «الأنشطة» ويسجّلون منها. العدد الأقصى اختياري.</p><div class="bar"><button class="btn pri" id="na">+ نشاط جديد</button></div><div class="list">${R.length?R.map(row).join(""):'<div class="empty">لا توجد أنشطة بعد.</div>'}</div>`;
+    el.innerHTML=`<p class="sub">الأنشطة تظهر للأعضاء في صفحة «الأنشطة» ويسجّلون منها (بالهاتف والواتساب وتعهد الجدية). العدد الأقصى اختياري.</p><div class="bar"><button class="btn pri" id="na">+ نشاط جديد</button></div><div class="list">${R.length?R.map(row).join(""):'<div class="empty">لا توجد أنشطة بعد.</div>'}</div>`;
   }
   el.onclick=async e=>{
     if(e.target.closest("#na"))return form(null);
@@ -18,9 +18,12 @@ CESS_SEC.activities=function(el){
   };
   async function regs(a){
     let L=[];try{L=(await call("adminActRegs",{id:a.id})).items}catch(e){return toast(e.message,"bad")}
-    modal(`<h3>مسجلو «${esc(a.title)}» (${L.length})</h3><div class="list" style="max-height:50vh;overflow:auto;margin-top:10px">${L.map(x=>`<div class="rs" style="padding:10px 14px"><div class="who"><b>${esc(x.name||"بدون اسم")}</b><span><bdi>${esc(x.student_id)}</bdi>${x.batch?" · دفعة "+esc(x.batch):""}</span></div></div>`).join("")||'<div class="empty">لا مسجلين بعد.</div>'}</div><div class="row"><button class="btn pri" id="cp">نسخ القائمة</button><button class="btn" id="x">إغلاق</button></div>`);
+    const wa=x=>`https://wa.me/${x.whatsapp}?text=${encodeURIComponent("مرحبًا "+(x.name||"")+"، بخصوص تسجيلك في «"+a.title+"»")}`;
+    modal(`<h3>مسجلو «${esc(a.title)}» (${L.length})</h3>
+    <div class="row" style="margin-top:8px"><button class="btn pri" id="dl">تحميل (Excel)</button><button class="btn" id="x">إغلاق</button></div>
+    <div class="list" style="max-height:52vh;overflow:auto;margin-top:12px">${L.map(x=>`<div class="rs" style="padding:12px 14px"><div class="who"><b>${esc(x.name||"بدون اسم")}</b><span><bdi>${esc(x.student_id)}</bdi>${x.batch?" · دفعة "+esc(x.batch):""}</span><span dir="ltr" style="display:block">${x.phone?"+"+esc(x.phone):"—"}${x.whatsapp&&x.whatsapp!==x.phone?" · واتساب +"+esc(x.whatsapp):""}</span></div><div class="acts">${x.whatsapp?`<a class="btn sm pri" target="_blank" rel="noopener" href="${esc(wa(x))}">واتساب</a>`:""}${x.phone?`<a class="btn sm" href="tel:+${esc(x.phone)}">اتصال</a>`:""}</div></div>`).join("")||'<div class="empty">لا مسجلين بعد.</div>'}</div>`);
     $("#x").onclick=()=>dlg.close();
-    $("#cp").onclick=async()=>{await copy(L.map(x=>`${x.name||""}\t${x.student_id}\t${x.batch||""}`).join("\n"));toast("تم النسخ")};
+    $("#dl").onclick=()=>csv("registrants.csv",["الاسم","الرقم الجامعي","الدفعة","الهاتف","واتساب","وقت التسجيل"],L.map(x=>[x.name||"",x.student_id,x.batch||"",x.phone||"",x.whatsapp||"",x.at?new Date(x.at).toLocaleString("ar"):""]));
   }
   function form(a){
     modal(`<h3>${a?"تعديل النشاط":"نشاط جديد"}</h3>
