@@ -3,259 +3,711 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0B132B">
 <title>الأعضاء — CESS-UofT</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 <style>
 :root{
- --bg:#0B132B;--bg2:#101B38;--ac:#FFC72C;--t1:#F8FAFF;--t2:#A8B3CC;
- --card:rgba(255,255,255,.045);--bd:rgba(255,255,255,.105);--ok:#22C55E;
- --shadow:0 18px 50px rgba(0,0,0,.18);--radius:20px
+  --bg:#0B132B;
+  --ac:#FFC72C;
+  --t1:#fff;
+  --t2:#A8B3CC;
+  --card:rgba(255,255,255,.04);
+  --bd:rgba(255,255,255,.1);
+  --ok:#22C55E
 }
+
 [data-theme=light]{
- --bg:#F3F6FB;--bg2:#EAF0F8;--t1:#111B31;--t2:#61708A;
- --card:rgba(255,255,255,.88);--bd:rgba(15,23,42,.10);--ok:#15803D;
- --shadow:0 14px 38px rgba(25,45,80,.08)
+  --bg:#F4F6F9;
+  --t1:#0F172A;
+  --t2:#64748B;
+  --card:#fff;
+  --bd:rgba(15,23,42,.1);
+  --ok:#15803D
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;font-family:Cairo,Inter,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;font-size:15px;line-height:1.65;padding:18px 16px 48px;transition:background .2s,color .2s}
-button,input,select{font:inherit}
-button,a{-webkit-tap-highlight-color:transparent}
-a{color:inherit}
-[hidden]{display:none!important}
-.w{max-width:1120px;margin:0 auto}
-.top{display:flex;align-items:center;gap:9px;margin:0 auto 26px;flex-wrap:wrap}
-.logo{display:flex;align-items:center;gap:10px;font-weight:800;text-decoration:none;color:var(--t1);flex:1;min-width:150px;font-family:Inter,Cairo,sans-serif;letter-spacing:.1px}
-.logo-mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(145deg,#FFD85C,#F4B900);display:grid;place-items:center;color:#0B132B;box-shadow:0 6px 18px rgba(255,199,44,.2);font-size:18px}
-.logo small{display:block;color:var(--t2);font:600 10px Inter,sans-serif;letter-spacing:1.1px;margin-top:1px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 13px;border-radius:12px;border:1px solid var(--bd);background:var(--card);color:var(--t1);font:700 12.5px Cairo,sans-serif;cursor:pointer;text-decoration:none;transition:transform .18s,border-color .18s,background .18s}
-.btn:hover{border-color:var(--ac);transform:translateY(-1px)}
-.btn:focus-visible,.soc:focus-visible,.mc:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid rgba(255,199,44,.55);outline-offset:3px}
-.btn.pri{background:var(--ac);color:#0B132B;border-color:transparent}
-.hero{position:relative;overflow:hidden;border:1px solid var(--bd);border-radius:26px;padding:clamp(22px,4vw,38px);margin-bottom:20px;background:linear-gradient(120deg,rgba(255,199,44,.09),transparent 42%),linear-gradient(145deg,var(--bg2),var(--card));box-shadow:var(--shadow)}
-.hero:before{content:"";position:absolute;width:240px;height:240px;border-radius:50%;background:rgba(255,199,44,.08);filter:blur(42px);top:-140px;left:-55px;pointer-events:none}
-.hero-inner{position:relative;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ac);font:800 11px Inter,Cairo,sans-serif;letter-spacing:1.1px;text-transform:uppercase;margin-bottom:10px}
-.eyebrow:before{content:"";width:22px;height:2px;background:var(--ac);border-radius:3px}
-h1{font-size:clamp(25px,4vw,36px);font-weight:800;line-height:1.35;margin:0;letter-spacing:-.5px}
-.hero p{font-size:14px;color:var(--t2);line-height:1.9;margin:10px 0 0;max-width:620px}
-.hero-side{display:flex;align-items:center;gap:12px;padding:13px 16px;border:1px solid var(--bd);background:var(--card);border-radius:16px;min-width:145px}
-.stat-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:rgba(255,199,44,.13);color:var(--ac);font-size:18px}
-.stat-number{font:800 23px Inter,Cairo,sans-serif;line-height:1.2}
-.stat-label{font-size:11px;color:var(--t2);margin-top:3px}
-.toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:22px 0 14px}
-.section-title{font-size:18px;font-weight:800;margin:0}
-.section-note{font-size:12px;color:var(--t2);margin-top:3px}
-.bar{display:flex;gap:9px;flex-wrap:wrap;width:100%;margin-bottom:20px}
-.search-wrap{position:relative;flex:1;min-width:220px}
-.search-wrap i{position:absolute;right:15px;top:50%;transform:translateY(-50%);color:var(--t2);pointer-events:none}
-.bar input,.bar select{height:48px;padding:0 14px;border-radius:14px;border:1px solid var(--bd);background:var(--card);color:var(--t1);font:500 13px Cairo,sans-serif;transition:border-color .2s,box-shadow .2s}
-.bar input{width:100%;padding-right:43px}
-.bar input::placeholder{color:var(--t2);opacity:.9}
-.bar input:focus,.bar select:focus{border-color:rgba(255,199,44,.7);box-shadow:0 0 0 4px rgba(255,199,44,.08);outline:none}
-.bar select{min-width:145px;cursor:pointer}
-.bar option{color:#0F172A}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,235px),1fr));gap:15px}
-.mc{--person:#FFC72C;--person-rgb:255,199,44;position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;min-width:0;overflow:hidden;background:var(--card);border:1px solid var(--bd);border-radius:21px;padding:23px 16px 18px;color:var(--t1);text-decoration:none;box-shadow:0 6px 24px rgba(0,0,0,.04);transition:transform .22s,border-color .22s,box-shadow .22s}
-.mc:before{content:"";position:absolute;z-index:-1;inset:0 0 auto;height:100px;background:linear-gradient(180deg,rgba(var(--person-rgb),.12),transparent);opacity:.8;pointer-events:none}
-.mc:after{content:"";position:absolute;z-index:-1;width:140px;height:140px;top:-110px;left:calc(50% - 70px);border-radius:50%;background:rgba(var(--person-rgb),.26);filter:blur(35px);opacity:.7;pointer-events:none}
-.mc:hover{transform:translateY(-4px);border-color:rgba(var(--person-rgb),.65);box-shadow:0 14px 32px rgba(0,0,0,.12),0 0 0 1px rgba(var(--person-rgb),.12)}
-.av{--person:#FFC72C;--person-rgb:255,199,44;position:relative;width:100px;height:100px;border-radius:50%;padding:4px;display:grid;place-items:center;background:linear-gradient(135deg,var(--person),rgba(var(--person-rgb),.32),#FFFFFF);box-shadow:0 0 0 1px rgba(var(--person-rgb),.2),0 5px 22px rgba(var(--person-rgb),.18);color:#0B132B;font:800 32px Inter,Cairo,sans-serif;overflow:visible;flex-shrink:0;transition:box-shadow .25s,background .25s}
-.av:before{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid rgba(var(--person-rgb),.3);pointer-events:none;transition:inset .25s,opacity .25s}
-.mc:hover .av:before{inset:-7px;opacity:.95}
-.av .photo-inner{width:100%;height:100%;border-radius:50%;overflow:hidden;background:var(--bg2);display:grid;place-items:center}
-.av img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
-.av.big{width:126px;height:126px;font-size:42px}
-.mc-name{font-size:16px;font-weight:800;line-height:1.5;max-width:100%;overflow-wrap:anywhere}
-.mc-meta{font-size:12px;color:var(--t2);line-height:1.5}
-.mc-headline{font-size:12.5px;color:var(--t2);line-height:1.7;max-width:100%;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.skills{display:flex;justify-content:center;gap:5px;flex-wrap:wrap;margin-top:2px}
-.tag2{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;border:1px solid var(--bd);color:var(--t2);background:rgba(127,127,127,.05);max-width:100%;overflow-wrap:anywhere}
-.rl{display:inline-flex;align-items:center;gap:5px;margin-top:1px;font-size:11.5px;font-weight:800;color:#0B132B;background:var(--ac);border-radius:999px;padding:3px 11px}
-.open-profile{margin-top:5px;display:inline-flex;align-items:center;gap:7px;color:var(--person);font-size:12px;font-weight:800}
-.open-profile i{font-size:10px;transition:transform .2s}
-.mc:hover .open-profile i{transform:translateX(-3px)}
-.empty{grid-column:1/-1;padding:50px 18px;text-align:center;color:var(--t2);line-height:2;border:1px dashed var(--bd);border-radius:20px;background:var(--card)}
-.empty i{display:block;font-size:30px;color:var(--ac);margin-bottom:12px}
-.empty strong{display:block;color:var(--t1);font-size:15px;margin-bottom:4px}
-.hero2{display:flex;align-items:center;gap:22px;background:var(--card);border:1px solid var(--bd);border-radius:24px;padding:clamp(20px,4vw,30px);margin-bottom:16px;flex-wrap:wrap;box-shadow:var(--shadow)}
-.profile-info{flex:1;min-width:200px}
-.profile-info h1{font-size:clamp(24px,4vw,32px)}
-.socs{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.soc{width:42px;height:42px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--bd);background:var(--card);color:var(--t1);text-decoration:none;font-size:17px;transition:all .2s}
-.soc:hover{border-color:var(--ac);color:var(--ac);transform:translateY(-2px)}
-.panel{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:21px;margin-bottom:15px}
-.panel h2{font-size:16px;font-weight:800;margin:0 0 12px;display:flex;align-items:center;gap:9px}
-.panel h2:before{content:"";width:4px;height:18px;border-radius:5px;background:var(--ac)}
-.ach{padding:13px 0;border-bottom:1px solid var(--bd)}.ach:last-child{border:0;padding-bottom:0}.ach p{font-size:13px;color:var(--t2);line-height:1.8;margin:5px 0 0}
-.lnk{font-size:12.5px;color:var(--ac);text-decoration:none;display:inline-block;margin-top:7px}
-.lnk:hover{text-decoration:underline}
-.vf{font-size:10.5px;font-weight:800;color:var(--ok);border:1px solid var(--ok);border-radius:999px;padding:2px 8px;margin-inline-start:7px;white-space:nowrap}
-.note{background:rgba(255,199,44,.09);border:1px solid rgba(255,199,44,.32);border-radius:13px;padding:12px 14px;font-size:13px;margin-bottom:14px}
-.sub{font-size:13px;color:var(--t2);line-height:1.8;margin:5px 0 12px}
-.back-row{margin-bottom:13px}
-.footer-note{text-align:center;font-size:11px;color:var(--t2);margin-top:28px;opacity:.8}
-@media(max-width:600px){
- body{padding:12px 12px 34px}
- .top{gap:7px;margin-bottom:17px}
- .logo{min-width:100px;gap:7px}.logo-mark{width:34px;height:34px}
- .top .btn{min-height:36px;padding:0 10px;font-size:11.5px}
- .hero{border-radius:21px;padding:22px 18px}
- .hero-inner{gap:17px}.hero-side{width:100%;padding:10px 13px}
- .stat-icon{width:38px;height:38px}
- .toolbar{align-items:flex-start;margin-top:19px}
- .bar{gap:8px}.search-wrap{flex-basis:100%;min-width:0}.bar select{flex:1;min-width:0;width:100%}
- .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
- .mc{padding:18px 10px 15px;border-radius:17px;gap:7px}
- .av{width:82px;height:82px;padding:3px;font-size:27px}
- .mc-name{font-size:13px}.mc-meta{font-size:10.5px}.mc-headline{font-size:11px}
- .tag2{font-size:10px;padding:2px 7px}.rl{font-size:10px;padding:3px 8px}
- .open-profile{font-size:11px}
- .hero2{gap:15px;border-radius:20px;padding:20px 16px}
- .av.big{width:100px;height:100px}
- .profile-info{min-width:0;width:100%}
- .panel{padding:17px;border-radius:16px}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box
 }
-@media(max-width:350px){.grid{grid-template-columns:1fr}.mc{padding:20px 14px}.av{width:92px;height:92px}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+
+body{
+  font-family:Inter,sans-serif;
+  background:var(--bg);
+  color:var(--t1);
+  min-height:100vh;
+  font-size:15px;
+  padding:16px 16px 40px
+}
+
+.w{
+  max-width:900px;
+  margin:0 auto
+}
+
+[hidden]{
+  display:none!important
+}
+
+.top{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:20px;
+  flex-wrap:wrap
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:800;
+  text-decoration:none;
+  color:var(--t1);
+  flex:1;
+  min-width:120px
+}
+
+.logo i{
+  width:28px;
+  height:28px;
+  background:var(--ac);
+  border-radius:7px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-style:normal
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:34px;
+  padding:0 12px;
+  border-radius:10px;
+  border:1px solid var(--bd);
+  background:var(--card);
+  color:var(--t1);
+  font:600 12.5px Inter,sans-serif;
+  cursor:pointer;
+  text-decoration:none
+}
+
+.pri{
+  background:var(--ac);
+  color:#0B132B;
+  border-color:transparent
+}
+
+h1{
+  font-size:22px;
+  font-weight:800
+}
+
+.sub{
+  font-size:13px;
+  color:var(--t2);
+  line-height:1.7;
+  margin:4px 0 12px
+}
+
+.bar{
+  display:flex;
+  gap:8px;
+  margin-bottom:14px;
+  flex-wrap:wrap
+}
+
+.bar input,
+.bar select{
+  height:44px;
+  padding:0 14px;
+  border-radius:12px;
+  border:1px solid var(--bd);
+  background:var(--card);
+  color:var(--t1);
+  font:inherit
+}
+
+.bar input{
+  flex:1;
+  min-width:180px
+}
+
+.bar option{
+  color:#0F172A
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:12px
+}
+
+.mc{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  gap:6px;
+  background:var(--card);
+  border:1px solid var(--bd);
+  border-radius:16px;
+  padding:20px 14px;
+  color:var(--t1);
+  text-decoration:none
+}
+
+.mc:hover{
+  border-color:var(--ac)
+}
+
+.mc p{
+  font-size:13px;
+  color:var(--t2);
+  line-height:1.6
+}
+
+.av{
+  width:84px;
+  height:84px;
+  border-radius:50%;
+  background:var(--ac);
+  color:#0B132B;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:32px;
+  font-weight:800;
+  overflow:hidden;
+  flex-shrink:0
+}
+
+.av img{
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
+
+.av.big{
+  width:112px;
+  height:112px;
+  font-size:42px
+}
+
+.tag2{
+  display:inline-block;
+  font-size:12px;
+  font-weight:600;
+  padding:3px 10px;
+  border-radius:999px;
+  border:1px solid var(--bd);
+  margin:2px 3px;
+  color:var(--t2)
+}
+
+.hero2{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  background:var(--card);
+  border:1px solid var(--bd);
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:14px;
+  flex-wrap:wrap
+}
+
+.socs{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:8px
+}
+
+.soc{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--bd);
+  background:var(--card);
+  color:var(--t1);
+  text-decoration:none;
+  font-size:18px
+}
+
+.soc:hover{
+  border-color:var(--ac);
+  color:var(--ac)
+}
+
+.panel{
+  background:var(--card);
+  border:1px solid var(--bd);
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:14px
+}
+
+.panel h2{
+  font-size:16px;
+  font-weight:800;
+  margin-bottom:10px
+}
+
+.ach{
+  padding:12px 0;
+  border-bottom:1px solid var(--bd)
+}
+
+.ach:last-child{
+  border:0
+}
+
+.ach p{
+  font-size:13px;
+  color:var(--t2);
+  line-height:1.7
+}
+
+.lnk{
+  font-size:12.5px;
+  color:var(--ac);
+  text-decoration:none
+}
+
+.vf{
+  font-size:11.5px;
+  font-weight:700;
+  color:var(--ok);
+  border:1px solid var(--ok);
+  border-radius:999px;
+  padding:1px 8px;
+  margin-inline-start:8px
+}
+
+.rl{
+  display:inline-block;
+  margin-top:4px;
+  font-size:12.5px;
+  font-weight:700;
+  color:#0B132B;
+  background:var(--ac);
+  border-radius:999px;
+  padding:2px 12px
+}
+
+.note{
+  background:rgba(255,199,44,.1);
+  border:1px solid rgba(255,199,44,.35);
+  border-radius:12px;
+  padding:12px;
+  font-size:13px;
+  margin-bottom:14px
+}
+
+.empty{
+  grid-column:1/-1;
+  padding:48px 16px;
+  text-align:center;
+  color:var(--t2);
+  line-height:1.9
+}
 </style>
 </head>
-<body data-theme="dark">
-<div class="w">
- <nav class="top" aria-label="التنقل الرئيسي">
-  <a href="index.html" class="logo"><span class="logo-mark"><i class="fa-solid fa-graduation-cap"></i></span><span>CESS-UofT<small>CIVIL ENGINEERING STUDENT SOCIETY</small></span></a>
-  <a class="btn" href="index.html"><i class="fa-solid fa-house"></i><span>الرئيسية</span></a>
-  <a class="btn" id="b1" href="dashboard.html">لوحتي</a>
-  <a class="btn" id="b2" href="members.html">الأعضاء</a>
-  <a class="btn pri" id="b3" href="login.html" hidden><i class="fa-solid fa-arrow-right-to-bracket"></i> دخول</a>
-  <button class="btn" id="tt" type="button" aria-label="تغيير المظهر">🌙</button>
- </nav>
 
- <main>
-  <section id="dv" hidden>
-   <header class="hero">
-    <div class="hero-inner">
-     <div>
-      <div class="eyebrow">CESS COMMUNITY</div>
-      <h1>مجتمع يصنع المستقبل</h1>
-      <p>تعرّف على أعضاء جمعية الهندسة المدنية، واكتشف مهاراتهم واهتماماتهم وإنجازاتهم. تظهر هنا الملفات التي اختار أصحابها مشاركتها.</p>
-     </div>
-     <div class="hero-side" aria-live="polite">
-      <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
-      <div><div class="stat-number" id="memberCount">—</div><div class="stat-label">عضو في الدليل</div></div>
-     </div>
+<body data-theme="dark">
+
+<div class="w">
+
+  <div class="top">
+    <a href="index.html" class="logo">
+      <i>🎓</i>
+      <span>CESS-UofT</span>
+    </a>
+
+    <a class="btn" href="index.html">الرئيسية</a>
+    <a class="btn" id="b1" href="dashboard.html">لوحتي</a>
+    <a class="btn" id="b2" href="members.html">الأعضاء</a>
+    <a class="btn pri" id="b3" href="login.html" hidden>دخول</a>
+
+    <button class="btn" id="tt" type="button">🌙</button>
+  </div>
+
+  <div id="dv" hidden>
+    <h1>أعضاء الجمعية</h1>
+
+    <p class="sub">
+      تعرّف على زملائك ومهاراتهم وإنجازاتهم. يظهر هنا من اختار إظهار ملفه.
+    </p>
+
+    <div class="bar">
+      <input id="q" type="search" placeholder="ابحث بالاسم أو المهارة">
+      <select id="bf"></select>
     </div>
-   </header>
-   <div class="toolbar">
-    <div><h2 class="section-title">استكشف الأعضاء</h2><div class="section-note">ابحث بالاسم أو المهارة، أو اختر الدفعة.</div></div>
-   </div>
-   <div class="bar">
-    <div class="search-wrap"><i class="fa-solid fa-magnifying-glass"></i><input id="q" type="search" placeholder="ابحث عن عضو أو مهارة..." aria-label="البحث عن عضو أو مهارة" autocomplete="off"></div>
-    <select id="bf" aria-label="تصفية حسب الدفعة"><option value="">كل الدفعات</option></select>
-   </div>
-   <div class="grid" id="grid" aria-live="polite"></div>
-   <p class="footer-note">CESS-UofT · Academic Growth • Practical Experience • Professional Development</p>
-  </section>
-  <section id="pv" hidden aria-live="polite"></section>
- </main>
+
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <div id="pv" hidden></div>
+
 </div>
 
 <script src="cess.js"></script>
 <script src="pf.js"></script>
+
 <script>
-const URL_="https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/"+CESS_FN,ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
-const $=s=>document.querySelector(s);let TOKEN=localStorage.getItem("cess-session-token");
-const PID=new URLSearchParams(location.search).get("id");
-function leave(){localStorage.removeItem("cess-session-token");location.href="login.html"}
-async function call(a,i={}){let r;try{r=await fetch(URL_,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+ANON},body:JSON.stringify({action:a,input:{...i,token:TOKEN}})})}catch{throw new Error("تعذّر الاتصال بالخادم. تحقق من الإنترنت ثم حاول مجددًا.")}
-const j=await r.json().catch(()=>({}));if(!j.ok){const e=new Error(j.error||"حدث خطأ");e.status=r.status;throw e}return j.data}
-function theme(t){document.body.dataset.theme=t;localStorage.setItem("cess-theme",t);$("#tt").textContent=t==="dark"?"🌙":"☀️";$("#tt").setAttribute("aria-label",t==="dark"?"تفعيل الوضع الفاتح":"تفعيل الوضع الداكن")}
-$("#tt").onclick=()=>theme(document.body.dataset.theme==="dark"?"light":"dark");theme(localStorage.getItem("cess-theme")||"dark");
+const URL_ =
+  "https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/" + CESS_FN;
 
-/* Escape all user-provided text before placing it in HTML. */
-function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+const ANON =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
 
-/* Color is sampled from each member photo when the browser permits it.
-   If cross-origin image sampling is blocked, the design safely falls back to gold. */
-function safePhotoURL(v){try{const u=new URL(String(v||""),location.href);return (u.protocol==="https:"||u.origin===location.origin)?u.href:""}catch{return""}}
-function photoMarkup(n,p,big=false){
- const photo=safePhotoURL(p),size=big?" big":"";
- return `<div class="av${size}" data-photo-frame><div class="photo-inner">${photo?`<img src="${esc(photo)}" alt="صورة ${esc(n||"العضو")}" loading="lazy" referrerpolicy="no-referrer">`:esc((n||"؟").trim().slice(0,1))}</div></div>`;
+const $ = s => document.querySelector(s);
+
+let TOKEN = localStorage.getItem("cess-session-token");
+
+const PID = new URLSearchParams(location.search).get("id");
+
+function leave(){
+  localStorage.removeItem("cess-session-token");
+  location.href = "login.html";
 }
-function applyPhotoColors(root=document){
- root.querySelectorAll(".av[data-photo-frame]").forEach(frame=>{
-  const img=frame.querySelector("img");if(!img||frame.dataset.colorDone)return;
-  frame.dataset.colorDone="1";
-  const sample=()=>{
-   try{
-    const c=document.createElement("canvas"),ctx=c.getContext("2d",{willReadFrequently:true});
-    c.width=c.height=24;ctx.drawImage(img,0,0,24,24);
-    const data=ctx.getImageData(0,0,24,24).data;let r=0,g=0,b=0,count=0;
-    for(let i=0;i<data.length;i+=4){
-     if(data[i+3]<180)continue;
-     const max=Math.max(data[i],data[i+1],data[i+2]),min=Math.min(data[i],data[i+1],data[i+2]);
-     if(max-min<16&&max>225)continue;
-     r+=data[i];g+=data[i+1];b+=data[i+2];count++;
-    }
-    if(!count)return;
-    r=Math.round(r/count);g=Math.round(g/count);b=Math.round(b/count);
-    const mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2;
-    if(mx-mn<17||l<30||l>235){r=255;g=199;b=44}
-    else{const boost=1.10;r=Math.min(255,Math.round(r*boost));g=Math.min(255,Math.round(g*boost));b=Math.min(255,Math.round(b*boost))}
-    const rgb=`${r},${g},${b}`,color=`rgb(${rgb})`;
-    frame.style.setProperty("--person",color);frame.style.setProperty("--person-rgb",rgb);
-    const card=frame.closest(".mc");if(card){card.style.setProperty("--person",color);card.style.setProperty("--person-rgb",rgb)}
-   }catch(_){/* CORS restrictions: retain the accessible gold fallback. */}
-  };
-  if(img.complete&&img.naturalWidth)sample();else img.addEventListener("load",sample,{once:true});
- });
+
+async function call(a,i={}){
+  let r;
+
+  try{
+    r = await fetch(URL_,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        Authorization:"Bearer " + ANON
+      },
+      body:JSON.stringify({
+        action:a,
+        input:{
+          ...i,
+          token:TOKEN
+        }
+      })
+    });
+  }catch{
+    throw new Error("تعذّر الاتصال بالخادم.");
+  }
+
+  const j = await r.json().catch(()=>({}));
+
+  if(!j.ok){
+    const e = new Error(j.error || "حدث خطأ");
+    e.status = r.status;
+    throw e;
+  }
+
+  return j.data;
 }
-const ini=(n,p)=>photoMarkup(n,p);
-let ALL=[];
+
+function theme(t){
+  document.body.dataset.theme = t;
+  localStorage.setItem("cess-theme",t);
+  $("#tt").textContent = t === "dark" ? "🌙" : "☀️";
+}
+
+$("#tt").onclick = () => {
+  theme(document.body.dataset.theme === "dark" ? "light" : "dark");
+};
+
+theme(localStorage.getItem("cess-theme") || "dark");
+
+const ini = (n,p) =>
+  p
+    ? `<img src="${esc(p)}" alt="">`
+    : esc((n || "؟").trim().slice(0,1));
+
+let ALL = [];
+
 function drawDir(){
- const q=$("#q").value.trim().toLowerCase(),b=$("#bf").value;
- const rs=ALL.filter(x=>(!b||String(x.batch||"")===b)&&(!q||(String(x.name||"")+" "+(x.headline||"")+" "+(x.skills||[]).join(" ")).toLowerCase().includes(q)));
- $("#memberCount").textContent=ALL.length.toLocaleString("ar");
- $("#grid").innerHTML=rs.length?rs.map(x=>`<a class="mc" href="members.html?id=${encodeURIComponent(x.pid)}" aria-label="عرض ملف ${esc(x.name||"العضو")}">
-  ${ini(x.name,x.photo)}
-  <b class="mc-name">${esc(x.name||"عضو")}</b>
-  ${x.leader_title?`<span class="rl"><i class="fa-solid fa-star"></i>${esc(x.leader_title)}</span>`:""}
-  ${x.batch?`<span class="mc-meta"><i class="fa-regular fa-calendar"></i> دفعة ${esc(x.batch)}</span>`:""}
-  ${x.headline?`<p class="mc-headline">${esc(x.headline)}</p>`:""}
-  <div class="skills">${(x.skills||[]).slice(0,3).map(s=>`<span class="tag2">${esc(s)}</span>`).join("")}</div>
-  <span class="open-profile">عرض الملف <i class="fa-solid fa-arrow-left"></i></span>
- </a>`).join(""):`<div class="empty"><i class="fa-solid ${ALL.length?"fa-magnifying-glass":"fa-users"}"></i><strong>${ALL.length?"لم نعثر على نتائج مطابقة":"لا توجد ملفات أعضاء بعد"}</strong>${ALL.length?"جرّب كلمة بحث مختلفة أو غيّر الدفعة المختارة.":"يمكنك إنشاء ملفك الشخصي من لوحة التحكم لتظهر في دليل الأعضاء."}</div>`;
- applyPhotoColors($("#grid"));
+  const q = $("#q").value.trim().toLowerCase();
+  const b = $("#bf").value;
+
+  const rs = ALL.filter(x =>
+    (!b || x.batch === b) &&
+    (
+      !q ||
+      (
+        x.name + " " +
+        (x.headline || "") + " " +
+        (x.skills || []).join(" ")
+      ).toLowerCase().includes(q)
+    )
+  );
+
+  $("#grid").innerHTML = rs.length
+    ? rs.map(x => `
+      <a class="mc" href="members.html?id=${encodeURIComponent(x.pid)}">
+
+        <div class="av">${ini(x.name,x.photo)}</div>
+
+        <b>${esc(x.name || "عضو")}</b>
+
+        ${
+          x.leader_title
+            ? `<span class="rl">${esc(x.leader_title)}</span>`
+            : ""
+        }
+
+        <span class="sub" style="margin:0">
+          ${x.batch ? "دفعة " + esc(x.batch) : ""}
+        </span>
+
+        ${
+          x.headline
+            ? `<p>${esc(x.headline)}</p>`
+            : ""
+        }
+
+        <div>
+          ${
+            (x.skills || [])
+              .slice(0,3)
+              .map(s => `<span class="tag2">${esc(s)}</span>`)
+              .join("")
+          }
+        </div>
+
+      </a>
+    `).join("")
+    : `
+      <div class="empty">
+        ${
+          ALL.length
+            ? "لا نتائج مطابقة."
+            : "لم يُنشئ أحد ملفه بعد. كن الأول من لوحتك!"
+        }
+      </div>
+    `;
 }
-$("#q").oninput=drawDir;$("#bf").onchange=drawDir;
+
+$("#q").oninput = drawDir;
+$("#bf").onchange = drawDir;
+
 async function showDir(){
- $("#dv").hidden=false;
- try{ALL=(await call("pfDirectory")).items||[]}catch(e){if(e.status===401)return leave();$("#grid").innerHTML=`<div class="empty"><i class="fa-solid fa-triangle-exclamation"></i><strong>تعذّر تحميل الأعضاء</strong>${esc(e.message)}</div>`;return}
- const bs=[...new Set(ALL.map(x=>x.batch).filter(Boolean).map(String))].sort((a,b)=>a.localeCompare(b,"ar",{numeric:true}));
- $("#bf").innerHTML='<option value="">كل الدفعات</option>'+bs.map(b=>`<option value="${esc(b)}">${esc(b)}</option>`).join("");
- drawDir();
+  $("#dv").hidden = false;
+
+  try{
+    ALL = (await call("pfDirectory")).items;
+  }catch(e){
+    if(e.status === 401){
+      $("#grid").innerHTML = `
+        <div class="empty">
+          تعذّر تحميل قائمة الأعضاء بسبب صلاحيات الوصول.
+          <br>
+          <a class="btn pri" href="login.html">تسجيل الدخول</a>
+        </div>
+      `;
+      return;
+    }
+
+    $("#grid").innerHTML = `
+      <div class="empty">${esc(e.message)}</div>
+    `;
+
+    return;
+  }
+
+  const bs = [
+    ...new Set(ALL.map(x=>x.batch).filter(Boolean))
+  ].sort();
+
+  $("#bf").innerHTML =
+    '<option value="">كل الدفعات</option>' +
+    bs.map(b=>`<option>${esc(b)}</option>`).join("");
+
+  drawDir();
 }
+
 async function showProfile(){
- const box=$("#pv");box.hidden=false;let d;
- try{d=await call("pfGet",{pid:PID})}
- catch(e){
-  if(e.status===401&&TOKEN){TOKEN=null;localStorage.removeItem("cess-session-token");$("#b1").hidden=$("#b2").hidden=true;$("#b3").hidden=false;try{d=await call("pfGet",{pid:PID})}catch(e2){e=e2}}
-  if(!d){box.innerHTML=`<div class="panel" style="text-align:center"><h2 style="justify-content:center">${esc(e.message)}</h2><p class="sub">قد يكون الملف مخفيًا أو غير موجود.</p><a class="btn pri" href="${TOKEN?"members.html":"index.html"}">العودة</a></div>`;return}
- }
- document.title=(d.name||"ملف عضو")+" — CESS-UofT";
- const ach=(d.achievements||[]).map(x=>`<div class="ach"><b>${esc(x.title)}</b>${x.verified?'<span class="vf">✓ إنجاز موثّق</span>':""}${x.date?`<div class="sub" style="margin:2px 0">${esc(x.date)}</div>`:""}${x.description?`<p>${esc(x.description)}</p>`:""}${x.url?`<a class="lnk" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">عرض تفاصيل الإنجاز ↗</a>`:""}</div>`).join("");
- box.innerHTML=`<div class="back-row"><a class="btn" href="${TOKEN?"members.html":"index.html"}"><i class="fa-solid fa-arrow-right"></i> رجوع</a></div>
- ${d.blocked?'<div class="note">⚠️ هذا الملف مخفي من قِبل المشرف ولا يراه غيرك والمشرفون.</div>':d.visibility==="hidden"?'<div class="note">هذا الملف مخفي، لا يراه غيرك والمشرفون.</div>':""}
- <div class="hero2">${photoMarkup(d.name,d.photo,true)}<div class="profile-info"><h1>${esc(d.name||"")}</h1>${d.leader_title?`<span class="rl">${esc(d.leader_title)}</span>`:""}<p class="sub" style="margin:7px 0 0">${d.batch?"دفعة "+esc(d.batch):""}${d.headline?" · "+esc(d.headline):""}</p><div class="socs">${pfIcons(d.links)}</div>${d.self?'<a class="btn pri" style="margin-top:13px" href="profile.html?edit=1"><i class="fa-solid fa-pen"></i> تعديل ملفي</a>':""}</div></div>
- ${d.bio?`<div class="panel"><h2>نبذة عن العضو</h2><p style="white-space:pre-wrap;line-height:2;margin:0">${esc(d.bio)}</p></div>`:""}
- ${(d.skills||[]).length?`<div class="panel"><h2>المهارات</h2><div class="skills" style="justify-content:flex-start">${d.skills.map(s=>`<span class="tag2">${esc(s)}</span>`).join("")}</div></div>`:""}
- <div class="panel"><h2>الإنجازات</h2>${ach||'<p class="sub" style="margin:0">لم تتم إضافة إنجازات بعد.</p>'}</div>`;
- applyPhotoColors(box);
+  const box = $("#pv");
+  box.hidden = false;
+
+  let d;
+
+  try{
+    d = await call("pfGet",{pid:PID});
+  }catch(e){
+
+    if(e.status === 401 && TOKEN){
+      TOKEN = null;
+      localStorage.removeItem("cess-session-token");
+
+      $("#b1").hidden = true;
+      $("#b2").hidden = false;
+      $("#b3").hidden = false;
+
+      try{
+        d = await call("pfGet",{pid:PID});
+      }catch(e2){
+        e = e2;
+      }
+    }
+
+    if(!d){
+      box.innerHTML = `
+        <div class="panel" style="text-align:center">
+          <h2>${esc(e.message)}</h2>
+
+          <p class="sub">
+            قد يكون الملف مخفيًا أو غير موجود.
+          </p>
+
+          <a class="btn pri"
+             href="${TOKEN ? "members.html" : "index.html"}">
+            رجوع
+          </a>
+        </div>
+      `;
+
+      return;
+    }
+  }
+
+  document.title = (d.name || "ملف عضو") + " — CESS-UofT";
+
+  const ach = (d.achievements || []).map(x => `
+    <div class="ach">
+
+      <b>${esc(x.title)}</b>
+
+      ${
+        x.verified
+          ? '<span class="vf">✓ موثّق من الجمعية</span>'
+          : ""
+      }
+
+      ${
+        x.date
+          ? `<div class="sub" style="margin:2px 0">${esc(x.date)}</div>`
+          : ""
+      }
+
+      ${
+        x.description
+          ? `<p>${esc(x.description)}</p>`
+          : ""
+      }
+
+      ${
+        x.url
+          ? `<a class="lnk" href="${esc(x.url)}" target="_blank" rel="noopener">رابط الإنجاز ↗</a>`
+          : ""
+      }
+
+    </div>
+  `).join("");
+
+  box.innerHTML = `
+
+    <div style="margin-bottom:12px">
+      <a class="btn" href="${TOKEN ? "members.html" : "index.html"}">
+        ← رجوع
+      </a>
+    </div>
+
+    ${
+      d.blocked
+        ? '<div class="note">⚠️ هذا الملف مخفي من قِبل المشرف ولا يراه غيرك والمشرفون.</div>'
+        : d.visibility === "hidden"
+          ? '<div class="note">هذا الملف مخفي، لا يراه غيرك والمشرفون.</div>'
+          : ""
+    }
+
+    <div class="hero2">
+
+      <div class="av big">
+        ${ini(d.name,d.photo)}
+      </div>
+
+      <div style="flex:1;min-width:200px">
+
+        <h1>${esc(d.name || "")}</h1>
+
+        ${
+          d.leader_title
+            ? `<span class="rl">${esc(d.leader_title)}</span>`
+            : ""
+        }
+
+        <p class="sub" style="margin:4px 0">
+          ${d.batch ? "دفعة " + esc(d.batch) : ""}
+          ${d.headline ? " · " + esc(d.headline) : ""}
+        </p>
+
+        <div class="socs">
+          ${pfIcons(d.links)}
+        </div>
+
+        ${
+          d.self
+            ? '<a class="btn pri" style="margin-top:10px" href="profile.html?edit=1">تعديل ملفي</a>'
+            : ""
+        }
+
+      </div>
+    </div>
+
+    ${
+      d.bio
+        ? `
+          <div class="panel">
+            <h2>نبذة</h2>
+            <p style="white-space:pre-wrap;line-height:1.9">
+              ${esc(d.bio)}
+            </p>
+          </div>
+        `
+        : ""
+    }
+
+    ${
+      (d.skills || []).length
+        ? `
+          <div class="panel">
+            <h2>المهارات</h2>
+            ${d.skills.map(s=>`<span class="tag2">${esc(s)}</span>`).join("")}
+          </div>
+        `
+        : ""
+    }
+
+    <div class="panel">
+      <h2>الإنجازات</h2>
+      ${ach || '<p class="sub">لا توجد إنجازات بعد.</p>'}
+    </div>
+
+  `;
 }
-if(!TOKEN){$("#b1").hidden=$("#b2").hidden=true;$("#b3").hidden=false}
-if(PID)showProfile();else if(!TOKEN)leave();else showDir();
+
+/* تهيئة أزرار التنقل وعرض الأعضاء */
+
+if(!TOKEN){
+  $("#b1").hidden = true;
+  $("#b2").hidden = false;
+  $("#b3").hidden = false;
+}
+
+if(PID){
+  showProfile();
+}else{
+  showDir();
+}
 </script>
+
 </body>
 </html>
