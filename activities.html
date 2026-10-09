@@ -70,4 +70,5 @@ document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>tab(b.dataset.
   try{[ACT,NEWS]=await Promise.all([call("actList").then(d=>d.items),call("annPublic").then(d=>d.items)])}catch(e){$("#pa").innerHTML=`<div class="glass empty">${E(e.message)}</div>`;return}
   drawA();drawN();tab(location.hash==="#news"?"news":"act");
 })();
+  <script src="join.js"></script>
 </script></body></html>
