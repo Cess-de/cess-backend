@@ -1,54 +1,116 @@
-CESS_SEC.members=function(el){
-  const VN={members:"للأعضاء",public:"عام",hidden:"مخفي"};
-  let R=[],Q="",F="all";
-  const FL={all:()=>1,lead:r=>!!r.leader_title,hid:r=>r.visibility==="hidden"||r.blocked,rev:r=>r.unverified>0};
-  const av=r=>r.photo?`<img src="${esc(r.photo)}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`:esc((r.name||r.student_id).trim().slice(0,1));
-  const row=r=>`<div class="rs"><div class="av">${av(r)}</div><div class="who"><b>${esc(r.name||"بدون اسم")}${r.leader_title?`<span class="badge warn" style="margin-inline-start:6px;font-size:11px">${esc(r.leader_title)}</span>`:""}</b><span><bdi>${esc(r.student_id)}</bdi>${r.batch?" · دفعة "+esc(r.batch):""} · ${VN[r.visibility]||""}${r.unverified?" · "+r.unverified+" إنجاز للمراجعة":""}</span></div>${r.blocked?'<span class="badge bad">محجوب</span>':""}${r.featured?'<span class="badge info">مميّز</span>':""}<div class="acts"><button class="btn sm" data-o="${esc(r.student_id)}">إدارة</button></div></div>`;
-  const list=()=>{const q=Q.trim().toLowerCase(),rs=R.filter(FL[F]).filter(r=>!q||(r.name+" "+r.student_id+" "+(r.leader_title||"")).toLowerCase().includes(q));return rs.length?rs.map(row).join(""):`<div class="empty">${R.length?"لا نتائج.":"لم يُنشئ أحد ملفه بعد."}</div>`};
-  function draw(){
-    el.innerHTML=`<p class="sub">إدارة ملفات الأعضاء: الحجب والتمييز والصفة القيادية وتوثيق الإنجازات.</p><div class="bar"><input id="mq" type="search" placeholder="ابحث بالاسم أو الرقم أو الصفة" value="${esc(Q)}"><button class="btn pri" id="ml">+ تعيين قيادي</button></div><div class="chips">${[["all","الكل"],["lead","القياديون"],["rev","إنجازات للمراجعة"],["hid","مخفية/محجوبة"]].map(([k,l])=>`<button class="chip ${F===k?"on":""}" data-f="${k}">${l}</button>`).join("")}</div><div class="list" id="mlist">${list()}</div>`;
-    el.querySelector("#mq").oninput=e=>{Q=e.target.value;el.querySelector("#mlist").innerHTML=list()};
-  }
-  async function refresh(){
-    el.innerHTML='<div class="list"><div class="sk"></div><div class="sk"></div></div>';
-    try{R=(await call("adminPfList")).items}catch(e){el.innerHTML=`<div class="list"><div class="empty">${esc(e.message)}</div></div>`;return}
-    draw();
-  }
-  el.onclick=e=>{
-    const f=e.target.closest("[data-f]");if(f){F=f.dataset.f;return draw()}
-    if(e.target.closest("#ml"))return leader(null);
-    const o=e.target.closest("[data-o]");if(o)mgr(R.find(r=>r.student_id===o.dataset.o));
-  };
-  function leader(r){
-    modal(`<h3>تعيين قيادي</h3>${r?`<p class="sub">${esc(r.name||r.student_id)}</p>`:'<div class="fld"><label>الرقم الجامعي</label><input id="l1" inputmode="numeric" dir="ltr"></div>'}<div class="fld"><label>الصفة القيادية (فارغة = إلغاء)</label><input id="l2" value="${esc((r&&r.leader_title)||"")}" placeholder="مثال: رئيس الجمعية"></div><div class="fld"><label>الترتيب (1 يظهر أولًا)</label><input id="l3" type="number" min="1" max="999" value="${r&&r.leader_title?r.leader_rank:""}"></div><p class="sub">يظهر القيادي للعامة في الصفحة الرئيسية فقط إذا اختار صاحب الملف «عام».</p><div class="row"><button class="btn pri" id="ls">حفظ</button><button class="btn" id="lx">إلغاء</button></div>`);
-    $("#lx").onclick=()=>dlg.close();
-    $("#ls").onclick=e=>busy(e.currentTarget,async()=>{
-      const sid=r?r.student_id:nz($("#l1").value);
-      if(!/^\d{4,20}$/.test(sid))throw new Error("أدخل رقمًا جامعيًا صحيحًا.");
-      await call("adminLeaderSet",{student_id:sid,title:$("#l2").value,rank:$("#l3").value});
-      dlg.close();toast("تم الحفظ");await refresh();
-    });
-  }
-  async function mgr(r){
-    let ach=[];try{ach=(await call("pfGet",{pid:r.pid})).achievements||[]}catch(e){}
-    modal(`<h3>${esc(r.name||r.student_id)}</h3><p class="sub"><bdi>${esc(r.student_id)}</bdi></p>
-    <div class="row" style="margin-top:0"><a class="btn" target="_blank" rel="noopener" href="members.html?id=${encodeURIComponent(r.pid)}">عرض الملف</a><button class="btn" id="g1">${r.featured?"إلغاء التمييز":"تمييز"}</button><button class="btn dng" id="g2">${r.blocked?"إظهار الملف":"حجب الملف"}</button></div>
-    <div class="row"><button class="btn" id="g3">الصفة القيادية</button>${r.photo?'<button class="btn dng" id="g4">مسح الصورة</button>':""}<button class="btn dng" id="g5">حذف الملف</button></div>
-    <h3 style="margin-top:18px;font-size:15px">الإنجازات (${ach.length})</h3>
-    ${ach.map(a=>`<div class="rs" style="padding:10px 0"><div class="who"><b>${esc(a.title)}</b>${a.verified?'<span class="badge ok" style="margin-inline-start:6px;font-size:11px">موثّق</span>':""}<span>${esc(a.date||"")}</span></div><div class="acts"><button class="btn sm" data-v="${esc(a.id)}" data-s="${a.verified?0:1}">${a.verified?"إلغاء التوثيق":"توثيق"}</button><button class="btn sm dng" data-d="${esc(a.id)}">حذف</button></div></div>`).join("")||'<p class="sub">لا توجد إنجازات.</p>'}
-    <div class="row"><button class="btn" id="x">إغلاق</button></div>`);
-    const done=async m=>{toast(m);await refresh()},again=async()=>{await refresh();mgr(R.find(x=>x.student_id===r.student_id)||r)};
-    $("#x").onclick=()=>dlg.close();
-    $("#g1").onclick=e=>busy(e.currentTarget,async()=>{await call("adminPfSet",{student_id:r.student_id,featured:!r.featured});dlg.close();await done("تم")});
-    $("#g2").onclick=e=>busy(e.currentTarget,async()=>{await call("adminPfSet",{student_id:r.student_id,blocked:!r.blocked});dlg.close();await done(r.blocked?"أُظهر الملف":"حُجب الملف")});
-    $("#g3").onclick=()=>leader(r);
-    if($("#g4"))$("#g4").onclick=e=>busy(e.currentTarget,async()=>{await call("adminPfClear",{student_id:r.student_id,what:"photo"});dlg.close();await done("مُسحت الصورة")});
-    $("#g5").onclick=async()=>{
-      if(!await confirmBox("حذف الملف كاملًا؟",`سيُحذف ملف <b>${esc(r.name||r.student_id)}</b> وصورته وإنجازاته نهائيًا.`,"حذف",true))return;
-      try{await call("adminPfClear",{student_id:r.student_id,what:"all"});await done("حُذف الملف")}catch(e){toast(e.message,"bad")}
-    };
-    dlg.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>busy(b,async()=>{await call("adminAchVerify",{id:b.dataset.v,verified:b.dataset.s==="1"});await again()}));
-    dlg.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>busy(b,async()=>{await call("adminAchDelete",{id:b.dataset.d});await again()}));
-  }
-  refresh();
-};
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>لوحتي — CESS-UofT</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B132B;--ac:#FFC72C;--t1:#fff;--t2:#A8B3CC;--g:rgba(255,255,255,.08);--gb:rgba(255,255,255,.2);--bd:rgba(255,255,255,.12);--ok:#22C55E;--bad:#EF4444;--el:#141d38}
+[data-theme=light]{--bg:#EAF0F8;--t1:#0F172A;--t2:#5B6B82;--g:rgba(255,255,255,.62);--gb:rgba(15,23,42,.08);--bd:rgba(15,23,42,.1);--ok:#15803D;--el:#fff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,sans-serif;color:var(--t1);min-height:100vh;font-size:15px;padding:14px 14px 110px;background:radial-gradient(circle at 12% 8%,rgba(255,199,44,.28),transparent 38%),radial-gradient(circle at 90% 30%,rgba(59,130,246,.30),transparent 42%),radial-gradient(circle at 30% 95%,rgba(168,85,247,.22),transparent 40%),var(--bg);background-attachment:fixed}
+.w{max-width:760px;margin:0 auto}[hidden]{display:none!important}
+.glass{background:var(--g);border:1px solid var(--gb);-webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%);box-shadow:0 8px 30px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.22);border-radius:22px}
+.top{display:flex;align-items:center;gap:8px;padding:10px 14px;margin-bottom:14px}
+.logo{display:flex;align-items:center;gap:8px;font-weight:800;text-decoration:none;color:var(--t1);flex:1}
+.logo i{width:28px;height:28px;background:var(--ac);border-radius:8px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:14px}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--gb);background:var(--g);color:var(--t1);font:600 13px Inter,sans-serif;cursor:pointer;text-decoration:none;--spc:var(--t1);white-space:nowrap}
+.btn:focus-visible,input:focus-visible{outline:2px solid var(--ac);outline-offset:2px}.btn:disabled{opacity:.55;cursor:not-allowed}
+.pri{background:var(--ac);color:#0B132B;border-color:transparent;--spc:#0B132B}.danger{background:var(--bad);color:#fff;border-color:transparent;--spc:#fff}.dng{color:var(--bad)}.sm{height:34px;padding:0 13px;font-size:12.5px}
+.loading{color:transparent!important;pointer-events:none}
+.loading::after{content:"";position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border:2px solid var(--spc);border-top-color:transparent;border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.hero{display:flex;align-items:center;gap:16px;padding:20px;margin-bottom:14px;flex-wrap:wrap}
+.av{width:72px;height:72px;border-radius:50%;background:var(--ac);color:#0B132B;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;overflow:hidden;flex-shrink:0;box-shadow:0 0 0 3px var(--gb)}
+.hero h1{font-size:19px;font-weight:800}.hero p{font-size:13px;color:var(--t2);margin-top:2px}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 12px;border-radius:999px;margin:6px 6px 0 0}
+.tg1{background:var(--ac);color:#0B132B}.tg2{border:1px solid var(--ac);color:var(--ac)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.c{display:block;padding:18px;text-align:start;color:var(--t1);text-decoration:none;font-family:inherit;width:100%;border-radius:22px}
+a.c,button.c{cursor:pointer}a.c:hover,button.c:hover{border-color:var(--ac)}
+.c .e{font-size:26px}.c b{display:block;font-size:14px;margin:8px 0 3px}.c span{font-size:12px;color:var(--t2)}.c.off{opacity:.55}
+.panel{padding:22px;margin-bottom:14px}.panel h2{font-size:17px;font-weight:800;margin-bottom:4px}.sub{font-size:13px;color:var(--t2);line-height:1.7;margin-bottom:14px}
+.fld{margin-bottom:12px}.fld label{display:block;font-size:12.5px;font-weight:600;color:var(--t2);margin-bottom:6px}
+.fld input{width:100%;height:44px;padding:0 14px;border-radius:14px;border:1px solid var(--gb);background:var(--g);color:var(--t1);font:inherit}
+.fld small{display:block;min-height:18px;font-size:12px;margin-top:4px;color:var(--bad)}
+.nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom));width:min(92vw,420px);display:flex;padding:6px;border-radius:999px;z-index:20}
+.lens{position:absolute;top:6px;bottom:6px;left:0;width:0;border-radius:999px;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.38),rgba(255,255,255,.12));-webkit-backdrop-filter:blur(8px) brightness(1.2);backdrop-filter:blur(8px) brightness(1.2);border:1px solid rgba(255,255,255,.5);box-shadow:inset 0 1px 1px rgba(255,255,255,.6),0 4px 14px rgba(0,0,0,.2);transition:transform .55s cubic-bezier(.34,1.4,.5,1),width .55s cubic-bezier(.34,1.4,.5,1)}
+.ni{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 4px;border:0;background:none;color:var(--t2);font:600 11px Inter,sans-serif;text-decoration:none;cursor:pointer}
+.ni span{font-size:19px}.ni.on{color:var(--t1)}
+.sk{height:70px;margin:8px 0;border-radius:18px;background:linear-gradient(90deg,var(--g),var(--bd),var(--g));background-size:200% 100%;animation:sh 1.2s infinite}@keyframes sh{to{background-position:-200% 0}}
+dialog{border:1px solid var(--gb);border-radius:22px;background:var(--el);color:var(--t1);padding:24px;width:min(92vw,440px);margin:auto}dialog::backdrop{background:rgba(0,0,0,.55)}dialog h3{font-size:18px;font-weight:800}
+.row{display:flex;gap:8px;margin-top:16px}.row .btn{flex:1}
+#toasts{position:fixed;top:calc(12px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:8px;z-index:99;width:min(92vw,420px)}
+.toast{padding:12px 16px;border-radius:16px;background:var(--el);border:1px solid var(--bd);font-size:13.5px;box-shadow:0 8px 24px rgba(0,0,0,.3)}.toast.bad{border-color:var(--bad)}.toast.ok{border-color:var(--ok)}
+@media(prefers-reduced-motion:reduce){.sk{animation:none}}
+</style></head>
+<body data-theme="dark"><div class="w">
+<div id="boot"><div class="sk"></div><div class="sk"></div></div>
+<div id="app" hidden>
+  <header class="glass top"><a href="index.html" class="logo"><i>🎓</i><span>CESS-UofT</span></a>
+    <a class="btn sm pri" id="adm" href="admin.html" hidden>لوحة التحكم</a><button class="btn sm" id="tt" aria-label="تبديل المظهر">🌙</button><button class="btn sm" id="out">خروج</button></header>
+
+  <div id="v-home">
+    <section class="glass hero"><div class="av" id="av"></div><div style="flex:1;min-width:160px"><h1 id="name"></h1><p><bdi id="sid"></bdi></p><div id="tags"></div></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn sm" id="vw" href="profile.html">ملفي</a><a class="btn sm pri" href="profile.html?edit=1">تعديل</a></div></section>
+    <div id="gsBox"></div>
+    <div class="grid">
+      <a class="glass c" href="profile.html"><div class="e">👤</div><b>ملفي الشخصي</b><span>الصورة والنبذة والإنجازات</span></a>
+      <a class="glass c" href="members.html"><div class="e">👥</div><b>أعضاء الجمعية</b><span>تعرّف على زملائك</span></a>
+      <a class="glass c" href="resources.html"><div class="e">📚</div><b>الموارد</b><span>ملفات ومراجع الجمعية</span></a>
+      <div class="glass c off"><div class="e">📅</div><b>الأنشطة</b><span>قريبًا</span></div>
+      <div class="glass c off"><div class="e">📢</div><b>الإعلانات</b><span>قريبًا</span></div>
+      <div class="glass c off"><div class="e">🗳️</div><b>الانتخابات</b><span>قريبًا</span></div>
+    </div>
+  </div>
+
+  <div id="v-sec" hidden>
+    <div class="glass panel"><h2>تغيير كلمة المرور</h2><p class="sub">بعد التغيير تخرج بقية أجهزتك تلقائيًا، وتبقى أنت داخل هذا الجهاز.</p>
+      <div class="fld"><label>كلمة المرور الحالية</label><input id="p0" type="password" dir="ltr" autocomplete="current-password"></div>
+      <div class="fld"><label>كلمة المرور الجديدة</label><input id="p1" type="password" dir="ltr" autocomplete="new-password"><small id="e1"></small></div>
+      <div id="rules" style="margin:-8px 0 14px"></div>
+      <div class="fld"><label>تأكيد كلمة المرور الجديدة</label><input id="p2" type="password" dir="ltr" autocomplete="new-password"><small id="e2"></small></div>
+      <button class="btn pri" id="chg" style="width:100%" disabled>حفظ كلمة المرور</button></div>
+    <div class="glass panel"><h2>الأجهزة</h2><p class="sub">إن فقدت جهازًا أو شككت في دخول أحد إلى حسابك، اخرج من كل الأجهزة ثم سجّل الدخول من جديد.</p>
+      <button class="btn dng" id="all" style="width:100%">الخروج من كل الأجهزة</button></div>
+  </div>
+</div></div>
+<nav class="glass nav" id="nav" hidden><i class="lens"></i>
+  <button class="ni on" data-v="home"><span>🏠</span>الرئيسية</button><a class="ni" href="members.html"><span>👥</span>الأعضاء</a><a class="ni" href="resources.html"><span>📚</span>الموارد</a><button class="ni" data-v="sec"><span>🔐</span>الأمان</button></nav>
+<dialog id="dlg"></dialog><div id="toasts" aria-live="polite"></div>
+<script src="cess.js"></script><script src="glass-strip.js"></script>
+<script>
+const URL_="https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/"+CESS_FN,ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
+const $=s=>document.querySelector(s),TOKEN=localStorage.getItem("cess-session-token"),dlg=$("#dlg");
+const E=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function leave(){localStorage.removeItem("cess-session-token");localStorage.removeItem("cess-member");location.href="login.html"}
+async function call(a,i={}){let r;try{r=await fetch(URL_,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+ANON},body:JSON.stringify({action:a,input:{...i,token:TOKEN}})})}catch{throw new Error("تعذّر الاتصال بالخادم، تحقق من الإنترنت.")}
+const j=await r.json().catch(()=>({}));if(r.status===401&&a!=="changePassword")leave();if(!j.ok)throw new Error(j.error||"حدث خطأ غير متوقع");return j.data}
+function toast(m,t="ok"){const e=document.createElement("div");e.className="toast "+t;e.textContent=m;$("#toasts").append(e);setTimeout(()=>e.remove(),t==="bad"?7000:4200)}
+async function busy(b,fn){if(b.disabled)return;b.classList.add("loading");b.disabled=true;try{return await fn()}catch(e){toast(e.message,"bad")}finally{b.classList.remove("loading");b.disabled=false;if(b.id==="chg")check()}}
+function theme(t){document.body.dataset.theme=t;localStorage.setItem("cess-theme",t);$("#tt").textContent=t==="dark"?"🌙":"☀️"}
+$("#tt").onclick=()=>theme(document.body.dataset.theme==="dark"?"light":"dark");theme(localStorage.getItem("cess-theme")||"dark");
+function lens(){const a=document.querySelector(".ni.on"),l=$(".lens");if(!a)return;l.style.width=a.offsetWidth+"px";l.style.transform="translateX("+a.offsetLeft+"px)"}
+function view(v){$("#v-home").hidden=v!=="home";$("#v-sec").hidden=v!=="sec";document.querySelectorAll(".ni[data-v]").forEach(b=>b.classList.toggle("on",b.dataset.v===v));lens();scrollTo(0,0)}
+document.querySelectorAll(".ni[data-v]").forEach(b=>b.onclick=()=>view(b.dataset.v));addEventListener("resize",lens);
+function check(){const a=$("#p0").value,b=$("#p1").value,c=$("#p2").value;
+$("#e1").textContent=b&&b===a?"اختر كلمة مختلفة عن الحالية.":"";$("#e2").textContent=c&&c!==b?"كلمتا المرور غير متطابقتين.":"";
+$("#chg").disabled=!(a&&!pwErr(b)&&b!==a&&b===c)}
+["p0","p1","p2"].forEach(i=>$("#"+i).oninput=check);pwMeter($("#p1"),$("#rules"));
+$("#chg").onclick=e=>busy(e.currentTarget,async()=>{await call("changePassword",{current_password:$("#p0").value,new_password:$("#p1").value});["p0","p1","p2"].forEach(i=>$("#"+i).value="");$("#p1").dispatchEvent(new Event("input"));toast("تم تغيير كلمة المرور");view("home")});
+$("#all").onclick=()=>{dlg.innerHTML=`<h3>الخروج من كل الأجهزة؟</h3><p class="sub" style="margin-top:8px">ستخرج من هذا الجهاز وكل الأجهزة الأخرى، وتحتاج إلى تسجيل الدخول من جديد.</p><div class="row"><button class="btn danger" id="y">خروج من الكل</button><button class="btn" id="n">إلغاء</button></div>`;dlg.showModal();
+$("#n").onclick=()=>dlg.close();$("#y").onclick=e=>busy(e.currentTarget,async()=>{await call("logoutAll");leave()})};
+$("#out").onclick=e=>busy(e.currentTarget,async()=>{try{await call("logout")}catch{}leave()});
+(async()=>{
+  if(!TOKEN)return leave();
+  try{
+    const m=await call("me"),n=m.member.full_name;
+    $("#name").textContent=n||"مرحبًا بك";$("#sid").textContent="الرقم الجامعي: "+m.member.student_id;$("#av").textContent=(n||m.member.student_id).trim().slice(0,1);
+    if(m.is_admin){$("#adm").hidden=false;$("#tags").innerHTML='<span class="tag tg2">مشرف</span>'}
+  }catch(e){return leave()}
+  $("#boot").hidden=true;$("#app").hidden=false;$("#nav").hidden=false;lens();
+  call("pfGet").then(d=>{
+    if(d.photo)$("#av").innerHTML=`<img src="${E(d.photo)}" alt="" style="width:100%;height:100%;object-fit:cover">`;
+    if(d.leader_title)$("#tags").insertAdjacentHTML("afterbegin",`<span class="tag tg1">${E(d.leader_title)}</span>`);
+    if(d.exists&&d.pid)$("#vw").href="members.html?id="+encodeURIComponent(d.pid);
+  }).catch(()=>{});
+  CessStrip.mount($("#gsBox"),{url:URL_,anon:ANON,token:TOKEN,all:"members.html",onEmpty:()=>{$("#gsBox").innerHTML='<a class="glass c" href="profile.html?edit=1" style="margin-top:14px"><b>كن أول من ينشئ ملفه 👤</b><span>أضف صورتك ونبذتك لتظهر هنا.</span></a>'}});
+})();
+</script></body></html>
