@@ -152,10 +152,11 @@ $("#fb").onclick=()=>{
 
 (async()=>{
   if(!TOKEN)return leave();
-  try{const m=await call("me");if(m.is_admin)$("#adm").hidden=false}catch(e){return leave()}
-  $("#boot").hidden=true;$("#app").hidden=false;
+  $("#boot").hidden=true;$("#app").hidden=false;$("#grid").innerHTML='<div class="sk"></div><div class="sk"></div>';
+  call("me").then(m=>{if(m.is_admin)$("#adm").hidden=false}).catch(()=>{});
   try{ALL=(await call("resList")).items;draw()}catch(e){$("#grid").innerHTML=`<div class="empty">${esc(e.message)}</div>`}
 })();
+
 </script>
 </body>
 </html>
