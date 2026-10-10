@@ -24,6 +24,7 @@ h1{font-size:22px;font-weight:800;margin:4px 4px 14px}
 <header class="glass top"><a href="index.html" class="logo"><i>🎓</i><span>CESS-UofT</span></a><a class="btn" href="index.html">الرئيسية</a><a class="btn" href="members.html">الأعضاء</a><button class="btn" id="tt">🌙</button></header>
 <h1 id="h"></h1><div id="c"><div class="sk"></div><div class="sk"></div></div></div>
 <script src="cess.js"></script>
+<script src="lightbox.js"></script>
 <script>
 const URL_="https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/"+CESS_FN,ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
 const $=s=>document.querySelector(s),TOKEN=localStorage.getItem("cess-session-token"),P=new URLSearchParams(location.search).get("p")||"offices";
@@ -31,7 +32,7 @@ const E=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt
 async function call(a,i={}){const r=await fetch(URL_,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+ANON},body:JSON.stringify({action:a,input:{...i,token:TOKEN}})});const j=await r.json().catch(()=>({}));if(!j.ok)throw new Error(j.error||"حدث خطأ");return j.data}
 function theme(t){document.body.dataset.theme=t;localStorage.setItem("cess-theme",t);$("#tt").textContent=t==="dark"?"🌙":"☀️"}
 $("#tt").onclick=()=>theme(document.body.dataset.theme==="dark"?"light":"dark");theme(localStorage.getItem("cess-theme")||"dark");
-const gal=im=>(im||[]).length?`<div class="gal">${im.map(u=>`<a href="${E(u)}" target="_blank" rel="noopener"><img src="${E(u)}" alt="" loading="lazy"></a>`).join("")}</div>`:"";
+const gal=im=>(im||[]).length?`<div class="gal" data-gal>${im.map(u=>`<img src="${E(u)}" alt="" loading="lazy" style="cursor:zoom-in">`).join("")}</div>`:"";
 const d8=d=>new Date(d).toLocaleDateString("ar",{day:"numeric",month:"long",year:"numeric"});
 const V={
   vision:["الرؤية والرسالة ومعيار العمل",async()=>{
