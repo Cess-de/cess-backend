@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>CESS-UofT</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B132B;--ac:#FFC72C;--t1:#fff;--t2:#A8B3CC;--g:rgba(255,255,255,.08);--gb:rgba(255,255,255,.2)}
+[data-theme=light]{--bg:#EAF0F8;--t1:#0F172A;--t2:#5B6B82;--g:rgba(255,255,255,.62);--gb:rgba(15,23,42,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,sans-serif;color:var(--t1);min-height:100vh;font-size:15px;padding:14px 14px 40px;background:radial-gradient(circle at 12% 8%,rgba(255,199,44,.28),transparent 38%),radial-gradient(circle at 90% 30%,rgba(59,130,246,.30),transparent 42%),var(--bg)}
+.w{max-width:860px;margin:0 auto}
+.glass{background:var(--g);border:1px solid var(--gb);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 6px 24px rgba(0,0,0,.16);border-radius:22px}
+.top{display:flex;align-items:center;gap:8px;padding:10px 14px;margin-bottom:16px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:8px;font-weight:800;text-decoration:none;color:var(--t1);flex:1}.logo i{width:28px;height:28px;background:var(--ac);border-radius:8px;display:flex;align-items:center;justify-content:center;font-style:normal}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:34px;padding:0 14px;border-radius:999px;border:1px solid var(--gb);background:var(--g);color:var(--t1);font:600 12.5px Inter,sans-serif;cursor:pointer;text-decoration:none}
+h1{font-size:22px;font-weight:800;margin:4px 4px 14px}
+.card{padding:18px;margin-bottom:12px}.card p{font-size:14px;color:var(--t2);line-height:1.9;margin-top:6px;white-space:pre-wrap}.dt{font-size:12.5px;font-weight:700;color:var(--ac);margin-bottom:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.mc{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:20px 14px;color:var(--t1);text-decoration:none}.mc p{font-size:13px;color:var(--t2)}
+.av{width:84px;height:84px;border-radius:50%;background:var(--ac);color:#0B132B;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:800;overflow:hidden}.av img{width:100%;height:100%;object-fit:cover}
+.rl{font-size:12.5px;font-weight:700;color:#0B132B;background:var(--ac);border-radius:999px;padding:2px 12px}
+.gal{display:flex;gap:8px;overflow-x:auto;margin-bottom:12px}.gal img{height:150px;border-radius:14px;display:block}
+.sk{height:110px;margin-bottom:12px;border-radius:22px;background:linear-gradient(90deg,var(--g),var(--gb),var(--g));background-size:200% 100%;animation:sh 1.2s infinite}@keyframes sh{to{background-position:-200% 0}}
+</style></head>
+<body data-theme="dark"><div class="w">
+<header class="glass top"><a href="index.html" class="logo"><i>🎓</i><span>CESS-UofT</span></a><a class="btn" href="index.html">الرئيسية</a><a class="btn" href="members.html">الأعضاء</a><button class="btn" id="tt">🌙</button></header>
+<h1 id="h"></h1><div id="c"><div class="sk"></div><div class="sk"></div></div></div>
+<script src="cess.js"></script>
+<script>
+const URL_="https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/"+CESS_FN,ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
+const $=s=>document.querySelector(s),TOKEN=localStorage.getItem("cess-session-token"),P=new URLSearchParams(location.search).get("p")||"offices";
+const E=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+async function call(a,i={}){const r=await fetch(URL_,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+ANON},body:JSON.stringify({action:a,input:{...i,token:TOKEN}})});const j=await r.json().catch(()=>({}));if(!j.ok)throw new Error(j.error||"حدث خطأ");return j.data}
+function theme(t){document.body.dataset.theme=t;localStorage.setItem("cess-theme",t);$("#tt").textContent=t==="dark"?"🌙":"☀️"}
+$("#tt").onclick=()=>theme(document.body.dataset.theme==="dark"?"light":"dark");theme(localStorage.getItem("cess-theme")||"dark");
+const gal=im=>(im||[]).length?`<div class="gal">${im.map(u=>`<a href="${E(u)}" target="_blank" rel="noopener"><img src="${E(u)}" alt="" loading="lazy"></a>`).join("")}</div>`:"";
+const d8=d=>new Date(d).toLocaleDateString("ar",{day:"numeric",month:"long",year:"numeric"});
+const V={
+  vision:["الرؤية والرسالة ومعيار العمل",async()=>{
+    let D={},S={};
+    try{const t=await(await fetch("index.html?v="+Date.now())).text(),a=t.indexOf("const TRANSLATIONS"),b=t.indexOf("function getSavedLang");D=new Function("return ("+t.slice(t.indexOf("{",a),b).trim().replace(/;\s*$/,"")+")")().ar||{}}catch(e){}
+    try{S=(await call("siteSettings")).settings}catch(e){}
+    const g=k=>(S[k]&&S[k].ar)||D[k]||"";
+    return [["الرؤية","vision_text"],["الرسالة","message_text"],["معيار عملنا","standard_text"]].map(([l,k])=>g(k)?`<div class="glass card"><div class="dt">${l}</div><p style="font-size:15px;color:var(--t1)">${E(g(k))}</p></div>`:"").join("")||'<div class="glass card">لا يوجد محتوى بعد.</div>';
+  }],
+  leaders:["تعرّف على قياداتنا",async()=>{
+    const L=(await call("pfStrip")).items.filter(x=>x.leader_title);
+    return L.length?`<div class="grid">${L.map(x=>`<a class="glass mc" href="members.html?id=${encodeURIComponent(x.pid)}"><div class="av">${x.photo?`<img src="${E(x.photo)}" alt="">`:E((x.name||"؟").slice(0,1))}</div><b>${E(x.name||"عضو")}</b><span class="rl">${E(x.leader_title)}</span>${x.headline?`<p>${E(x.headline)}</p>`:""}</a>`).join("")}</div>`:'<div class="glass card">لم تُضف القيادات بعد.</div>';
+  }],
+  offices:["الأمانات واللجان",async()=>{
+    const O=(await call("offList")).items;
+    return O.length?O.map(o=>`<div class="glass card">${gal(o.images)}<b style="font-size:17px">${E(o.name)}</b>${o.description?`<p>${E(o.description)}</p>`:""}</div>`).join(""):'<div class="glass card">لم تُضف الأمانات بعد.</div>';
+  }],
+  archive:["أرشيف الجمعية",async()=>{
+    const d=await call("archiveList");
+    const a=d.activities.map(x=>`<div class="glass card">${gal(x.images)}<div class="dt">📅 ${d8(x.starts_at)}</div><b>${E(x.title)}</b>${x.location?`<div style="font-size:12.5px;color:var(--t2);margin-top:4px">📍 ${E(x.location)}</div>`:""}${x.description?`<p>${E(x.description)}</p>`:""}</div>`).join("");
+    const n=d.announcements.map(x=>`<div class="glass card">${gal(x.images)}<div class="dt">📢 ${d8(x.created_at)}</div><b>${E(x.title)}</b>${x.body?`<p>${E(x.body)}</p>`:""}</div>`).join("");
+    return (a?`<h1 style="font-size:17px">الأنشطة السابقة</h1>${a}`:"")+(n?`<h1 style="font-size:17px;margin-top:18px">إعلانات سابقة</h1>${n}`:"")||'<div class="glass card">لا يوجد أرشيف بعد.</div>';
+  }]
+};
+const v=V[P]||V.offices;$("#h").textContent=v[0];document.title=v[0]+" — CESS-UofT";
+v[1]().then(h=>$("#c").innerHTML=h).catch(e=>$("#c").innerHTML=`<div class="glass card">${E(e.message)}</div>`);
+</script></body></html>
