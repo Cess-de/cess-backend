@@ -576,6 +576,24 @@
 </script>
 <script src="notify.js"></script>
 <script>CessNotify.init({url:"https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/smooth-handler",anon:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0",token:localStorage.getItem("cess-session-token")});</script>
+<script src="home-feed.js"></script>
+<script>
+(()=>{
+  const U="https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/smooth-handler",A="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
+  const st=document.createElement("style");
+  st.textContent=".mission-grid{grid-template-columns:1fr!important}.mission-card:first-child,.mission-note{display:none!important}.ql{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.ql a{display:flex;align-items:center;justify-content:center;gap:8px;height:56px;border-radius:20px;text-decoration:none;color:inherit;font-weight:700;font-size:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}.ql a:hover{border-color:#FFC72C}";
+  document.head.append(st);
+  const hero=document.querySelector(".hero");if(!hero)return;
+  const mk=(id,t,s,h)=>{const e=document.createElement("section");e.id=id;e.style.cssText="padding:44px 0";e.innerHTML=`<div class="container">${t?`<div class="section-title">${t}</div><div class="section-subtitle">${s}</div>`:""}${h}</div>`;return e};
+  const links=mk("quick","","",'<div class="ql"><a href="page.html?p=vision">🎯 الرؤية ومعيار العمل</a><a href="page.html?p=leaders">🏅 تعرّف على قياداتنا</a><a href="page.html?p=offices">🏛️ الأمانات</a><a href="page.html?p=archive">🗂️ أرشيف الجمعية</a><a href="members.html">👥 تعرّف على الأعضاء</a></div>');
+  const feed=mk("feed","نشاطات وإعلانات","سارع بالتسجيل في الفعاليات القادمة.",'<div id="hfBox"></div>');
+  hero.insertAdjacentElement("afterend",links);hero.insertAdjacentElement("afterend",feed);
+  CessFeed.mount(document.getElementById("hfBox"),{url:U,anon:A,onEmpty:()=>feed.remove()});
+  const L=[["page.html?p=offices","الأمانات"],["page.html?p=leaders","قياداتنا"],["page.html?p=archive","الأرشيف"]];
+  const mn=document.getElementById("mobileNav");if(mn)mn.insertAdjacentHTML("beforeend",L.map(x=>`<a href="${x[0]}">${x[1]}</a>`).join(""));
+  const nl=document.querySelector(".nav-links");if(nl)nl.insertAdjacentHTML("beforeend",L.map(x=>`<li><a href="${x[0]}">${x[1]}</a></li>`).join(""));
+})();
+</script>
 
 </body>
 </html>
