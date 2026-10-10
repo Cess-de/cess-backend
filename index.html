@@ -594,6 +594,11 @@
   const nl=document.querySelector(".nav-links");if(nl)nl.insertAdjacentHTML("beforeend",L.map(x=>`<li><a href="${x[0]}">${x[1]}</a></li>`).join(""));
 })();
 </script>
+<script>
+(()=>{const rm=s=>document.querySelectorAll(s).forEach(e=>e.remove());
+rm('.hero-actions a[href="members.html"]');rm('#mobileNav a[href="members.html"]');rm('.ql a[href="members.html"]');
+document.querySelectorAll('.nav-links a[href="members.html"]').forEach(a=>{const l=a.closest("li");if(l)l.remove()});})();
+</script>
 
 </body>
 </html>
