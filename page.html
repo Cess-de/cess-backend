@@ -59,4 +59,16 @@ const V={
 };
 const v=V[P]||V.offices;$("#h").textContent=v[0];document.title=v[0]+" — CESS-UofT";
 v[1]().then(h=>$("#c").innerHTML=h).catch(e=>$("#c").innerHTML=`<div class="glass card">${E(e.message)}</div>`);
+  <script>
+if(P==="archive"){(async()=>{
+  const af=document.createElement("div");af.id="af";$("#c").insertAdjacentElement("afterend",af);
+  if(!TOKEN){af.innerHTML='<div class="glass card"><p>🔒 ملفات الأرشيف للأعضاء. <a href="login.html" style="color:var(--ac)">سجّل الدخول</a> لعرضها.</p></div>';return}
+  try{
+    const R=(await call("resList")).items.filter(x=>x.category==="الأرشيف");
+    if(!R.length)return;
+    af.innerHTML='<h1 style="font-size:17px;margin-top:18px">ملفات الأرشيف</h1>'+R.map(x=>`<div class="glass card"><div class="dt">${x.kind==="folder"?"📁 مجلد":"📄 ملف"}</div><b>${E(x.title)}</b>${x.description?`<p>${E(x.description)}</p>`:""}<a class="btn" style="margin-top:10px" href="resources.html?c=${encodeURIComponent("الأرشيف")}">${x.kind==="folder"?"تصفّح المحتوى":"فتح"}</a></div>`).join("");
+  }catch(e){}
+})()}
+</script>
+
 </script></body></html>
