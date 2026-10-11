@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>الانتخابات — CESS-UofT</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B132B;--ac:#FFC72C;--t1:#fff;--t2:#A8B3CC;--g:rgba(255,255,255,.08);--gb:rgba(255,255,255,.2);--ok:#22C55E;--bad:#EF4444;--el:#141d38}
+[data-theme=light]{--bg:#EAF0F8;--t1:#0F172A;--t2:#5B6B82;--g:rgba(255,255,255,.62);--gb:rgba(15,23,42,.1);--ok:#15803D;--el:#fff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,sans-serif;color:var(--t1);min-height:100vh;font-size:15px;padding:14px 14px 120px;background:radial-gradient(circle at 12% 8%,rgba(255,199,44,.26),transparent 38%),radial-gradient(circle at 90% 30%,rgba(59,130,246,.28),transparent 42%),var(--bg)}
+.w{max-width:720px;margin:0 auto}[hidden]{display:none!important}
+.glass{background:var(--g);border:1px solid var(--gb);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 6px 24px rgba(0,0,0,.16);border-radius:22px}
+.top{display:flex;align-items:center;gap:8px;padding:10px 14px;margin-bottom:16px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:8px;font-weight:800;text-decoration:none;color:var(--t1);flex:1}.logo i{width:28px;height:28px;background:var(--ac);border-radius:8px;display:flex;align-items:center;justify-content:center;font-style:normal}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 18px;border-radius:999px;border:1px solid var(--gb);background:var(--g);color:var(--t1);font:700 13.5px Inter,sans-serif;cursor:pointer;text-decoration:none;--spc:var(--t1)}
+.btn:disabled{opacity:.5;cursor:not-allowed}.pri{background:var(--ac);color:#0B132B;border-color:transparent;--spc:#0B132B}.sm{height:34px;padding:0 13px;font-size:12.5px}
+.loading{color:transparent!important;pointer-events:none}.loading::after{content:"";position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border:2px solid var(--spc);border-top-color:transparent;border-radius:50%;animation:sp .7s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+h1{font-size:22px;font-weight:800;margin:0 4px 6px}.sub{font-size:13px;color:var(--t2);line-height:1.8;margin:0 4px 14px}
+.ec{padding:18px;margin-bottom:12px}.ec b{font-size:17px}.ec p{font-size:13.5px;color:var(--t2);line-height:1.8;margin:6px 0 12px}
+.bd{display:inline-block;font-size:12px;font-weight:800;padding:3px 12px;border-radius:999px;margin-inline-start:8px;border:1px solid var(--gb)}.bd.ok{color:var(--ok);border-color:var(--ok)}.bd.ac{background:var(--ac);color:#0B132B;border-color:transparent}
+.ps{margin:22px 0 10px;font-size:17px;font-weight:800}
+.cd{display:flex;gap:12px;align-items:center;padding:14px;margin-bottom:10px;border-radius:20px;cursor:pointer;border:2px solid var(--gb);background:var(--g);transition:.2s}
+.cd.sel{border-color:var(--ac);background:rgba(255,199,44,.14)}.cd .rd{width:24px;height:24px;border-radius:50%;border:2px solid var(--gb);flex-shrink:0;display:flex;align-items:center;justify-content:center}.cd.sel .rd{border-color:var(--ac)}.cd.sel .rd::after{content:"";width:12px;height:12px;border-radius:50%;background:var(--ac)}
+.av{width:56px;height:56px;border-radius:50%;background:var(--ac);color:#0B132B;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;overflow:hidden;flex-shrink:0}.av img{width:100%;height:100%;object-fit:cover}
+.cd .tx{flex:1;min-width:0}.cd b{font-size:15px}.cd p{font-size:12.5px;color:var(--t2);line-height:1.7;margin-top:3px}
+.bar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom));width:min(94vw,520px);padding:12px 14px;display:flex;align-items:center;gap:12px;z-index:20}
+.bar .pg{flex:1;font-size:13px;font-weight:700}.bar .pb{height:6px;border-radius:99px;background:var(--gb);overflow:hidden;margin-top:6px}.bar .pb i{display:block;height:100%;background:var(--ac);transition:width .3s}
+.rb{height:10px;border-radius:99px;background:var(--gb);overflow:hidden;margin:4px 0 12px}.rb i{display:block;height:100%;background:var(--ac)}
+.ok2{text-align:center;padding:30px 16px}.ok2 .e{font-size:54px}.empty{padding:40px 16px;text-align:center;color:var(--t2);line-height:1.9}
+.sk{height:96px;margin-bottom:12px;border-radius:22px;background:linear-gradient(90deg,var(--g),var(--gb),var(--g));background-size:200% 100%;animation:sh 1.2s infinite}@keyframes sh{to{background-position:-200% 0}}
+dialog{border:1px solid var(--gb);border-radius:22px;background:var(--el);color:var(--t1);padding:24px;width:min(92vw,440px);margin:auto}dialog::backdrop{background:rgba(0,0,0,.55)}dialog h3{font-size:18px;font-weight:800;margin-bottom:10px}
+.row{display:flex;gap:8px;margin-top:16px}.row .btn{flex:1}
+#toasts{position:fixed;top:calc(12px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:99;width:min(92vw,420px)}.toast{padding:12px 16px;border-radius:16px;background:var(--el);border:1px solid var(--gb);font-size:13.5px;margin-bottom:8px}.toast.bad{border-color:var(--bad)}
+</style></head>
+<body data-theme="dark"><div class="w">
+<header class="glass top"><a href="dashboard.html" class="logo"><i>🎓</i><span>CESS-UofT</span></a><a class="btn sm" href="index.html">الرئيسية</a><a class="btn sm" href="dashboard.html">لوحتي</a><button class="btn sm" id="tt">🌙</button></header>
+<div id="c"><div class="sk"></div><div class="sk"></div></div></div>
+<div class="glass bar" id="bar" hidden><div class="pg"><span id="pt"></span><div class="pb"><i id="pi"></i></div></div><button class="btn pri" id="go" disabled>مراجعة وتأكيد</button></div>
+<dialog id="dlg"></dialog><div id="toasts"></div>
+<script src="cess.js"></script>
+<script>
+const URL_="https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/"+CESS_FN,ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
+const $=s=>document.querySelector(s),TOKEN=localStorage.getItem("cess-session-token"),dlg=$("#dlg");
+const E=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function leave(){localStorage.removeItem("cess-session-token");location.href="login.html"}
+async function call(a,i={}){let r;try{r=await fetch(URL_,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+ANON},body:JSON.stringify({action:a,input:{...i,token:TOKEN}})})}catch{throw new Error("تعذّر الاتصال بالخادم.")}
+const j=await r.json().catch(()=>({}));if(r.status===401)leave();if(!j.ok)throw new Error(j.error||"حدث خطأ");return j.data}
+function toast(m,t="ok"){const e=document.createElement("div");e.className="toast "+t;e.textContent=m;$("#toasts").append(e);setTimeout(()=>e.remove(),5000)}
+function theme(t){document.body.dataset.theme=t;localStorage.setItem("cess-theme",t);$("#tt").textContent=t==="dark"?"🌙":"☀️"}
+$("#tt").onclick=()=>theme(document.body.dataset.theme==="dark"?"light":"dark");theme(localStorage.getItem("cess-theme")||"dark");
+const when=d=>d?new Date(d).toLocaleString("ar",{day:"numeric",month:"long",hour:"numeric",minute:"2-digit"}):"";
+let CUR=null,SEL={};
+const badge=e=>e.voted?'<span class="bd ok">تم تصويتك ✓</span>':e.status==="closed"?'<span class="bd">مغلق</span>':!e.eligible?'<span class="bd">غير مؤهل</span>':e.live?'<span class="bd ac">مفتوح الآن</span>':'<span class="bd">لم يبدأ بعد</span>';
+async function list(){
+  $("#bar").hidden=true;CUR=null;
+  $("#c").innerHTML='<div class="sk"></div><div class="sk"></div>';
+  try{
+    const d=(await call("elList")).items;
+    $("#c").innerHTML=`<h1>الانتخابات</h1><p class="sub">صوتك سرّي: لا يستطيع أحد معرفة اختيارك.</p>`+(d.length?d.map(e=>`<div class="glass ec"><b>${E(e.title)}</b>${badge(e)}${e.description?`<p>${E(e.description)}</p>`:'<p></p>'}<div class="sub" style="margin:0 0 12px">${e.closes_at?"يُغلق: "+when(e.closes_at):""}</div><button class="btn ${e.live&&e.eligible&&!e.voted?"pri":""}" data-o="${E(e.id)}">${e.live&&e.eligible&&!e.voted?"صوّت الآن":e.status==="closed"?"النتائج":"التفاصيل"}</button></div>`).join(""):'<div class="glass empty">لا توجد انتخابات حاليًا.</div>');
+  }catch(e){$("#c").innerHTML=`<div class="glass empty">${E(e.message)}</div>`}
+}
+$("#c").onclick=e=>{const o=e.target.closest("[data-o]");if(o)openEl(o.dataset.o);const b=e.target.closest("[data-sel]");if(b)pick(b.dataset.p,b.dataset.sel);if(e.target.closest("[data-back]"))list()};
+async function openEl(id){
+  $("#c").innerHTML='<div class="sk"></div><div class="sk"></div>';
+  try{CUR=await call("elGet",{id});SEL={};draw()}catch(e){toast(e.message,"bad");list()}
+}
+const back='<p style="margin:0 4px 12px"><button class="btn sm" data-back>← رجوع</button></p>';
+function draw(){
+  const e=CUR;$("#bar").hidden=true;let h=back+`<h1>${E(e.title)}</h1>${e.description?`<p class="sub">${E(e.description)}</p>`:""}`;
+  if(e.results)h+=`<div class="glass ec"><b>النتائج</b><p>شارك ${e.results.voters} عضوًا.</p>${e.results.positions.map(p=>`<div style="margin-bottom:16px"><b style="font-size:15px">${E(p.title)}</b><span class="sub" style="margin:0 8px">${p.total} ورقة · امتناع ${p.abstain}</span>${p.candidates.map((c,i)=>{const pc=p.total?Math.round(c.votes/p.total*100):0;return `<div style="margin-top:8px;display:flex;justify-content:space-between;font-size:13.5px"><span>${i===0&&c.votes>0?"🏆 ":""}${E(c.name||c.student_id)}</span><span>${c.votes} · ${pc}%</span></div><div class="rb"><i style="width:${pc}%"></i></div>`}).join("")}</div>`).join("")}</div>`;
+  else if(e.voted)h+='<div class="glass ok2"><div class="e">✅</div><h1>تم تسجيل صوتك</h1><p class="sub">شكرًا لمشاركتك. اختيارك سرّي ولا يمكن لأحد الاطلاع عليه.'+(e.status==="closed"?"":" ستظهر النتائج بعد إغلاق التصويت.")+'</p></div>';
+  else if(e.status==="closed")h+='<div class="glass empty">أُغلق التصويت. النتائج غير معلنة بعد.</div>';
+  else if(!e.eligible)h+='<div class="glass empty">لا تملك حق التصويت في هذا الانتخاب.</div>';
+  else if(!e.live)h+=`<div class="glass empty">التصويت غير متاح الآن.${e.opens_at?"<br>يبدأ: "+when(e.opens_at):""}</div>`;
+  else{
+    h+=e.positions.map(p=>`<div class="ps">${E(p.title)}</div>${p.candidates.map(c=>`<div class="cd${SEL[p.id]===c.id?" sel":""}" data-p="${p.id}" data-sel="${c.id}"><div class="rd"></div><div class="av">${c.photo?`<img src="${E(c.photo)}" alt="">`:E((c.name||"؟").slice(0,1))}</div><div class="tx"><b>${E(c.name||c.student_id)}</b>${c.batch?`<span class="sub" style="margin:0 8px">دفعة ${E(c.batch)}</span>`:""}${c.platform?`<p>${E(c.platform)}</p>`:""}</div></div>`).join("")}<div class="cd${SEL[p.id]==="-"?" sel":""}" data-p="${p.id}" data-sel="-"><div class="rd"></div><div class="tx"><b>امتناع عن التصويت</b></div></div>`).join("");
+    $("#bar").hidden=false;prog();
+  }
+  $("#c").innerHTML=h;
+}
+function pick(p,v){SEL[p]=v;const y=window.scrollY;draw();window.scrollTo(0,y)}
+function prog(){const n=CUR.positions.length,k=CUR.positions.filter(p=>SEL[p.id]).length;$("#pt").textContent=`اخترت ${k} من ${n}`;$("#pi").style.width=(n?k/n*100:0)+"%";$("#go").disabled=k<n}
+$("#go").onclick=()=>{
+  dlg.innerHTML=`<h3>تأكيد التصويت</h3><p class="sub" style="margin:0 0 10px">راجع اختياراتك. <b>لا يمكن التعديل بعد التأكيد.</b></p>${CUR.positions.map(p=>{const c=p.candidates.find(x=>x.id===SEL[p.id]);return `<div style="padding:8px 0;border-bottom:1px solid var(--gb)"><div class="sub" style="margin:0">${E(p.title)}</div><b>${c?E(c.name||c.student_id):"امتناع"}</b></div>`}).join("")}<div class="row"><button class="btn pri" id="y">تأكيد صوتي</button><button class="btn" id="n">رجوع</button></div>`;
+  dlg.showModal();$("#n").onclick=()=>dlg.close();
+  $("#y").onclick=async e=>{
+    const b=e.currentTarget;b.classList.add("loading");b.disabled=true;
+    try{await call("elVote",{id:CUR.id,choices:Object.fromEntries(CUR.positions.map(p=>[p.id,SEL[p.id]==="-"?"":SEL[p.id]]))});dlg.close();await openEl(CUR.id);toast("تم تسجيل صوتك")}
+    catch(err){dlg.close();toast(err.message,"bad")}
+  };
+};
+if(!TOKEN)leave();else list();
+</script></body></html>
