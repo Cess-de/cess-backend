@@ -100,7 +100,7 @@ function openV(title,src){
   dlg.showModal();$("#x").onclick=()=>dlg.close();dlg.onclose=()=>{dlg.innerHTML=""};
 }
 
-let ALL=[],CAT="",Q="";
+let ALL=[],CAT=new URLSearchParams(location.search).get("c")||"",Q="";
 const card=r=>`<div class="card"><div class="ic">${KI[r.kind]||"🔗"}</div><b>${esc(r.title)}</b>${r.description?`<p>${esc(r.description)}</p>`:""}${r.category?`<span class="tg">${esc(r.category)}</span>`:""}<div class="row">${r.kind==="folder"?`<button class="btn pri sm" data-b="${esc(r.id)}">تصفّح المحتوى</button>`:`<a class="btn pri sm" href="${esc(r.url)}" target="_blank" rel="noopener">فتح</a>${r.embed&&OKEMB.test(r.embed)?`<button class="btn sm" data-v="${esc(r.id)}">عرض هنا</button>`:""}`}</div></div>`;
 function draw(){
   const cats=[...new Set(ALL.map(r=>r.category).filter(Boolean))].sort();
