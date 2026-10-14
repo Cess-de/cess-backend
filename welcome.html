@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>مرحباً بطلاب الهندسة الجدد — الجمعية الهندسية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B132B; --yellow: #FFC72C; --text-white: #FFFFFF; --text-gray: #A8B3CC;
+    --white: #FFFFFF; --off-white: #F8F9FA; --dark-navy: #0F172A; --gray: #64748B; --green: #22C55E; --red: #EF4444;
+    --bg: var(--navy); --accent: var(--yellow); --text-primary: var(--text-white); --text-secondary: var(--text-gray);
+    --card-bg: rgba(255,255,255,0.04); --card-border: rgba(255,255,255,0.08); --input-bg: rgba(255,255,255,0.05);
+    --on-accent: var(--navy); --transition: 0.25s ease;
+  }
+  [data-theme="light"] {
+    --bg: var(--off-white); --text-primary: var(--dark-navy); --text-secondary: var(--gray);
+    --card-bg: var(--white); --card-border: rgba(15,23,42,0.08); --input-bg: var(--white);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif; background: var(--bg); color: var(--text-primary);
+    transition: background var(--transition), color var(--transition);
+    font-size: 15px; line-height: 1.7; padding-bottom: 40px;
+  }
+  .top-bar { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid var(--card-border); }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 16px; }
+  .logo-icon {
+    width: 36px; height: 36px; background: var(--accent); border-radius: 50%; overflow: hidden;
+    display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0;
+  }
+  .logo-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .theme-toggle {
+    width: 34px; height: 34px; border-radius: 50%; background: var(--card-bg); border: 1px solid var(--card-border);
+    display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; color: inherit;
+  }
+  .container { max-width: 560px; margin: 0 auto; padding: 22px 20px 0; }
+  .hero-text { text-align: center; margin-bottom: 20px; }
+  .hero-text h1 { font-size: clamp(20px, 5vw, 25px); font-weight: 800; margin-bottom: 8px; line-height: 1.4; }
+  .hero-text .accent { color: var(--accent); }
+  .hero-text p { font-size: 13.5px; color: var(--text-secondary); }
+  .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 18px; margin-bottom: 14px; }
+  .card h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: var(--accent); }
+  .card p { font-size: 13.5px; color: var(--text-secondary); margin-bottom: 8px; }
+  .card p:last-child { margin-bottom: 0; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0; }
+  .stat { border: 1px solid var(--card-border); border-radius: 12px; padding: 10px 6px; text-align: center; }
+  .stat b { display: block; font-size: 17px; font-weight: 800; color: var(--accent); line-height: 1.3; }
+  .stat span { font-size: 11.5px; color: var(--text-secondary); line-height: 1.4; display: block; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .chip { font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--card-border); color: var(--text-secondary); }
+  .chip.main { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  .eng { margin-top: 12px; padding: 12px; border-radius: 12px; border: 1px solid var(--accent); }
+  .eng h3 { font-size: 13.5px; font-weight: 700; margin-bottom: 4px; }
+  .eng p { font-size: 13px; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 12.5px; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary); }
+  .field input, .field select {
+    width: 100%; padding: 12px 14px; border-radius: 10px; border: 1.5px solid var(--card-border);
+    background: var(--input-bg); color: var(--text-primary); font-size: 14px; font-family: inherit; outline: none;
+  }
+  .field select option { color: #0F172A; background: #fff; }
+  .field input:focus, .field select:focus { border-color: var(--accent); }
+  .btn {
+    width: 100%; padding: 13px; border-radius: 999px; font-weight: 700; font-size: 14px; font-family: inherit;
+    cursor: pointer; background: transparent; color: var(--accent); border: 1.5px solid var(--accent);
+    transition: all var(--transition); margin-top: 6px;
+  }
+  [data-theme="light"] .btn { color: #B8860B; border-color: var(--accent); }
+  .btn:hover:not(:disabled) { background: var(--accent); color: var(--on-accent); }
+  .btn:disabled { opacity: 0.55; cursor: not-allowed; }
+  .alert { padding: 12px 14px; border-radius: 10px; font-size: 13px; margin-bottom: 14px; display: none; }
+  .alert.error { background: color-mix(in srgb, var(--red) 12%, transparent); border: 1px solid color-mix(in srgb, var(--red) 30%, transparent); color: var(--red); }
+  .alert.show { display: block; }
+  .spinner {
+    display: inline-block; width: 14px; height: 14px; border: 2px solid currentColor; border-top-color: transparent;
+    border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-inline-end: 8px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .success-box { text-align: center; padding: 30px 20px; }
+  .success-icon {
+    width: 60px; height: 60px; border-radius: 50%; background: color-mix(in srgb, var(--green) 15%, transparent);
+    display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 16px; color: var(--green);
+  }
+  .success-box h2 { font-size: 18px; font-weight: 800; margin-bottom: 8px; color: var(--text-primary); }
+</style>
+</head>
+<body data-theme="dark">
+
+<div class="top-bar">
+  <div class="logo">
+    <div class="logo-icon" id="logoBox">
+      🎓</div>
+    <span>الجمعية الهندسية</span>
+  </div>
+  <button class="theme-toggle" id="themeToggle" aria-label="تبديل المظهر">🌙</button>
+</div>
+
+<div class="container">
+  <div class="hero-text">
+    <h1>مبروك القبول! <span class="accent">أهلاً بك مهندساً جديداً</span></h1>
+    <p>اليوم إعلان نتيجة القبول، ونحن الجمعية الهندسية، بوابتك للتواصل مع طلاب كل تخصصات كلية الهندسة والعمارة.</p>
+  </div>
+
+  <div class="card">
+    <h2>عن الجامعة التكنولوجية</h2>
+    <p>بدأت عام 1991 كلية أهلية خيرية في الخرطوم باسم كلية الخرطوم للعلوم والتقانة، وركّزت منذ يومها الأول على التعليم العملي والتطبيقي. نمت من قسمين (الدراسات التجارية وعلوم الحاسوب) إلى كلية تقنية بمعامل وورش وكادر متميز، حتى رُقّيت عام 2018 إلى جامعة حكومية بعد استيفائها الشروط الأكاديمية، لحاجة السودان إلى تعليم تقني تطبيقي يسدّ الفجوة بين الخريج وسوق العمل، ولتوطين كادرها في الخدمة المدنية.</p>
+    <div class="stats">
+      <div class="stat"><b>1991</b><span>التأسيس</span></div>
+      <div class="stat"><b>2018</b><span>الترقية إلى جامعة حكومية</span></div>
+      <div class="stat"><b>2026</b><span>اعتماد مرتبة الشرف</span></div>
+    </div>
+    <p>وفي 20 أغسطس 2026 اعتُمدت لها مرتبة الشرف للبكالوريوس التكنولوجي (5 سنوات)، فشهادتك معترف بها داخل السودان وخارجه، وتؤهلك للالتحاق المباشر بالماجستير دون سنة تأهيلية.</p>
+
+    <div class="chips">
+      <span class="chip main">كلية الهندسة والعمارة</span>
+      <span class="chip">علوم الحاسوب وتقانة المعلومات</span>
+      <span class="chip">الدراسات التجارية</span>
+      <span class="chip">علوم التمريض</span>
+      <span class="chip">القانون</span>
+      <span class="chip">الدراسات العليا</span>
+      <span class="chip">المختبرات الطبية</span>
+    </div>
+
+    <div class="eng">
+      <h3>كلية الهندسة والعمارة</h3>
+      <p>بيتك الأكاديمي الجديد، وتضم العمارة والهندسة المدنية وفروع الهندسة الكهربائية الأربعة: القدرة والتحكم والاتصالات والإلكترونيات. دراسة تطبيقية تقوم على المعامل والورش، تُخرّج مهندسين يعملون داخل السودان وخارجه.</p>
+    </div>
+  </div>
+
+  <div class="card" id="formCard">
+    <h2>سجّل بياناتك للتواصل معك</h2>
+    <div id="alertBox" class="alert" role="alert"></div>
+
+    <div class="field"><label for="studentId">الرقم الجامعي</label><input type="text" id="studentId" placeholder="أدخل رقمك الجامعي" autocomplete="off"></div>
+    <div class="field"><label for="fullName">الاسم الرباعي</label><input type="text" id="fullName" placeholder="الاسم الكامل" autocomplete="name"></div>
+    <div class="field">
+      <label for="major">التخصص</label>
+      <select id="major">
+        <option value="" disabled selected>اختر التخصص</option>
+        <option value="architecture">عمارة</option>
+        <option value="civil">هندسة مدنية</option>
+        <option value="control">هندسة تحكم</option>
+        <option value="communications">هندسة اتصالات</option>
+        <option value="electronics">هندسة إلكترونيات</option>
+        <option value="power">هندسة قدرة</option>
+        <option value="computer">هندسة حاسوب</option>
+      </select>
+    </div>
+    <div class="field"><label for="whatsapp">رقم الواتساب</label><input type="tel" id="whatsapp" placeholder="09xxxxxxxx" dir="ltr" inputmode="tel"></div>
+    <div class="field"><label for="phone">رقم المكالمات</label><input type="tel" id="phone" placeholder="09xxxxxxxx" dir="ltr" inputmode="tel"></div>
+
+    <button class="btn" id="btnSubmit">إرسال</button>
+  </div>
+
+  <div class="card success-box" id="successCard" style="display:none;">
+    <div class="success-icon">✓</div>
+    <h2>تم استلام بياناتك بنجاح</h2>
+    <p>شكراً لتواصلك معنا، سنكون بانتظارك قريباً. مبروك مرة أخرى على القبول!</p>
+  </div>
+</div>
+
+<script>
+  const SUPABASE_PROJECT_REF = "bibhljpmmmcxcxhpbuqf";
+  // اسم الفنكشن الذي لصقت فيه الكود (غيّره إن كان غير public)
+  const FUNCTION_NAME = "cess";
+  const WELCOME_URL = `https://${SUPABASE_PROJECT_REF}.supabase.co/functions/v1/${FUNCTION_NAME}`;
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
+
+  (async function loadLogo(){ try {
+    const r = await fetch(WELCOME_URL, { method:'POST', headers:{'Content-Type':'application/json','Authorization':`Bearer ${SUPABASE_ANON_KEY}`}, body: JSON.stringify({ action:'welcomeLogo', input:{} }) });
+    const j = await r.json(); const u = j.ok && j.data && j.data.url; if (!u) return;
+    const img = new Image(); img.alt = 'شعار الجمعية الهندسية'; img.onload = () => { const b = document.getElementById('logoBox'); b.textContent=''; b.appendChild(img); }; img.src = u;
+  } catch(e){} })();
+
+  const body = document.body;
+  const themeToggle = document.getElementById('themeToggle');
+  function setTheme(t) {
+    body.setAttribute('data-theme', t);
+    try { localStorage.setItem('cess-theme', t); } catch (e) {}
+    themeToggle.textContent = t === 'dark' ? '🌙' : '☀️';
+  }
+  themeToggle.addEventListener('click', () => setTheme(body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+  let saved = 'dark';
+  try { saved = localStorage.getItem('cess-theme') || 'dark'; } catch (e) {}
+  setTheme(saved);
+
+  const alertBox = document.getElementById('alertBox');
+  function showAlert(m) { alertBox.textContent = m; alertBox.className = 'alert show error'; }
+  function hideAlert() { alertBox.className = 'alert'; }
+
+  const btn = document.getElementById('btnSubmit');
+  btn.addEventListener('click', async () => {
+    const student_id = document.getElementById('studentId').value.trim();
+    const full_name = document.getElementById('fullName').value.trim();
+    const major = document.getElementById('major').value;
+    const whatsapp = document.getElementById('whatsapp').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+
+    if (!student_id || !full_name || !major || !whatsapp || !phone) return showAlert('الرجاء تعبئة جميع الحقول واختيار التخصص.');
+
+    hideAlert();
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>جارٍ الإرسال...';
+
+    try {
+      const res = await fetch(WELCOME_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
+        body: JSON.stringify({ action: 'submitWelcomeForm', input: { student_id, full_name, major, whatsapp, phone } })
+      });
+      const json = await res.json();
+      if (!json.ok) throw new Error(json.error || 'حدث خطأ غير متوقع');
+
+      document.getElementById('formCard').style.display = 'none';
+      document.getElementById('successCard').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (e) {
+      showAlert(e.message || 'تعذّر الإرسال، حاول مرة أخرى.');
+      btn.disabled = false;
+      btn.textContent = 'إرسال';
+    }
+  });
+</script>
+
+</body>
+</html>
