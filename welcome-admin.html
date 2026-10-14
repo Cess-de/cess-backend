@@ -1,316 +1,107 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>لوحة التحكم — الجمعية الهندسية</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --navy:#0B132B; --yellow:#FFC72C; --accent:var(--yellow); --green:#22C55E; --red:#EF4444;
-    --bg:var(--navy); --text-primary:#FFFFFF; --text-secondary:#A8B3CC;
-    --card-bg:rgba(255,255,255,0.04); --card-border:rgba(255,255,255,0.1); --input-bg:rgba(255,255,255,0.05);
-    --on-accent:var(--navy); --row-alt:rgba(255,255,255,0.03);
+/* admin-welcome.js — يضيف تبويب "الطلاب الجدد" إلى لوحة التحكم الحالية.
+   يُحمَّل بعد admin-ext.js و admin-img.js. يستخدم دوال الصفحة نفسها (call, busy, toast, confirmBox, esc, $). */
+(function () {
+  const MJ = { architecture: "عمارة", civil: "هندسة مدنية", control: "هندسة تحكم", communications: "هندسة اتصالات", electronics: "هندسة إلكترونيات", power: "هندسة قدرة", computer: "هندسة حاسوب" };
+  let W = [], WF = "all", WQ = "", file = null, R = null;
+  const q = s => R.querySelector(s);
+
+  try { if (!SEC.some(x => x[0] === "welcome")) SEC.splice(1, 0, ["welcome", "الطلاب الجدد", "بيانات الطلاب المقبولين المسجّلين من صفحة الترحيب."]); } catch (e) {}
+
+  const intl = p => { let d = String(p || "").replace(/\D/g, ""); if (d.startsWith("00")) d = d.slice(2); else if (d.startsWith("0")) d = "249" + d.slice(1); return d; };
+  const day = d => { try { return new Date(d).toLocaleDateString("en-GB"); } catch { return ""; } };
+
+  function shell() {
+    R.innerHTML = `
+<div class="list" style="margin-bottom:12px;padding:14px"><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+  <div class="av" id="wlp" style="overflow:hidden;background:var(--ac)">🎓</div>
+  <div style="flex:1;min-width:150px"><b>شعار صفحة الترحيب</b><div class="sub" style="margin:2px 0 0">يظهر في صفحة welcome.html</div></div>
+  <input type="file" id="wlf" accept="image/*" hidden>
+  <button class="btn sm" id="wlc">اختيار صورة</button><button class="btn sm pri" id="wlu" disabled>رفع</button>
+</div></div>
+<div class="stats" id="wst"></div>
+<div class="bar"><input id="wq" type="search" placeholder="ابحث بالاسم أو الرقم أو الهاتف" aria-label="بحث"><button class="btn" id="wex">تصدير CSV</button><button class="btn" id="wrf" aria-label="تحديث">↻</button></div>
+<div class="chips" id="wch"></div><div class="list" id="wls"></div>`;
+
+    q("#wq").value = WQ;
+    q("#wq").oninput = e => { WQ = e.target.value; draw(); };
+    q("#wrf").onclick = e => busy(e.currentTarget, () => load(true));
+    q("#wex").onclick = exportCsv;
+    q("#wls").onclick = onList;
+    q("#wlc").onclick = () => q("#wlf").click();
+    q("#wlf").onchange = onFile;
+    q("#wlu").onclick = e => busy(e.currentTarget, upload);
+    call("welcomeLogo").then(r => r.url && setPrev(r.url)).catch(() => {});
   }
-  [data-theme="light"] {
-    --bg:#F8F9FA; --text-primary:#0F172A; --text-secondary:#64748B;
-    --card-bg:#FFFFFF; --card-border:rgba(15,23,42,0.1); --input-bg:#FFFFFF; --row-alt:rgba(15,23,42,0.03);
+
+  function setPrev(url) { const b = q("#wlp"); if (!b) return; b.textContent = ""; const i = new Image(); i.style.cssText = "width:100%;height:100%;object-fit:cover"; i.src = url; b.append(i); }
+
+  function onFile() {
+    file = q("#wlf").files[0] || null;
+    q("#wlu").disabled = !file;
+    if (file) { const r = new FileReader(); r.onload = () => setPrev(r.result); r.readAsDataURL(file); }
   }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Inter','Segoe UI',Tahoma,sans-serif; background:var(--bg); color:var(--text-primary); font-size:14px; line-height:1.6; padding-bottom:40px; transition:background .25s, color .25s; }
-  .top-bar { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; border-bottom:1px solid var(--card-border); }
-  .logo { display:flex; align-items:center; gap:10px; font-weight:800; font-size:15px; }
-  .logo-icon { width:34px; height:34px; border-radius:50%; background:var(--accent); overflow:hidden; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
-  .logo-icon img { width:100%; height:100%; object-fit:cover; display:block; }
-  .icon-btn { width:34px; height:34px; border-radius:50%; background:var(--card-bg); border:1px solid var(--card-border); cursor:pointer; font-size:14px; color:inherit; }
-  .container { max-width:1000px; margin:0 auto; padding:16px; }
-  .card { background:var(--card-bg); border:1px solid var(--card-border); border-radius:16px; padding:16px; margin-bottom:14px; }
-  .card h2 { font-size:14.5px; font-weight:700; color:var(--accent); margin-bottom:10px; }
-  .field { margin-bottom:12px; }
-  .field label { display:block; font-size:12.5px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; }
-  input, select { width:100%; padding:11px 13px; border-radius:10px; border:1.5px solid var(--card-border); background:var(--input-bg); color:var(--text-primary); font-size:14px; font-family:inherit; outline:none; }
-  select option { color:#0F172A; background:#fff; }
-  input:focus, select:focus { border-color:var(--accent); }
-  .btn { padding:10px 18px; border-radius:999px; font-weight:700; font-size:13px; font-family:inherit; cursor:pointer; background:transparent; color:var(--accent); border:1.5px solid var(--accent); transition:all .25s; white-space:nowrap; }
-  [data-theme="light"] .btn { color:#B8860B; }
-  .btn:hover:not(:disabled) { background:var(--accent); color:var(--on-accent); }
-  .btn:disabled { opacity:.5; cursor:not-allowed; }
-  .btn.full { width:100%; padding:13px; }
-  .btn.danger { color:var(--red); border-color:var(--red); padding:5px 12px; font-size:12px; }
-  .btn.danger:hover:not(:disabled) { background:var(--red); color:#fff; }
-  .alert { padding:11px 13px; border-radius:10px; font-size:13px; margin-bottom:12px; display:none; }
-  .alert.show { display:block; }
-  .alert.error { background:color-mix(in srgb,var(--red) 12%,transparent); border:1px solid color-mix(in srgb,var(--red) 30%,transparent); color:var(--red); }
-  .alert.ok { background:color-mix(in srgb,var(--green) 12%,transparent); border:1px solid color-mix(in srgb,var(--green) 30%,transparent); color:var(--green); }
-  .stats { display:flex; flex-wrap:wrap; gap:8px; }
-  .stat { border:1px solid var(--card-border); border-radius:12px; padding:8px 12px; text-align:center; min-width:84px; }
-  .stat b { display:block; font-size:18px; font-weight:800; color:var(--accent); line-height:1.3; }
-  .stat span { font-size:11.5px; color:var(--text-secondary); }
-  .toolbar { display:grid; grid-template-columns:1fr; gap:8px; margin-bottom:12px; }
-  .toolbar .row { display:flex; gap:8px; flex-wrap:wrap; }
-  .toolbar .row > * { flex:1; min-width:120px; }
-  .table-wrap { overflow-x:auto; border:1px solid var(--card-border); border-radius:12px; }
-  table { width:100%; border-collapse:collapse; font-size:13px; min-width:680px; }
-  th, td { padding:9px 10px; text-align:right; border-bottom:1px solid var(--card-border); white-space:nowrap; }
-  th { font-size:12px; color:var(--text-secondary); font-weight:600; background:var(--row-alt); }
-  tbody tr:nth-child(even) { background:var(--row-alt); }
-  td.ltr { direction:ltr; text-align:right; }
-  .empty { text-align:center; padding:24px; color:var(--text-secondary); }
-  .logo-up { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
-  .logo-preview { width:64px; height:64px; border-radius:50%; background:var(--accent); overflow:hidden; display:flex; align-items:center; justify-content:center; font-size:26px; flex-shrink:0; }
-  .logo-preview img { width:100%; height:100%; object-fit:cover; }
-  .logo-up .grow { flex:1; min-width:180px; }
-  .hint { font-size:12px; color:var(--text-secondary); margin-top:6px; }
-  .spinner { display:inline-block; width:13px; height:13px; border:2px solid currentColor; border-top-color:transparent; border-radius:50%; animation:spin .7s linear infinite; vertical-align:middle; margin-inline-end:6px; }
-  @keyframes spin { to { transform:rotate(360deg); } }
-  #app { display:none; }
-</style>
-</head>
-<body data-theme="dark">
 
-<div class="top-bar">
-  <div class="logo"><div class="logo-icon" id="logoTop">🎓</div><span>لوحة التحكم — الجمعية الهندسية</span></div>
-  <button class="icon-btn" id="themeToggle" aria-label="تبديل المظهر">🌙</button>
-</div>
-
-<div class="container">
-
-  <div class="card" id="loginCard" style="max-width:420px;margin:30px auto;">
-    <h2>تسجيل دخول الإدارة</h2>
-    <div id="loginAlert" class="alert error" role="alert"></div>
-    <div class="field"><label for="adminSid">الرقم الجامعي</label><input type="text" id="adminSid" inputmode="numeric" autocomplete="username" dir="ltr"></div>
-    <div class="field"><label for="adminKey">كلمة المرور</label><input type="password" id="adminKey" autocomplete="current-password" dir="ltr"></div>
-    <button class="btn full" id="btnLogin">دخول</button>
-  </div>
-
-  <div id="app">
-    <div class="card">
-      <h2>الملخص</h2>
-      <div class="stats" id="stats"></div>
-    </div>
-
-    <div class="card">
-      <h2>بيانات الطلاب</h2>
-      <div id="listAlert" class="alert error" role="alert"></div>
-      <div class="toolbar">
-        <input type="search" id="search" placeholder="بحث بالاسم أو الرقم الجامعي أو الهاتف">
-        <div class="row">
-          <select id="majorFilter">
-            <option value="">كل التخصصات</option>
-            <option value="architecture">عمارة</option>
-            <option value="civil">هندسة مدنية</option>
-            <option value="control">هندسة تحكم</option>
-            <option value="communications">هندسة اتصالات</option>
-            <option value="electronics">هندسة إلكترونيات</option>
-            <option value="power">هندسة قدرة</option>
-            <option value="computer">هندسة حاسوب</option>
-          </select>
-          <button class="btn" id="btnRefresh">تحديث</button>
-          <button class="btn" id="btnCsv">تنزيل CSV</button>
-          <button class="btn" id="btnLogout">خروج</button>
-        </div>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>#</th><th>الرقم الجامعي</th><th>الاسم</th><th>التخصص</th><th>واتساب</th><th>مكالمات</th><th>وقت الإرسال</th><th></th></tr></thead>
-          <tbody id="tbody"></tbody>
-        </table>
-      </div>
-      <div class="hint" id="countHint"></div>
-    </div>
-
-    <div class="card">
-      <h2>شعار الجمعية</h2>
-      <div id="logoAlert" class="alert" role="alert"></div>
-      <div class="logo-up">
-        <div class="logo-preview" id="logoPreview">🎓</div>
-        <div class="grow">
-          <input type="file" id="logoFile" accept="image/png,image/jpeg,image/webp">
-          <div class="hint">أي صورة (PNG / JPG / WEBP) — تُقصّ مربعة وتُضغط تلقائياً.</div>
-        </div>
-        <button class="btn" id="btnLogo">رفع الشعار</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-  const REF = "bibhljpmmmcxcxhpbuqf";
-  // اسم الفنكشن الذي لصقت فيه الكود (غيّره إن كان غير public)
-  const FUNCTION_NAME = "cess";
-  const URL_FN = `https://${REF}.supabase.co/functions/v1/${FUNCTION_NAME}`;
-  const LOGO_URL = `https://${REF}.supabase.co/storage/v1/object/public/branding/logo`;
-  const ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYmhsanBtbW1jeGN4aHBidXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3OTQwMzIsImV4cCI6MjEwNTM3MDAzMn0.4z9qDoZ71ftWDVj8MoarqMzTTwai15I2myBs1gxI0l0";
-  const MAJOR_AR = { architecture:'عمارة', civil:'هندسة مدنية', control:'هندسة تحكم', communications:'هندسة اتصالات', electronics:'هندسة إلكترونيات', power:'هندسة قدرة', computer:'هندسة حاسوب' };
-  const $ = id => document.getElementById(id);
-
-  function setTheme(t){ document.body.setAttribute('data-theme',t); try{localStorage.setItem('cess-theme',t);}catch(e){} $('themeToggle').textContent = t==='dark'?'🌙':'☀️'; }
-  $('themeToggle').onclick = () => setTheme(document.body.getAttribute('data-theme')==='dark'?'light':'dark');
-  let st='dark'; try{ st=localStorage.getItem('cess-theme')||'dark'; }catch(e){}
-  setTheme(st);
-
-  let adminKey = '';
-  async function api(action, input={}) {
-    const res = await fetch(URL_FN, {
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+ANON},
-      body: JSON.stringify({ action, input:{ ...input, token: adminKey } })
-    });
-    const json = await res.json();
-    if (!json.ok) throw new Error(json.error || 'حدث خطأ غير متوقع');
-    return json.data !== undefined ? json.data : json;
+  async function upload() {
+    if (!file) return;
+    const src = await new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(file); });
+    const im = await new Promise((res, rej) => { const x = new Image(); x.onload = () => res(x); x.onerror = () => rej(new Error("تعذّر قراءة الصورة.")); x.src = src; });
+    const side = Math.min(512, im.width, im.height), cv = document.createElement("canvas"); cv.width = cv.height = side;
+    const cx = cv.getContext("2d"); cx.fillStyle = "#fff"; cx.fillRect(0, 0, side, side);
+    const sw = Math.min(im.width, im.height); cx.drawImage(im, (im.width - sw) / 2, (im.height - sw) / 2, sw, sw, 0, 0, side, side);
+    const d = await call("adminWelcomeLogo", { data: cv.toDataURL("image/jpeg", 0.9) });
+    setPrev(d.url); file = null; q("#wlu").disabled = true; toast("تم رفع الشعار");
   }
-  function show(el, msg, type){ el.textContent = msg; el.className = 'alert show ' + (type||'error'); }
-  function hide(el){ el.className = 'alert'; }
 
-  function setLogo(box, url) {
-    box.textContent = '';
-    const img = new Image();
-    img.alt = 'شعار الجمعية الهندسية';
-    img.onerror = () => { box.textContent = '🎓'; };
-    img.src = url;
-    box.appendChild(img);
+  async function load(quiet) {
+    if (!quiet && q("#wls")) q("#wls").innerHTML = '<div class="sk"></div><div class="sk"></div><div class="sk"></div>';
+    try { W = (await call("adminWelcomeList")).rows || []; } catch (e) { toast(e.message, "bad"); W = []; }
+    draw();
   }
-  function loadLogos(url) { if (!url) return; setLogo($('logoTop'), url); setLogo($('logoPreview'), url); }
-  api('welcomeLogo').then(r => loadLogos(r.url)).catch(() => {});
 
-  async function start(token) {
-    adminKey = token;
-    await load();
-    try { sessionStorage.setItem('welcome-admin-token', token); } catch(e){}
-    $('loginCard').style.display = 'none';
-    $('app').style.display = 'block';
+  function list() {
+    const t = nz(WQ).toLowerCase();
+    return W.filter(r => (WF === "all" || r.major === WF) &&
+      (!t || [r.student_id, r.full_name, r.whatsapp, r.phone].some(v => String(v || "").toLowerCase().includes(t))));
   }
-  async function enter() {
-    const sid = $('adminSid').value.trim(), pw = $('adminKey').value;
-    if (!sid || !pw) return show($('loginAlert'), 'أدخل الرقم الجامعي وكلمة المرور.');
-    hide($('loginAlert'));
-    const b = $('btnLogin');
-    b.disabled = true; b.innerHTML = '<span class="spinner"></span>جارٍ التحقق...';
-    try {
-      adminKey = '';
-      const r = await api('login', { student_id: sid, password: pw });
-      await start(r.token);
-    } catch (e) {
-      adminKey = '';
-      show($('loginAlert'), e.message);
-    } finally {
-      b.disabled = false; b.textContent = 'دخول';
-    }
-  }
-  $('btnLogin').onclick = enter;
-  $('adminKey').addEventListener('keydown', e => { if (e.key === 'Enter') enter(); });
-  $('btnLogout').onclick = () => { try{sessionStorage.removeItem('welcome-admin-token');}catch(e){} location.reload(); };
 
-  let ROWS = [];
-  async function load() {
-    const data = await api('listWelcomeSubmissions');
-    ROWS = data.rows || [];
-    render();
+  function draw() {
+    if (!q("#wls")) return;
+    const cnt = {}; W.forEach(r => cnt[r.major] = (cnt[r.major] || 0) + 1);
+    const recent = W.filter(r => Date.now() - new Date(r.submitted_at) < 864e5).length;
+    q("#wst").innerHTML = `<div class="st"><b>${W.length}</b><span>الإجمالي</span></div><div class="st"><b>${recent}</b><span>آخر 24 ساعة</span></div>`;
+    q("#wch").innerHTML = [["all", "الكل (" + W.length + ")"], ...Object.keys(MJ).filter(k => cnt[k]).map(k => [k, MJ[k] + " (" + cnt[k] + ")"])]
+      .map(([k, l]) => `<button class="chip ${WF === k ? "on" : ""}" data-wf="${k}">${esc(l)}</button>`).join("");
+    q("#wch").onclick = e => { const b = e.target.closest("[data-wf]"); if (b) { WF = b.dataset.wf; draw(); } };
+    const rows = list();
+    q("#wls").innerHTML = rows.length ? rows.slice(0, 300).map(r => `
+<div class="rs"><div class="av">${esc((r.full_name || "؟").trim().slice(0, 1))}</div>
+<div class="who"><b>${esc(r.full_name)}</b><span><bdi>${esc(r.student_id)}</bdi> · ${esc(MJ[r.major] || r.major)} · ${day(r.submitted_at)}</span>
+<span style="display:block" dir="ltr">${esc(r.whatsapp)} / ${esc(r.phone)}</span></div>
+<div class="acts"><a class="btn sm" href="https://wa.me/${intl(r.whatsapp)}" target="_blank" rel="noopener">واتساب</a><a class="btn sm" href="tel:${esc(r.phone)}">اتصال</a><button class="btn sm dng" data-wd="${esc(r.id)}">حذف</button></div></div>`).join("")
+      + (rows.length > 300 ? '<div class="empty">يُعرض أول 300 فقط. استخدم البحث أو الفلتر.</div>' : "")
+      : `<div class="empty">${W.length ? "لا نتائج مطابقة." : "لا توجد تسجيلات بعد."}</div>`;
   }
-  function filtered() {
-    const q = $('search').value.trim().toLowerCase();
-    const m = $('majorFilter').value;
-    return ROWS.filter(r =>
-      (!m || r.major === m) &&
-      (!q || [r.student_id, r.full_name, r.whatsapp, r.phone].some(v => String(v||'').toLowerCase().includes(q)))
-    );
-  }
-  function fmt(d){ try { return new Date(d).toLocaleString('en-GB'); } catch(e){ return d || ''; } }
-  function cell(tr, text, cls){ const td = document.createElement('td'); td.textContent = text; if (cls) td.className = cls; tr.appendChild(td); return td; }
 
-  function render() {
-    const stats = $('stats'); stats.textContent = '';
-    const counts = {}; ROWS.forEach(r => counts[r.major] = (counts[r.major]||0)+1);
-    const add = (n, l) => { const d = document.createElement('div'); d.className='stat'; const b = document.createElement('b'); b.textContent = n; const s = document.createElement('span'); s.textContent = l; d.append(b,s); stats.appendChild(d); };
-    add(ROWS.length, 'الإجمالي');
-    Object.keys(MAJOR_AR).forEach(k => { if (counts[k]) add(counts[k], MAJOR_AR[k]); });
-
-    const list = filtered();
-    const tb = $('tbody'); tb.textContent = '';
-    if (!list.length) {
-      const tr = document.createElement('tr'); const td = document.createElement('td');
-      td.colSpan = 8; td.className = 'empty'; td.textContent = 'لا توجد بيانات.'; tr.appendChild(td); tb.appendChild(tr);
-    }
-    list.forEach((r, i) => {
-      const tr = document.createElement('tr');
-      cell(tr, String(i+1));
-      cell(tr, r.student_id);
-      cell(tr, r.full_name);
-      cell(tr, MAJOR_AR[r.major] || r.major);
-      cell(tr, r.whatsapp, 'ltr');
-      cell(tr, r.phone, 'ltr');
-      cell(tr, fmt(r.submitted_at), 'ltr');
-      const td = document.createElement('td');
-      const del = document.createElement('button'); del.className = 'btn danger'; del.textContent = 'حذف';
-      del.onclick = async () => {
-        if (!confirm('حذف هذا السجل نهائياً؟')) return;
-        del.disabled = true;
-        try { await api('deleteWelcomeSubmission', { id: r.id }); ROWS = ROWS.filter(x => x.id !== r.id); render(); }
-        catch (e) { show($('listAlert'), e.message); del.disabled = false; }
-      };
-      td.appendChild(del); tr.appendChild(td);
-      tb.appendChild(tr);
-    });
-    $('countHint').textContent = `المعروض: ${list.length} من ${ROWS.length}`;
+  async function onList(e) {
+    const b = e.target.closest("[data-wd]"); if (!b) return;
+    const r = W.find(x => x.id === b.dataset.wd); if (!r) return;
+    if (!await confirmBox("حذف التسجيل؟", `سيُحذف تسجيل <b>${esc(r.full_name)}</b> نهائيًا.`, "حذف", true)) return;
+    await busy(b, async () => { await call("adminWelcomeDelete", { id: r.id }); W = W.filter(x => x.id !== r.id); draw(); toast("تم الحذف"); });
   }
-  $('search').addEventListener('input', render);
-  $('majorFilter').addEventListener('change', render);
-  $('btnRefresh').onclick = async () => {
-    hide($('listAlert'));
-    try { await load(); } catch (e) { show($('listAlert'), e.message); }
+
+  function exportCsv() {
+    const rows = list(); if (!rows.length) return toast("لا توجد بيانات للتصدير", "bad");
+    const cell = (v, num) => { v = String(v ?? ""); if (num && /^\+?\d+$/.test(v)) return '="' + v + '"'; if (/^[=@\t\r]/.test(v) || /^[+\-](?![\d\s()+\-]*$)/.test(v)) v = "'" + v; return '"' + v.replace(/"/g, '""') + '"'; };
+    const head = ["الرقم الجامعي", "الاسم", "التخصص", "واتساب", "مكالمات", "التاريخ"].map(h => '"' + h + '"').join(",");
+    const lines = rows.map(r => [cell(r.student_id, 1), cell(r.full_name), cell(MJ[r.major] || r.major), cell(r.whatsapp, 1), cell(r.phone, 1), cell(day(r.submitted_at))].join(","));
+    const u = URL.createObjectURL(new Blob(["\ufeff" + [head, ...lines].join("\r\n")], { type: "text/csv;charset=utf-8" }));
+    const a = document.createElement("a"); a.href = u; a.download = "welcome-students.csv"; a.click(); setTimeout(() => URL.revokeObjectURL(u), 1000);
+  }
+
+  // الواجهة التي تتوقعها لوحة التحكم: CESS_SEC.welcome=function(...)
+  (window.CESS_SEC = window.CESS_SEC || {}).welcome = function () {
+    R = [].slice.call(arguments).find(x => x instanceof Element) || document.querySelector("#s-other");
+    WF = "all"; WQ = ""; file = null;
+    shell(); load();
   };
-
-  function csvCell(v, keepAsText) {
-    let s = String(v == null ? '' : v);
-    if (keepAsText && /^\+?\d+$/.test(s)) return '="' + s + '"';
-    if (/^[=@\t\r]/.test(s) || /^[+\-](?![\d\s()+\-]*$)/.test(s)) s = "'" + s;
-    return '"' + s.replace(/"/g, '""') + '"';
-  }
-  $('btnCsv').onclick = () => {
-    const list = filtered();
-    if (!list.length) return show($('listAlert'), 'لا توجد بيانات للتنزيل.');
-    hide($('listAlert'));
-    const head = ['الرقم الجامعي','الاسم','التخصص','واتساب','مكالمات','وقت الإرسال'].map(h => '"' + h + '"').join(',');
-    const lines = list.map(r => [
-      csvCell(r.student_id, true), csvCell(r.full_name), csvCell(MAJOR_AR[r.major] || r.major),
-      csvCell(r.whatsapp, true), csvCell(r.phone, true), csvCell(fmt(r.submitted_at))
-    ].join(','));
-    const blob = new Blob(['\ufeff' + [head, ...lines].join('\r\n')], { type: 'text/csv;charset=utf-8;' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'welcome-submissions-' + new Date().toISOString().slice(0,10) + '.csv';
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-  };
-
-  $('logoFile').addEventListener('change', () => {
-    const f = $('logoFile').files[0];
-    if (f) { const r = new FileReader(); r.onload = () => { $('logoPreview').textContent=''; const i = new Image(); i.src = r.result; $('logoPreview').appendChild(i); }; r.readAsDataURL(f); }
-  });
-  $('btnLogo').onclick = async () => {
-    const f = $('logoFile').files[0];
-    if (!f) return show($('logoAlert'), 'اختر صورة أولاً.');
-    if (f.size > 1.5 * 1024 * 1024) return show($('logoAlert'), 'حجم الصورة يتجاوز 1.5MB.');
-    hide($('logoAlert'));
-    const b = $('btnLogo'); b.disabled = true; b.innerHTML = '<span class="spinner"></span>جارٍ الرفع...';
-    try {
-      const src = await new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(f); });
-      const im = await new Promise((res, rej) => { const x = new Image(); x.onload = () => res(x); x.onerror = () => rej(new Error('تعذّر قراءة الصورة.')); x.src = src; });
-      const side = Math.min(512, Math.min(im.width, im.height)), cv = document.createElement('canvas'); cv.width = cv.height = side;
-      const cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, side, side);
-      const sw = Math.min(im.width, im.height); cx.drawImage(im, (im.width - sw) / 2, (im.height - sw) / 2, sw, sw, 0, 0, side, side);
-      const up = await api('adminWelcomeLogo', { data: cv.toDataURL('image/jpeg', 0.9) });
-      show($('logoAlert'), 'تم رفع الشعار، وسيظهر في صفحة الترحيب.', 'ok');
-      loadLogos(up.url);
-    } catch (e) { show($('logoAlert'), e.message); }
-    finally { b.disabled = false; b.textContent = 'رفع الشعار'; }
-  };
-
-  try { const t = sessionStorage.getItem('welcome-admin-token'); if (t) start(t).catch(() => { adminKey = ''; }); } catch(e){}
-</script>
-</body>
-</html>
+})();
