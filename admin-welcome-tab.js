@@ -1,0 +1,1 @@
+(function(){try{if(!SEC.some(function(x){return x[0]==="welcome"}))SEC.splice(1,0,["welcome","الطلاب الجدد","بيانات الطلاب المقبولين المسجّلين من صفحة الترحيب."]);var app=document.querySelector("#app");if(app&&!app.hidden&&typeof tabs==="function")tabs()}catch(e){}})();
