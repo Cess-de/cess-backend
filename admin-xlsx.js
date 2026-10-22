@@ -9,8 +9,10 @@ const SYN={
   name:["الاسم","اسم الطالب","الاسم الكامل","الاسم الرباعي","اسم","name","full name","student name","fullname"],
   batch:["الدفعة","دفعة","batch","cohort","year","intake","السنة الدراسية","سنة القبول","المستوى","level"],
   email:["البريد","البريد الجامعي","البريد الإلكتروني","الايميل","ايميل","email","e mail","mail","university email"]};
+SYN.dept=["القسم","قسم","الكلية","كلية","department","dept","faculty","major"];
+SYN.spec=["التخصص","تخصص","المسار","الشعبة","specialization","specialisation","track","stream","branch","program"];
 Object.keys(SYN).forEach(k=>SYN[k]=SYN[k].map(H));
-const FK=["id","name","batch","email"],FL={id:"الرقم الجامعي",name:"الاسم",batch:"الدفعة",email:"البريد"};
+const FK=["id","name","batch","email","dept","spec"],FL={id:"الرقم الجامعي",name:"الاسم",batch:"الدفعة",email:"البريد",dept:"القسم",spec:"التخصص"};
 const cv=v=>typeof v==="number"?String(v):N(v);
 const idv=v=>cv(v).replace(/\.0+$/,"").replace(/[\s,.\-_]/g,"");
 const IDOK=v=>/^\d{4,20}$/.test(v);
@@ -23,7 +25,7 @@ function analyze(rows,forced){
     rows[r].forEach(c=>{for(const k of FK){if(!used.has(k)&&hit(c,k)){used.add(k);sc+=hit(c,k);if(k==="id"||k==="name")key=true;break}}});
     if(key&&sc>bs){bs=sc;best=r}
   }
-  const map={id:-1,name:-1,batch:-1,email:-1},w=Math.max(0,...rows.slice(0,30).map(r=>r.length));
+  const map={id:-1,name:-1,batch:-1,email:-1,dept:-1,spec:-1},w=
   if(best>=0)rows[best].forEach((c,i)=>{for(const k of FK){if(map[k]<0&&hit(c,k)&&!Object.values(map).includes(i)){map[k]=i;break}}});
   const data=rows.slice(best+1,best+201);
   const st=i=>{const v=data.map(r=>cv(r[i])).filter(Boolean);if(!v.length)return{};const f=p=>v.filter(p).length/v.length;
@@ -44,7 +46,7 @@ function extract(sh,map,hdr,fb,sbatch){
     if(!IDOK(id)){bad.push(cv(map.id>=0?r[map.id]:r.find(c=>cv(c))));return}
     if(seen.has(id)){dup++;return}seen.add(id);
     const g=k=>map[k]>=0?cv(r[map[k]]):"";
-    ok.push({student_id:id,full_name:g("name"),batch:g("batch")||fb||(sbatch?sh.name:""),email:g("email")});
+    ok.push({student_id:id,full_name:g("name"),batch:g("batch")||fb||(sbatch?sh.name:""),email:g("email"),dept:g("dept"),spec:g("spec")});
   });
   return{ok,bad,dup};
 }
