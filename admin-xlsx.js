@@ -120,7 +120,7 @@ function inject(){
   p3.innerHTML=`<p class="sub">ارفع ملف Excel (xlsx أو xls أو csv) بأي تنسيق. نكتشف الأعمدة تلقائيًا وتراجعها قبل الإضافة. يُقرأ الملف في جهازك فقط.</p>
     <label class="btn pri" style="width:100%;height:46px;cursor:pointer">اختيار ملف Excel<input type="file" id="xf" accept=".xlsx,.xls,.csv" hidden></label>
     <div id="xs" class="sub" style="margin-top:10px"></div><div id="xm" hidden></div>`;
-  b.onclick=()=>{seg.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));dlg.querySelector("#p1").hidden=true;p2.hidden=true;p3.hidden=false};
+    b.addEventListener("click",()=>{seg.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));dlg.querySelector("#p1").hidden=true;p2.hidden=true;p3.hidden=false});
   seg.querySelectorAll("button:not([data-t=xf])").forEach(x=>x.addEventListener("click",()=>{p3.hidden=true}));
   wire(p3);
 }
