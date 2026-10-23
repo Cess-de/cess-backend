@@ -599,6 +599,25 @@
 rm('.hero-actions a[href="members.html"]');rm('#mobileNav a[href="members.html"]');rm('.ql a[href="members.html"]');
 document.querySelectorAll('.nav-links a[href="members.html"]').forEach(a=>{const l=a.closest("li");if(l)l.remove()});})();
 </script>
+<script src="cess.js"></script>
+<script>
+(()=>{
+  const ap=S=>{
+    const g=k=>{try{return JSON.parse((S[k]||{}).ar||"[]")}catch(e){return[]}},n=g("img_hero_night"),d=g("img_hero_day");let ch=0;
+    if(n.length&&n.join()!==NIGHT_IMAGES.join()){NIGHT_IMAGES.length=0;NIGHT_IMAGES.push(...n);ch=1}
+    if(d.length&&d.join()!==DAY_IMAGES.join()){DAY_IMAGES.length=0;DAY_IMAGES.push(...d);ch=1}
+    if(ch){bannerImageForThisLoad=null;setTheme(getSavedTheme())}
+  };
+  let c=null;try{c=JSON.parse(localStorage.getItem("cess-hero")||"null")}catch(e){}
+  if(c)ap(c);
+  fetch("https://bibhljpmmmcxcxhpbuqf.supabase.co/functions/v1/"+CESS_FN,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+CESS_ANON},body:JSON.stringify({action:"siteSettings",input:{}})})
+    .then(r=>r.json()).then(j=>{
+      if(!j.ok)return;const S={img_hero_night:j.data.settings.img_hero_night,img_hero_day:j.data.settings.img_hero_day};
+      try{localStorage.setItem("cess-hero",JSON.stringify(S))}catch(e){}
+      ap(S);
+    }).catch(()=>{});
+})();
+</script>
 
 </body>
 </html>
