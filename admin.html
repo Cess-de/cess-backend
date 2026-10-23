@@ -50,7 +50,7 @@ h1{font-size:22px;font-weight:800;margin-top:14px}.sub{font-size:13px;color:var(
 dialog{border:1px solid var(--bd);border-radius:18px;background:var(--el);color:var(--t1);padding:24px;width:min(92vw,540px);margin:auto;max-height:92vh;overflow:auto}
 dialog::backdrop{background:rgba(0,0,0,.55)}dialog h3{font-size:18px;font-weight:800}
 .seg{display:flex;gap:4px;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:4px;margin:14px 0}
-.seg button{flex:1;height:36px;border:0;border-radius:9px;background:transparent;color:var(--t2);font:600 13px Inter,sans-serif;cursor:pointer}
+.seg button{flex:1;height:36px;border:0;border-radius:99px;background:transparent;color:var(--t2);font:600 13px Inter,sans-serif;cursor:pointer}
 .seg button.on{background:var(--ac);color:#0B132B}
 .fld{margin-bottom:12px}.fld label{display:block;font-size:12.5px;font-weight:600;color:var(--t2);margin-bottom:6px}
 .fld input{width:100%;height:42px;padding:0 12px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--t1);font:inherit}
@@ -209,12 +209,12 @@ $("#out").onclick=e=>busy(e.currentTarget,async()=>{try{await call("logout")}cat
 $("#who").textContent="مرحبًا "+(m.member.full_name||m.member.student_id)+" — أنت مشرف";$("#boot").hidden=true;$("#app").hidden=false;tabs();load()}catch{leave()}})();
 </script>
 <script src="admin-ext.js"></script>
-  <script src="admin-img.js"></script>
+<script src="admin-img.js"></script>
 <script src="admin-welcome-tab.js"></script>
 <script src="admin-xlsx.js"></script>
 <script src="admin-depts.js"></script>
 <script src="admin-codes.js"></script>
-
+<script src="admin-images.js"></script>
 
 </body>
 </html>
