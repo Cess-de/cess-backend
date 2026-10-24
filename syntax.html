@@ -1,0 +1,8 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>فحص الصياغة</title></head>
+<body style="font-family:sans-serif;padding:16px;line-height:2"><h3>فحص ملفات JS</h3><button id="go" style="padding:10px 18px;font-size:16px">ابدأ</button><div id="o"></div>
+<script>
+const F=["cess.js","pf.js","glass-strip.js","notify.js","join.js","like.js","home-feed.js","carousel.js","lightbox.js","admin-ext.js","admin-img.js","admin-xlsx.js","admin-depts.js","admin-codes.js","admin-images.js","admin-roles.js","admin-site.js","admin-resources.js","admin-members.js","admin-news.js","admin-activities.js","admin-offices.js","admin-vote.js","admin-log.js"];
+document.getElementById("go").onclick=async()=>{const o=document.getElementById("o");o.textContent="جارٍ الفحص...";const L=[];
+for(const f of F){try{const r=await fetch(f+"?v="+Date.now(),{cache:"no-store"});if(!r.ok){L.push("❌ "+f+" — غير موجود");continue}const t=await r.text();if(t.trim().length<30){L.push("❌ "+f+" — فارغ");continue}try{new Function(t);L.push("✅ "+f)}catch(e){L.push("❌ "+f+" — خطأ صياغة: "+e.message)}}catch(e){L.push("❌ "+f+" — تعذّر")}}
+o.innerHTML=L.map(x=>"<div>"+x+"</div>").join("")};
+</script></body></html>
