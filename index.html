@@ -618,6 +618,17 @@ document.querySelectorAll('.nav-links a[href="members.html"]').forEach(a=>{const
     }).catch(()=>{});
 })();
 </script>
+<script>
+(()=>{
+  const st=document.createElement("style");
+  st.textContent='[data-brand]:empty{display:none}[data-brand]{text-align:center}.brand-strip{padding:30px 0 24px!important}.brand-strip [data-brand]{margin-bottom:14px}.brand-strip [data-brand] img{filter:drop-shadow(0 8px 22px rgba(0,0,0,.35))}.footer [data-brand]{margin:0 0 16px}';
+  document.head.append(st);
+  const bs=document.querySelector(".brand-strip");
+  if(bs){const d=document.createElement("div");d.dataset.brand="140";bs.prepend(d)}
+  const fc=document.querySelector(".footer .container");
+  if(fc){const d=document.createElement("div");d.dataset.brand="100";fc.prepend(d)}
+})();
+</script>
 
 </body>
 </html>
